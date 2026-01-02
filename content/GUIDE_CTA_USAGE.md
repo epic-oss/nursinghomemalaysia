@@ -15,7 +15,7 @@ Use the emoji-prefixed blockquote format. The system auto-detects these patterns
 ```markdown
 > **📋 Get Your Custom Quote**
 >
-> Planning team building? Get personalized quotes from verified providers.
+> Looking for elderly care facilities? Get personalized quotes from verified providers.
 >
 > **[Get Free Quotes →](/calculator)**
 ```
@@ -25,7 +25,7 @@ Use the emoji-prefixed blockquote format. The system auto-detects these patterns
 ```markdown
 > **💰 Calculate Your Budget**
 >
-> Use our free calculator to estimate costs for your team size and preferences.
+> Use our free calculator to estimate costs for nursing home care.
 >
 > **[Try the Calculator →](/calculator)**
 ```
@@ -37,15 +37,15 @@ For more customization, use the React components directly in MDX:
 ```mdx
 <GuideCTA
   variant="quote"
-  headline="Ready to Plan Your Event?"
-  description="Get quotes from verified team building providers."
+  headline="Find the Right Care Facility"
+  description="Get quotes from verified nursing homes and care facilities."
   buttonText="Get Quotes"
   href="/calculator"
 />
 
 <QuoteCTA context="Penang" />
 
-<CalculatorCTA context="Cameron Highlands" />
+<CalculatorCTA context="Kuala Lumpur" />
 ```
 
 ## Placement Guidelines
@@ -69,7 +69,7 @@ For location-specific guides, customize the description:
 ```markdown
 > **📋 Get Your Custom Quote**
 >
-> Planning Penang team building? Get personalized quotes from verified providers.
+> Looking for nursing homes in Penang? Get personalized quotes from verified facilities.
 >
 > **[Get Free Quotes →](/calculator)**
 ```
@@ -93,7 +93,7 @@ Pre-configured variants. Accept all props except `variant`.
 
 ```mdx
 <QuoteCTA context="Johor" />
-<!-- Renders: "Planning Johor Team Building?" -->
+<!-- Renders: "Looking for nursing homes in Johor?" -->
 
 <CalculatorCTA />
 <!-- Uses default calculator messaging -->
@@ -104,13 +104,13 @@ Pre-configured variants. Accept all props except `variant`.
 ### Standard Guide Article
 
 ```markdown
-## Popular Venues
+## Types of Care Facilities
 
-Content about venues...
+Content about facility types...
 
 > **📋 Get Your Custom Quote**
 >
-> Looking for venue options? Get personalized quotes from verified providers.
+> Looking for the right care facility? Get personalized quotes from verified providers.
 >
 > **[Get Free Quotes →](/calculator)**
 
@@ -120,7 +120,7 @@ Content about pricing...
 
 > **💰 Calculate Your Budget**
 >
-> Use our free calculator to estimate costs for your team size and preferences.
+> Use our free calculator to estimate nursing home costs.
 >
 > **[Try the Calculator →](/calculator)**
 
@@ -128,19 +128,19 @@ Content about pricing...
 
 Final content...
 
-[Browse Team Building Companies →](/listings)
+[Browse Nursing Homes →](/listings)
 ```
 
 ### Location-Specific Guide
 
 ```markdown
-## Best Venues in Langkawi
+## Best Nursing Homes in Kuala Lumpur
 
 Content...
 
 > **📋 Get Your Custom Quote**
 >
-> Planning Langkawi team building? Get personalized quotes from verified providers.
+> Looking for nursing homes in Kuala Lumpur? Get personalized quotes from verified facilities.
 >
 > **[Get Free Quotes →](/calculator)**
 ```
