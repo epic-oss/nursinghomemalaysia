@@ -75,8 +75,8 @@ export function QuoteFormModal({ isOpen, onClose, source = 'floating_button' }: 
             Get Free Quotes
           </h2>
           <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400 sm:text-base">
-            Tell us about your team building needs and we'll connect you with up to 5 suitable
-            vendors at no cost.
+            Tell us about your nursing home needs and we'll connect you with up to 5 suitable
+            facilities at no cost.
           </p>
         </div>
 

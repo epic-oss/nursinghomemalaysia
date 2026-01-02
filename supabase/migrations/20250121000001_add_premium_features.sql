@@ -1,10 +1,10 @@
 -- Add premium subscription features to companies table
-ALTER TABLE companies
+ALTER TABLE nursing_homes
 ADD COLUMN IF NOT EXISTS is_premium BOOLEAN DEFAULT false,
 ADD COLUMN IF NOT EXISTS premium_since TIMESTAMP WITH TIME ZONE;
 
 -- Create index for premium listings
-CREATE INDEX IF NOT EXISTS idx_companies_premium ON companies(is_premium);
+CREATE INDEX IF NOT EXISTS idx_nursing_homes_premium ON nursing_homes(is_premium);
 
 -- Update existing is_featured to work with premium
 -- Premium companies are automatically featured

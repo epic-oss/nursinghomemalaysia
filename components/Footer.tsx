@@ -36,12 +36,12 @@ export function Footer() {
 
         {/* Copyright */}
         <div className="mt-6 text-center text-sm text-zinc-600 dark:text-zinc-400">
-          <p>&copy; {currentYear} Team Building MY. All rights reserved.</p>
+          <p>&copy; {currentYear} Nursing Home MY. All rights reserved.</p>
         </div>
 
         {/* Optional: Additional info */}
         <div className="mt-4 text-center text-xs text-zinc-500 dark:text-zinc-500">
-          <p>Your trusted directory for team building companies in Malaysia</p>
+          <p>Your trusted directory for nursing home companies in Malaysia</p>
         </div>
       </div>
     </footer>

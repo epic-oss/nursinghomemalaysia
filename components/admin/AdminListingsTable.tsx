@@ -1,12 +1,12 @@
 'use client'
 
 import Link from 'next/link'
-import { Company } from '@/lib/types'
+import { NursingHome } from '@/lib/types'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 interface AdminListingsTableProps {
-  listings: Company[]
+  listings: NursingHome[]
 }
 
 export function AdminListingsTable({ listings }: AdminListingsTableProps) {
@@ -144,7 +144,7 @@ export function AdminListingsTable({ listings }: AdminListingsTableProps) {
               <td className="px-4 py-3 text-right">
                 <div className="flex items-center justify-end gap-2">
                   <Link
-                    href={`/listings/company/${listing.slug}`}
+                    href={`/listings/nursing_home/${listing.slug}`}
                     target="_blank"
                     className="rounded-md border border-zinc-300 px-3 py-1 text-xs font-medium text-zinc-700 transition-colors hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
                   >

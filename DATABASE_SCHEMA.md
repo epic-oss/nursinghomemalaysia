@@ -4,12 +4,12 @@ This document describes the tables to create in Supabase Studio.
 
 ## Tables
 
-### 1. companies
+### 1. nursing_homes
 
-Team building service providers and organizers.
+Elderly care facilities and nursing home providers.
 
 ```sql
-create table companies (
+create table nursing_homes (
   id uuid primary key default gen_random_uuid(),
   slug text unique, -- URL-safe slug for SEO-friendly URLs
   name text not null,
@@ -26,17 +26,16 @@ create table companies (
   price_range text, -- e.g., "RM 500 - RM 2000"
   services text[], -- Array of services offered
   category text,
-  activities text,
+  services text,
   featured boolean default false,
-  hrdf_claimable boolean,
   created_at timestamp with time zone default now(),
   updated_at timestamp with time zone default now()
 );
 ```
 
-### 2. venues
+### 2. facilities
 
-Locations where team building activities can be held.
+Elderly care facilities and service locations.
 
 ```sql
 create table venues (
@@ -60,16 +59,16 @@ create table venues (
 );
 ```
 
-### 3. activities
+### 3. services
 
-Specific team building activities and packages.
+Specific elderly care services and packages.
 
 ```sql
-create table activities (
+create table services (
   id uuid primary key default gen_random_uuid(),
   name text not null,
   description text not null,
-  category text not null, -- e.g., "Outdoor", "Indoor", "Virtual", "Sports"
+  category text not null, -- e.g., "Residential Care", "Day Care", "Rehabilitation", "Medical"
   duration text, -- e.g., "2 hours", "Full day"
   group_size text, -- e.g., "10-50 people"
   price_range text, -- e.g., "RM 50 per person"
@@ -91,7 +90,7 @@ Contact form submissions from users.
 ```sql
 create table inquiries (
   id uuid primary key default gen_random_uuid(),
-  listing_type text not null, -- 'company', 'venue', or 'activity'
+  listing_type text not null, -- 'nursing_home', 'facility', or 'service'
   listing_id uuid not null,
   listing_name text not null, -- Denormalized for easy reference
   name text not null,
@@ -110,19 +109,19 @@ create table inquiries (
 Create indexes for better query performance:
 
 ```sql
--- Companies
-create index idx_companies_slug on companies(slug);
-create index idx_companies_state on companies(state);
-create index idx_companies_featured on companies(featured);
+-- Nursing Homes
+create index idx_nursing_homes_slug on nursing_homes(slug);
+create index idx_nursing_homes_state on nursing_homes(state);
+create index idx_nursing_homes_featured on nursing_homes(featured);
 
--- Venues
-create index idx_venues_state on venues(state);
-create index idx_venues_venue_type on venues(venue_type);
-create index idx_venues_featured on venues(featured);
+-- Facilities
+create index idx_facilities_state on facilities(state);
+create index idx_facilities_venue_type on facilities(venue_type);
+create index idx_facilities_featured on facilities(featured);
 
--- Activities
-create index idx_activities_category on activities(category);
-create index idx_activities_featured on activities(featured);
+-- Services
+create index idx_services_category on services(category);
+create index idx_services_featured on services(featured);
 
 -- Inquiries
 create index idx_inquiries_created_at on inquiries(created_at desc);
@@ -135,15 +134,15 @@ Enable RLS and create policies for public read access:
 
 ```sql
 -- Enable RLS
-alter table companies enable row level security;
-alter table venues enable row level security;
-alter table activities enable row level security;
+alter table nursing_homes enable row level security;
+alter table facilities enable row level security;
+alter table services enable row level security;
 alter table inquiries enable row level security;
 
 -- Public read access for listings
-create policy "Public read access" on companies for select using (true);
-create policy "Public read access" on venues for select using (true);
-create policy "Public read access" on activities for select using (true);
+create policy "Public read access" on nursing_homes for select using (true);
+create policy "Public read access" on facilities for select using (true);
+create policy "Public read access" on services for select using (true);
 
 -- Only authenticated users can insert inquiries
 create policy "Anyone can submit inquiries" on inquiries for insert with check (true);

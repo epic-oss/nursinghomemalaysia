@@ -5,11 +5,11 @@ import { useRouter } from 'next/navigation'
 import { claimVendor } from './actions'
 
 interface ClaimButtonProps {
-  vendorId: string
+  facilityId: string
   vendorName: string
 }
 
-export function ClaimButton({ vendorId, vendorName }: ClaimButtonProps) {
+export function ClaimButton({ facilityId, vendorName }: ClaimButtonProps) {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -20,7 +20,7 @@ export function ClaimButton({ vendorId, vendorName }: ClaimButtonProps) {
     setError('')
 
     try {
-      const result = await claimVendor(vendorId)
+      const result = await claimVendor(facilityId)
 
       if (!result.success) {
         setError(result.error || 'Failed to claim listing')

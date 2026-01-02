@@ -40,7 +40,7 @@ export function AddListingModal({ isOpen, onClose }: AddListingModalProps) {
     contact_email: '',
     website: '',
     description: '',
-    hrdf_claimable: false,
+    ,
   })
 
   const handleChange = (
@@ -82,7 +82,7 @@ export function AddListingModal({ isOpen, onClose }: AddListingModalProps) {
         contact_email: '',
         website: '',
         description: '',
-        hrdf_claimable: false,
+        ,
       })
 
       // Close modal and refresh
@@ -246,13 +246,13 @@ export function AddListingModal({ isOpen, onClose }: AddListingModalProps) {
           <div className="flex items-center gap-2">
             <input
               type="checkbox"
-              id="hrdf_claimable"
-              name="hrdf_claimable"
-              checked={formData.hrdf_claimable}
+              id="
+              name="
+              checked={formData.
               onChange={handleChange}
               className="h-4 w-4 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900 dark:border-zinc-700"
             />
-            <label htmlFor="hrdf_claimable" className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
+            <label htmlFor="
               HRDF Claimable
             </label>
           </div>

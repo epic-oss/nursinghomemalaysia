@@ -32,14 +32,14 @@ export async function generateMetadata({ params }: GuidePageProps): Promise<Meta
     }
   }
 
-  const baseUrl = 'https://www.teambuildingmy.com'
+  const baseUrl = 'https://www.nursinghomemy.com'
   const pageUrl = `${baseUrl}/guides/${post.slug}`
 
   const processedTitle = processTemplateVariables(post.title)
   const processedDescription = processTemplateVariables(post.description)
 
   return {
-    title: `${processedTitle} | Team Building MY`,
+    title: `${processedTitle} | Nursing Home MY`,
     description: processedDescription,
     keywords: post.keywords,
     alternates: {
@@ -51,7 +51,7 @@ export async function generateMetadata({ params }: GuidePageProps): Promise<Meta
       type: 'article',
       publishedTime: post.date,
       url: pageUrl,
-      siteName: 'Team Building MY',
+      siteName: 'Nursing Home MY',
       images: post.image ? [post.image] : [],
     },
     twitter: {
@@ -71,7 +71,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
     notFound()
   }
 
-  const baseUrl = 'https://www.teambuildingmy.com'
+  const baseUrl = 'https://www.nursinghomemy.com'
   const pageUrl = `${baseUrl}/guides/${post.slug}`
   const processedTitle = processTemplateVariables(post.title)
   const processedDescription = processTemplateVariables(post.description)

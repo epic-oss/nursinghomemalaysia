@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
       contact_email,
       website,
       description,
-      hrdf_claimable,
+      ,
     } = body
 
     // Validate required fields
@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
 
     // Check if slug exists and make it unique if needed
     const { data: existingSlug } = await adminClient
-      .from('companies')
+      .from('nursing_homes')
       .select('slug')
       .eq('slug', slug)
       .single()
@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
 
     // Insert new company
     const { data, error } = await adminClient
-      .from('companies')
+      .from('nursing_homes')
       .insert({
         name,
         slug,
@@ -63,7 +63,7 @@ export async function POST(request: NextRequest) {
         contact_email,
         website: website || null,
         description,
-        hrdf_claimable: hrdf_claimable || false,
+        ,
         featured: false,
         is_featured: false,
         is_premium: false,

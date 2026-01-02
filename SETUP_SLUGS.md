@@ -8,10 +8,10 @@ In your Supabase SQL Editor, run:
 
 ```sql
 -- Add slug column to companies table
-ALTER TABLE companies ADD COLUMN slug text;
+ALTER TABLE nursing_homes ADD COLUMN slug text;
 
 -- Create unique index on slug
-CREATE UNIQUE INDEX idx_companies_slug ON companies(slug);
+CREATE UNIQUE INDEX idx_nursing_homes_slug ON nursing_homes(slug);
 ```
 
 ## Step 2: Populate Slugs for Existing Companies
@@ -29,7 +29,7 @@ Expected output:
 📊 Found 81 companies
 
 ✅ Generated slug for "MD Events Asia SDN BHD": md-events-asia
-✅ Generated slug for "Team Building Pro": team-building-pro
+✅ Generated slug for "Nursing Home Pro": nursing-home-pro
 ...
 
 ==================================================
@@ -45,8 +45,8 @@ Expected output:
 ## Step 3: Test the URLs
 
 Visit a company page using the new slug format:
-- Old: `http://localhost:3000/listings/company/{uuid}`
-- New: `http://localhost:3000/listings/company/md-events-asia`
+- Old: `http://localhost:3000/listings/nursing_home/{uuid}`
+- New: `http://localhost:3000/listings/nursing_home/md-events-asia`
 
 ## Step 4: Verify Everything Works
 
@@ -87,7 +87,7 @@ Then run: `node scripts/run-slug-migration.js`
 - `lib/slug-utils.ts` - Slug generation utilities
 - `lib/image-utils.ts` - Image URL transformation
 - `scripts/run-slug-migration.js` - Bulk slug population script
-- `app/listings/company/[slug]/page.tsx` - New slug-based company detail page
+- `app/listings/nursing_home/[slug]/page.tsx` - New slug-based company detail page
 - `supabase/migrations/add_slug_to_companies.sql` - Database migration
 
 ### Files Modified:
@@ -96,7 +96,7 @@ Then run: `node scripts/run-slug-migration.js`
 - `DATABASE_SCHEMA.md` - Updated schema documentation
 
 ### URLs:
-- Companies now use: `/listings/company/{slug}`
+- Companies now use: `/listings/nursing_home/{slug}`
 - Venues still use: `/listings/venue/{id}`
 - Activities still use: `/listings/activity/{id}`
 

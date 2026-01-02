@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Team Building Directory for Malaysia - A comprehensive directory application for discovering team building companies, venues, and activities across Malaysia. Built with Next.js 16, TypeScript, Tailwind CSS v4, and Supabase.
+Nursing Home Directory for Malaysia - A comprehensive directory application for discovering nursing home facilities and elderly care services across Malaysia. Built with Next.js 16, TypeScript, Tailwind CSS v4, and Supabase.
 
 ## Development Commands
 
@@ -38,7 +38,7 @@ npm run lint
   - `layout.tsx` - Root layout with font configuration
   - `listings/` - Listings pages
     - `page.tsx` - Main listings page with search and filtering
-    - `[type]/[id]/page.tsx` - Dynamic detail pages for companies, venues, activities
+    - `[type]/[id]/page.tsx` - Dynamic detail pages for nursing homes, facilities, services
 - `components/` - Reusable React components
   - `ListingCard.tsx` - Card component for displaying listings
   - `SearchFilter.tsx` - Client component for search and filtering
@@ -87,19 +87,19 @@ Before running the app, configure Supabase:
 
 ## Database Architecture
 
-Three main entities managed via Supabase Studio:
+Main entities managed via Supabase Studio:
 
-- **Companies**: Team building service providers with services, location, pricing
-- **Venues**: Locations for events with capacity, amenities, venue type
-- **Activities**: Specific team building activities with categories, difficulty, objectives
+- **Nursing Homes**: Elderly care facilities with services, location, pricing
+- **Facilities**: Care facilities with capacity, amenities, facility type
+- **Services**: Specific elderly care services with categories and details
 - **Inquiries**: Contact form submissions from users
 
 All tables include `featured` flag for homepage display and are indexed for search performance.
 
 ## Key Features
 
-- **Search & Filter**: Text search with filters by state, category, venue type
-- **Detail Pages**: Dynamic routes for companies, venues, and activities
+- **Search & Filter**: Text search with filters by state, category, facility type
+- **Detail Pages**: Dynamic routes for nursing homes, facilities, and services
 - **Contact Forms**: Server Actions submit inquiries to Supabase
 - **Featured Listings**: Homepage displays featured items from each category
 - **Responsive Design**: Mobile-first with Tailwind CSS

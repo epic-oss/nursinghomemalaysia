@@ -8,9 +8,9 @@ interface ClaimResult {
   error?: string
 }
 
-export async function claimVendor(vendorId: string): Promise<ClaimResult> {
+export async function claimVendor(facilityId: string): Promise<ClaimResult> {
   // Validate input
-  if (!vendorId || typeof vendorId !== 'string') {
+  if (!facilityId || typeof facilityId !== 'string') {
     return { success: false, error: 'Invalid vendor ID' }
   }
 
@@ -27,9 +27,9 @@ export async function claimVendor(vendorId: string): Promise<ClaimResult> {
 
   // Check if vendor exists and is not already claimed
   const { data: vendor, error: vendorError } = await adminClient
-    .from('companies')
+    .from('nursing_homes')
     .select('id, name, user_id')
-    .eq('id', vendorId)
+    .eq('id', facilityId)
     .single()
 
   if (vendorError || !vendor) {
@@ -46,7 +46,7 @@ export async function claimVendor(vendorId: string): Promise<ClaimResult> {
   // Check if user already has a claimed listing (optional: allow multiple claims)
   // Uncomment if you want to limit users to one listing
   // const { data: existingClaim } = await adminClient
-  //   .from('companies')
+  //   .from('nursing_homes')
   //   .select('id, name')
   //   .eq('user_id', user.id)
   //   .single()
@@ -57,11 +57,11 @@ export async function claimVendor(vendorId: string): Promise<ClaimResult> {
 
   // Claim the vendor
   const { error: updateError } = await adminClient
-    .from('companies')
+    .from('nursing_homes')
     .update({
       user_id: user.id,
     })
-    .eq('id', vendorId)
+    .eq('id', facilityId)
     .is('user_id', null) // Extra safety: only update if still unclaimed
 
   if (updateError) {

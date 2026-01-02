@@ -16,7 +16,7 @@ export default function TermsPage() {
               1. Acceptance of Terms
             </h2>
             <p>
-              By accessing and using Team Building MY, you accept and agree to be bound by the terms
+              By accessing and using Nursing Home MY, you accept and agree to be bound by the terms
               and provision of this agreement.
             </p>
           </section>
@@ -26,8 +26,8 @@ export default function TermsPage() {
               2. Use of Service
             </h2>
             <p>
-              Team Building MY provides a directory service connecting users with team building
-              companies, venues, and activities in Malaysia. We do not directly provide team building
+              Nursing Home MY provides a directory service connecting users with nursing home
+              companies, venues, and activities in Malaysia. We do not directly provide nursing home
               services.
             </p>
           </section>
@@ -61,7 +61,7 @@ export default function TermsPage() {
               5. Limitation of Liability
             </h2>
             <p>
-              Team Building MY is not responsible for any disputes, damages, or issues arising from
+              Nursing Home MY is not responsible for any disputes, damages, or issues arising from
               transactions or interactions between users and listed service providers.
             </p>
           </section>
@@ -82,8 +82,8 @@ export default function TermsPage() {
             </h2>
             <p>
               For questions about these terms, please contact us at{' '}
-              <a href="mailto:hello@teambuildingmy.com" className="underline">
-                hello@teambuildingmy.com
+              <a href="mailto:hello@nursinghomemy.com" className="underline">
+                hello@nursinghomemy.com
               </a>
               .
             </p>

@@ -2,18 +2,18 @@ import type { Metadata } from 'next'
 import { CostCalculator } from '@/components/CostCalculator'
 
 export const metadata: Metadata = {
-  title: 'Team Building Cost Calculator Malaysia | Get Instant Estimates',
-  description: 'Calculate your team building budget instantly. Get estimated costs for 10-300 participants across Malaysia. Free quotes from verified providers.',
+  title: 'Nursing Home Cost Calculator Malaysia | Get Instant Estimates',
+  description: 'Calculate your nursing home budget instantly. Get estimated costs for 10-300 participants across Malaysia. Free quotes from verified providers.',
   keywords: [
-    'team building cost calculator',
-    'team building budget Malaysia',
-    'team building price estimate',
+    'nursing home cost calculator',
+    'nursing home budget Malaysia',
+    'nursing home price estimate',
     'corporate event cost calculator',
-    'team building cost per person',
+    'nursing home cost per person',
   ],
   openGraph: {
-    title: 'Team Building Cost Calculator Malaysia',
-    description: 'Calculate your team building budget instantly. Get estimated costs for 10-300 participants across Malaysia.',
+    title: 'Nursing Home Cost Calculator Malaysia',
+    description: 'Calculate your nursing home budget instantly. Get estimated costs for 10-300 participants across Malaysia.',
     type: 'website',
   },
 }
@@ -25,10 +25,10 @@ export default function CalculatorPage() {
         {/* Header */}
         <div className="mb-8 text-center">
           <h1 className="mb-3 text-3xl font-bold text-zinc-900 dark:text-zinc-50 sm:text-4xl">
-            Team Building Cost Calculator Malaysia
+            Nursing Home Cost Calculator Malaysia
           </h1>
           <p className="text-lg text-zinc-600 dark:text-zinc-400">
-            Get instant budget estimates for your team building event in Malaysia
+            Get instant budget estimates for your nursing home event in Malaysia
           </p>
         </div>
 
@@ -43,7 +43,7 @@ export default function CalculatorPage() {
           <div className="space-y-4">
             <details className="group rounded-lg border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
               <summary className="cursor-pointer text-lg font-semibold text-zinc-900 dark:text-zinc-50">
-                How much does team building cost in Malaysia?
+                How much does nursing home cost in Malaysia?
               </summary>
               <p className="mt-3 text-zinc-600 dark:text-zinc-400">
                 Team building costs in Malaysia typically range from RM80-150 per person for half-day indoor activities,
@@ -54,7 +54,7 @@ export default function CalculatorPage() {
 
             <details className="group rounded-lg border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
               <summary className="cursor-pointer text-lg font-semibold text-zinc-900 dark:text-zinc-50">
-                What factors affect team building prices?
+                What factors affect nursing home prices?
               </summary>
               <p className="mt-3 text-zinc-600 dark:text-zinc-400">
                 Key factors include: (1) Number of participants - larger groups get bulk discounts,
@@ -78,10 +78,10 @@ export default function CalculatorPage() {
 
             <details className="group rounded-lg border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
               <summary className="cursor-pointer text-lg font-semibold text-zinc-900 dark:text-zinc-50">
-                Can I get HRDF claim for team building?
+                Can I get HRDF claim for nursing home?
               </summary>
               <p className="mt-3 text-zinc-600 dark:text-zinc-400">
-                Yes! Many team building programs are HRDF claimable if they meet training criteria.
+                Yes! Many nursing home programs are if they meet training criteria.
                 HRDF covers 50-80% of approved training costs. The provider must be HRDF registered,
                 and the program should focus on skills development (leadership, communication, problem-solving).
                 Check our{' '}
@@ -101,7 +101,7 @@ export default function CalculatorPage() {
           </h2>
           <div className="space-y-3 text-sm text-zinc-600 dark:text-zinc-400">
             <p>
-              Our estimates are based on real market data from over 100+ verified team building
+              Our estimates are based on real market data from over 100+ verified nursing home
               providers across Malaysia. The ranges account for:
             </p>
             <ul className="ml-6 list-disc space-y-1">
@@ -122,10 +122,10 @@ export default function CalculatorPage() {
           </div>
         </div>
 
-        {/* Team Building Costs by Activity Type */}
+        {/* Nursing Home Costs by Activity Type */}
         <div className="mt-12">
           <h2 className="mb-6 text-2xl font-bold text-zinc-900 dark:text-zinc-50">
-            Team Building Costs by Activity Type
+            Nursing Home Costs by Activity Type
           </h2>
           <p className="mb-6 text-zinc-600 dark:text-zinc-400">
             Understanding what drives pricing helps you budget more accurately. Here&apos;s what to expect across different activity categories in Malaysia.
@@ -138,7 +138,7 @@ export default function CalculatorPage() {
                 Indoor Activities (RM80 - RM180 per person)
               </h3>
               <p className="text-zinc-600 dark:text-zinc-400">
-                Indoor team building works best for air-conditioned comfort and weather-proof planning. Typical programs include escape room challenges, cooking competitions, drumming workshops, and problem-solving games. Prices include facilitator fees, equipment, and basic refreshments. Hotel meeting rooms or training centers add RM500-2,000 to your total for venue rental.
+                Indoor nursing home works best for air-conditioned comfort and weather-proof planning. Typical programs include escape room challenges, cooking competitions, drumming workshops, and problem-solving games. Prices include facilitator fees, equipment, and basic refreshments. Hotel meeting rooms or training centers add RM500-2,000 to your total for venue rental.
               </p>
             </div>
 
@@ -158,7 +158,7 @@ export default function CalculatorPage() {
                 Resort & Retreat Packages (RM400 - RM800 per person)
               </h3>
               <p className="text-zinc-600 dark:text-zinc-400">
-                Overnight retreats combine team building with accommodation for deeper bonding. Two-day-one-night packages at resorts in Pahang, Negeri Sembilan, or Melaka include multiple activity sessions, all meals, accommodation, and evening programs. These work well for annual team retreats or department offsites where extended time together matters.
+                Overnight retreats combine nursing home with accommodation for deeper bonding. Two-day-one-night packages at resorts in Pahang, Negeri Sembilan, or Melaka include multiple activity sessions, all meals, accommodation, and evening programs. These work well for annual team retreats or department offsites where extended time together matters.
               </p>
             </div>
 
@@ -168,7 +168,7 @@ export default function CalculatorPage() {
                 Premium & Specialized Programs (RM500 - RM1,200 per person)
               </h3>
               <p className="text-zinc-600 dark:text-zinc-400">
-                High-end experiences include yacht team building, helicopter challenges, professional racing experiences, or programs with celebrity facilitators. Corporate leadership retreats with executive coaches also fall into this category. These deliver unique bragging rights and work well for C-suite retreats or reward programs.
+                High-end experiences include yacht nursing home, helicopter challenges, professional racing experiences, or programs with celebrity facilitators. Corporate leadership retreats with executive coaches also fall into this category. These deliver unique bragging rights and work well for C-suite retreats or reward programs.
               </p>
             </div>
           </div>
@@ -180,7 +180,7 @@ export default function CalculatorPage() {
             HRDF Claimable: Reduce Your Cost by 50-80%
           </h2>
           <p className="mb-6 text-zinc-600 dark:text-zinc-400">
-            If your company contributes to HRDF (Human Resources Development Fund), you can claim back a significant portion of your team building costs - but only if the program qualifies.
+            If your company contributes to HRDF (Human Resources Development Fund), you can claim back a significant portion of your nursing home costs - but only if the program qualifies.
           </p>
 
           {/* What's Claimable Under HRDF */}
@@ -243,7 +243,7 @@ export default function CalculatorPage() {
             </p>
             <ul className="space-y-2 text-zinc-700 dark:text-zinc-300">
               <li><strong>Total cost:</strong> RM12,500</li>
-              <li><strong>HRDF claimable (est. 60%):</strong> RM7,500</li>
+              <li><strong> (est. 60%):</strong> RM7,500</li>
               <li className="text-lg font-semibold text-green-600 dark:text-green-400"><strong>Your actual cost:</strong> RM5,000</li>
             </ul>
             <p className="mt-4 text-sm text-zinc-600 dark:text-zinc-400">
@@ -290,7 +290,7 @@ export default function CalculatorPage() {
               </p>
               <p>
                 <strong className="text-zinc-900 dark:text-zinc-50">Skills development (RM200-350/pax):</strong>{' '}
-                Full-day programs with trained facilitators. Good for communication, leadership, or department-specific challenges. Usually HRDF claimable.
+                Full-day programs with trained facilitators. Good for communication, leadership, or department-specific challenges. Usually.
               </p>
               <p>
                 <strong className="text-zinc-900 dark:text-zinc-50">Annual retreat (RM500-800/pax):</strong>{' '}
@@ -319,7 +319,7 @@ export default function CalculatorPage() {
             </h3>
             <ul className="space-y-2 text-zinc-600 dark:text-zinc-400">
               <li><strong>Peak season (Oct-Dec):</strong> Book 6-8 weeks ahead, prices 10-20% higher</li>
-              <li><strong>Off-peak (Jan-Mar):</strong> Better availability, some vendors offer discounts</li>
+              <li><strong>Off-peak (Jan-Mar):</strong> Better availability, some facilities offer discounts</li>
               <li><strong>Ramadan period:</strong> Limited outdoor options, indoor programs available</li>
             </ul>
           </div>
@@ -346,14 +346,14 @@ export default function CalculatorPage() {
           __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'SoftwareApplication',
-            name: 'Team Building Cost Calculator',
+            name: 'Nursing Home Cost Calculator',
             applicationCategory: 'BusinessApplication',
             offers: {
               '@type': 'Offer',
               price: '0',
               priceCurrency: 'MYR',
             },
-            description: 'Calculate team building costs for events in Malaysia. Get instant budget estimates for 10-300 participants.',
+            description: 'Calculate nursing home costs for events in Malaysia. Get instant budget estimates for 10-300 participants.',
           }),
         }}
       />

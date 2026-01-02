@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
 
     // Update premium status
     const { error: updateError } = await supabase
-      .from('companies')
+      .from('nursing_homes')
       .update({
         is_premium: isPremium,
         is_featured: isPremium, // Also update featured status

@@ -11,13 +11,13 @@ interface InArticleCTAProps {
 }
 
 export function InArticleCTA({
-  title = 'Ready to Book Your Team Building?',
-  description = 'Get free quotes from up to 5 verified vendors',
+  title = 'Ready to Book Your Nursing Home?',
+  description = 'Get free quotes from up to 5 verified facilities',
   location,
 }: InArticleCTAProps) {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const displayTitle = location ? `Ready to Book Your ${location} Team Building?` : title
+  const displayTitle = location ? `Ready to Book Your ${location} Nursing Home?` : title
 
   return (
     <>

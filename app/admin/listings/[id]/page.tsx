@@ -9,7 +9,7 @@ async function getListing(listingId: string) {
   const supabase = await createClient()
 
   const { data, error } = await supabase
-    .from('companies')
+    .from('nursing_homes')
     .select('*')
     .eq('id', listingId)
     .single()
@@ -92,7 +92,7 @@ export default async function AdminListingDetailPage({
       {/* Quick Actions */}
       <div className="flex flex-wrap gap-2">
         <Link
-          href={`/listings/company/${listing.slug}`}
+          href={`/listings/nursing_home/${listing.slug}`}
           target="_blank"
           className="rounded-md border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-900 transition-colors hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-50 dark:hover:bg-zinc-800"
         >

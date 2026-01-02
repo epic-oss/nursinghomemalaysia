@@ -28,11 +28,11 @@ CREATE TABLE IF NOT EXISTS leads (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
--- Create lead_notifications table to track which vendors received which leads
+-- Create lead_notifications table to track which facilities received which leads
 CREATE TABLE IF NOT EXISTS lead_notifications (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   lead_id UUID REFERENCES leads(id) ON DELETE CASCADE,
-  company_id UUID REFERENCES companies(id) ON DELETE CASCADE,
+  nursing_home_id UUID REFERENCES companies(id) ON DELETE CASCADE,
 
   -- Notification details
   sent_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS lead_notifications (
   opened_at TIMESTAMP WITH TIME ZONE,
   clicked_at TIMESTAMP WITH TIME ZONE,
 
-  UNIQUE(lead_id, company_id) -- One notification per lead per company
+  UNIQUE(lead_id, nursing_home_id) -- One notification per lead per company
 );
 
 -- Create indexes
@@ -54,7 +54,7 @@ CREATE INDEX IF NOT EXISTS idx_leads_status ON leads(status);
 CREATE INDEX IF NOT EXISTS idx_leads_created_at ON leads(created_at DESC);
 
 CREATE INDEX IF NOT EXISTS idx_lead_notifications_lead_id ON lead_notifications(lead_id);
-CREATE INDEX IF NOT EXISTS idx_lead_notifications_company_id ON lead_notifications(company_id);
+CREATE INDEX IF NOT EXISTS idx_lead_notifications_nursing_home_id ON lead_notifications(nursing_home_id);
 CREATE INDEX IF NOT EXISTS idx_lead_notifications_sent_at ON lead_notifications(sent_at DESC);
 
 -- Enable RLS
@@ -68,12 +68,12 @@ CREATE POLICY "Admins can do everything with leads"
   WITH CHECK (true);
 
 -- RLS policies for lead_notifications
--- Vendors can see notifications sent to them
-CREATE POLICY "Vendors can view their own lead notifications"
+-- Facilities can see notifications sent to them
+CREATE POLICY "Facilities can view their own lead notifications"
   ON lead_notifications FOR SELECT
   USING (
-    company_id IN (
-      SELECT id FROM companies WHERE user_id = auth.uid()
+    nursing_home_id IN (
+      SELECT id FROM nursing_homes WHERE user_id = auth.uid()
     )
   );
 

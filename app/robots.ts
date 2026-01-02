@@ -28,6 +28,6 @@ export default function robots(): MetadataRoute.Robots {
         ],
       },
     ],
-    sitemap: 'https://www.teambuildingmy.com/sitemap.xml',
+    sitemap: 'https://www.nursinghomemalaysia.com/sitemap.xml',
   }
 }

@@ -83,7 +83,7 @@ export async function POST(request: NextRequest) {
     }
     const durationLabel = durationMap[duration] || duration || 'Not specified'
 
-    // Process lead: save to database and distribute to matching vendors
+    // Process lead: save to database and distribute to matching facilities
     const distributionResult = await processAndDistributeLead({
       leadId: leadId,
       name: name,
@@ -103,8 +103,8 @@ export async function POST(request: NextRequest) {
       source: source || 'calculator',
     })
 
-    const totalVendorsNotified = distributionResult.claimedVendorsNotified + distributionResult.unclaimedVendorsNotified
-    console.log(`✅ Lead processed. Vendors notified: ${totalVendorsNotified} (${distributionResult.claimedVendorsNotified} claimed, ${distributionResult.unclaimedVendorsNotified} unclaimed)`)
+    const totalFacilitiesNotified = distributionResult.claimedFacilitiesNotified + distributionResult.unclaimedFacilitiesNotified
+    console.log(`✅ Lead processed. Facilities notified: ${totalFacilitiesNotified} (${distributionResult.claimedFacilitiesNotified} claimed, ${distributionResult.unclaimedFacilitiesNotified} unclaimed)`)
     if (distributionResult.vendorNames.length > 0) {
       console.log(`   Notified: ${distributionResult.vendorNames.join(', ')}`)
     }
@@ -124,12 +124,12 @@ export async function POST(request: NextRequest) {
       console.log('Attempting to send to Make.com...')
 
       // Add vendor notification info to webhook data
-      const webhookDataWithVendors = {
+      const webhookDataWithFacilities = {
         ...webhookData,
-        vendorsSentTo: distributionResult.vendorNames.join(', ') || 'None (no vendors in area)',
-        vendorsNotifiedCount: totalVendorsNotified.toString(),
-        claimedVendorsNotified: distributionResult.claimedVendorsNotified.toString(),
-        unclaimedVendorsNotified: distributionResult.unclaimedVendorsNotified.toString(),
+        facilitiesSentTo: distributionResult.vendorNames.join(', ') || 'None (no facilities in area)',
+        facilitiesNotifiedCount: totalFacilitiesNotified.toString(),
+        claimedFacilitiesNotified: distributionResult.claimedFacilitiesNotified.toString(),
+        unclaimedFacilitiesNotified: distributionResult.unclaimedFacilitiesNotified.toString(),
       }
 
       const webhookResponse = await fetch(
@@ -140,7 +140,7 @@ export async function POST(request: NextRequest) {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
           },
-          body: JSON.stringify(webhookDataWithVendors),
+          body: JSON.stringify(webhookDataWithFacilities),
         }
       )
 
@@ -164,9 +164,9 @@ export async function POST(request: NextRequest) {
       success: true,
       message: 'Lead submitted successfully',
       leadId,
-      vendorsNotified: totalVendorsNotified,
-      claimedVendorsNotified: distributionResult.claimedVendorsNotified,
-      unclaimedVendorsNotified: distributionResult.unclaimedVendorsNotified,
+      facilitiesNotified: totalFacilitiesNotified,
+      claimedFacilitiesNotified: distributionResult.claimedFacilitiesNotified,
+      unclaimedFacilitiesNotified: distributionResult.unclaimedFacilitiesNotified,
     })
   } catch (error) {
     console.error('Error processing calculator lead:', error)

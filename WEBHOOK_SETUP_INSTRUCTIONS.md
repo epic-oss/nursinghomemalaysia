@@ -55,7 +55,7 @@ stripe listen --forward-to localhost:3000/api/webhooks/stripe
 
 **Description** (optional):
 ```
-Premium subscription webhook for Team Building MY directory
+Premium subscription webhook for Nursing Home MY directory
 ```
 
 ### Step 4: Get the Signing Secret
@@ -71,7 +71,7 @@ STRIPE_WEBHOOK_SECRET=whsec_your_actual_secret_here
 
 ### Step 5: Update Payment Link Metadata (Important!)
 
-Your payment link needs to pass `user_id` and `company_id` to the webhook. Here's how:
+Your payment link needs to pass `user_id` and `nursing_home_id` to the webhook. Here's how:
 
 #### Option A: Use Client Reference ID (Simpler)
 

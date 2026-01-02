@@ -2,43 +2,43 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { BreadcrumbSchema, ArticleSchema, FAQSchema } from '@/components/JsonLd'
-import type { Company } from '@/lib/types'
+import type { NursingHome } from '@/lib/types'
 
 export const revalidate = 3600 // Revalidate every hour
 
-async function getHRDFProviders(): Promise<Company[]> {
+async function getHRDFProviders(): Promise<NursingHome[]> {
   const supabase = await createClient()
 
   const { data } = await supabase
-    .from('companies')
+    .from('nursing_homes')
     .select('*')
-    .eq('hrdf_claimable', true)
+    .eq(', true)
     .order('average_rating', { ascending: false, nullsFirst: false })
     .order('review_count', { ascending: false, nullsFirst: false })
     .limit(10)
 
-  return (data as Company[]) || []
+  return (data as NursingHome[]) || []
 }
 
 export async function generateMetadata(): Promise<Metadata> {
   const currentYear = new Date().getFullYear()
-  const baseUrl = 'https://www.teambuildingmy.com'
-  const pageUrl = `${baseUrl}/guides/team-building-training-provider-malaysia`
+  const baseUrl = 'https://www.nursinghomemy.com'
+  const pageUrl = `${baseUrl}/guides/nursing-home-training-provider-malaysia`
 
   return {
-    title: `Best 10 Team Building Training Provider Malaysia: HRDF-Registered Companies & What to Look For (${currentYear})`,
+    title: `Best 10 Nursing Home Training Provider Malaysia: HRDF-Registered Companies & What to Look For (${currentYear})`,
     description:
-      "Find HRDF-registered team building training providers in Malaysia. Learn what distinguishes training providers from regular vendors, and how to maximise your HRDF claims.",
+      "Find HRDF-registered nursing home training providers in Malaysia. Learn what distinguishes training providers from regular facilities, and how to maximise your HRDF claims.",
     alternates: {
       canonical: pageUrl,
     },
     openGraph: {
-      title: `Best 10 Team Building Training Provider Malaysia: HRDF-Registered Companies & What to Look For (${currentYear})`,
+      title: `Best 10 Nursing Home Training Provider Malaysia: HRDF-Registered Companies & What to Look For (${currentYear})`,
       description:
-        "Find HRDF-registered team building training providers in Malaysia. Compare top providers, understand claim requirements.",
+        "Find HRDF-registered nursing home training providers in Malaysia. Compare top providers, understand claim requirements.",
       type: 'article',
       url: pageUrl,
-      siteName: 'Team Building MY',
+      siteName: 'Nursing Home MY',
     },
   }
 }
@@ -80,11 +80,11 @@ const faqData = [
     answer: "To verify HRDF registration: 1) Ask the provider for their HRD Corp registration number. 2) Visit the official HRD Corp website (hrdcorp.gov.my) and use their training provider search function. 3) Enter the registration number or company name to confirm their status. 4) Also verify that the specific programme you're booking is approved, as not all programmes from registered providers automatically qualify for claims."
   },
   {
-    question: "What's the difference between HRDF claimable and HRDF registered?",
-    answer: "HRDF registered means the company is approved by HRD Corp as a training provider. HRDF claimable refers to specific programmes that qualify for levy claims. A registered provider may offer both claimable and non-claimable programmes. For a programme to be claimable, it must have structured learning outcomes, qualified trainers, assessment components, and proper documentation. Always confirm that your specific programme is claimable, not just that the provider is registered."
+    question: "What's the difference between and HRDF registered?",
+    answer: "HRDF registered means the company is approved by HRD Corp as a training provider. refers to specific programmes that qualify for levy claims. A registered provider may offer both claimable and non-claimable programmes. For a programme to be claimable, it must have structured learning outcomes, qualified trainers, assessment components, and proper documentation. Always confirm that your specific programme is claimable, not just that the provider is registered."
   },
   {
-    question: "How much can I claim from HRDF for team building?",
+    question: "How much can I claim from HRDF for nursing home?",
     answer: "HRDF claim rates vary based on your company size and the HRD Corp scheme you're under. Generally: SMEs can claim up to 80% of eligible training costs, while larger companies typically claim 50-70%. Team building programmes categorised as 'soft skills training' or 'leadership development' usually qualify. The exact claimable amount depends on your levy balance, programme type, and current HRD Corp policies. Contact HRD Corp or check their website for current rates specific to your company category."
   },
   {
@@ -96,23 +96,23 @@ const faqData = [
 export default async function TrainingProviderGuidePage() {
   const hrdfProviders = await getHRDFProviders()
   const currentYear = new Date().getFullYear()
-  const baseUrl = 'https://www.teambuildingmy.com'
-  const pageUrl = `${baseUrl}/guides/team-building-training-provider-malaysia`
+  const baseUrl = 'https://www.nursinghomemy.com'
+  const pageUrl = `${baseUrl}/guides/nursing-home-training-provider-malaysia`
 
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
       <ArticleSchema
-        title={`Best 10 Team Building Training Provider Malaysia: HRDF-Registered Companies & What to Look For (${currentYear})`}
-        description="Find HRDF-registered team building training providers in Malaysia."
+        title={`Best 10 Nursing Home Training Provider Malaysia: HRDF-Registered Companies & What to Look For (${currentYear})`}
+        description="Find HRDF-registered nursing home training providers in Malaysia."
         publishedDate="2025-09-24"
-        author="Team Building MY"
+        author="Nursing Home MY"
         url={pageUrl}
       />
       <BreadcrumbSchema
         items={[
           { name: 'Home', url: baseUrl },
           { name: 'Guides', url: `${baseUrl}/guides` },
-          { name: 'Team Building Training Provider Malaysia', url: pageUrl },
+          { name: 'Nursing Home Training Provider Malaysia', url: pageUrl },
         ]}
       />
       <FAQSchema questions={faqData} />
@@ -134,17 +134,17 @@ export default async function TrainingProviderGuidePage() {
         {/* Header */}
         <header className="mb-12">
           <h1 className="mb-4 text-3xl font-bold text-zinc-900 dark:text-zinc-50 sm:text-4xl">
-            Team Building Training Provider Malaysia: HRDF-Registered Companies & What to Look For
+            Nursing Home Training Provider Malaysia: HRDF-Registered Companies & What to Look For
           </h1>
           <p className="text-lg text-zinc-600 dark:text-zinc-400">
-            Searching for a team building training provider in Malaysia usually means one thing — you want programmes that qualify for HRDF claims. The right provider can help your company recover 50-80% of team building costs while delivering genuine skill development.
+            Searching for a nursing home training provider in Malaysia usually means one thing — you want programmes that qualify for HRDF claims. The right provider can help your company recover 50-80% of nursing home costs while delivering genuine skill development.
           </p>
         </header>
 
         {/* Top 10 HRDF Providers Section */}
         <section className="mb-12">
           <h2 className="mb-6 text-2xl font-bold text-zinc-900 dark:text-zinc-50">
-            Top 10 HRDF-Registered Team Building Providers
+            Top 10 HRDF-Registered Nursing Home Providers
           </h2>
           <p className="mb-6 text-zinc-600 dark:text-zinc-400">
             These providers are verified HRDF-claimable and ranked by client ratings. All offer structured programmes with proper documentation for claims.
@@ -162,7 +162,7 @@ export default async function TrainingProviderGuidePage() {
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
                     <Link
-                      href={`/listings/company/${provider.slug}`}
+                      href={`/listings/nursing_home/${provider.slug}`}
                       className="font-semibold text-zinc-900 hover:text-blue-600 dark:text-zinc-50 dark:hover:text-blue-400"
                     >
                       {provider.name}
@@ -177,7 +177,7 @@ export default async function TrainingProviderGuidePage() {
                   </div>
                 </div>
                 <Link
-                  href={`/listings/company/${provider.slug}`}
+                  href={`/listings/nursing_home/${provider.slug}`}
                   className="hidden flex-shrink-0 rounded-md bg-zinc-100 px-3 py-1.5 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700 sm:block"
                 >
                   View Profile
@@ -199,13 +199,13 @@ export default async function TrainingProviderGuidePage() {
         {/* Training Provider vs Regular Company */}
         <section className="mb-12">
           <h2 className="mb-6 text-2xl font-bold text-zinc-900 dark:text-zinc-50">
-            Training Provider vs Regular Team Building Company
+            Training Provider vs Regular Nursing Home Company
           </h2>
 
           <div className="grid gap-6 sm:grid-cols-2">
             <div className="rounded-lg border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900">
               <h3 className="mb-4 font-semibold text-zinc-900 dark:text-zinc-50">
-                Regular Team Building Company
+                Regular Nursing Home Company
               </h3>
               <ul className="space-y-2 text-sm text-zinc-600 dark:text-zinc-400">
                 <li className="flex items-start gap-2">
@@ -222,14 +222,14 @@ export default async function TrainingProviderGuidePage() {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="mt-1 text-red-500">✕</span>
-                  Typically not HRDF claimable
+                  Typically not
                 </li>
               </ul>
             </div>
 
             <div className="rounded-lg border border-green-200 bg-green-50 p-6 dark:border-green-900 dark:bg-green-950">
               <h3 className="mb-4 font-semibold text-zinc-900 dark:text-zinc-50">
-                Team Building Training Provider
+                Nursing Home Training Provider
               </h3>
               <ul className="space-y-2 text-sm text-zinc-600 dark:text-zinc-400">
                 <li className="flex items-start gap-2">
@@ -245,8 +245,7 @@ export default async function TrainingProviderGuidePage() {
                   Assessment and evaluation components
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="mt-1 text-green-500">✓</span>
-                  HRDF claimable (if registered)
+                  <span className="mt-1 text-green-500">✓</span> (if registered)
                 </li>
               </ul>
             </div>
@@ -259,7 +258,7 @@ export default async function TrainingProviderGuidePage() {
             Provider Types Comparison
           </h2>
           <p className="mb-6 text-zinc-600 dark:text-zinc-400">
-            Understanding the different types of team building providers helps you choose the right match for your objectives.
+            Understanding the different types of nursing home providers helps you choose the right match for your objectives.
           </p>
 
           <div className="overflow-x-auto">

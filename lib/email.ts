@@ -14,8 +14,8 @@ function getResendClient(): Resend {
 }
 
 // Email sender configuration
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'Team Building MY <leads@teambuildingmy.com>'
-const BASE_URL = 'https://teambuildingmy.com'
+const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'Nursing Home MY <leads@nursinghomemy.com>'
+const BASE_URL = 'https://nursinghomemy.com'
 
 interface LeadData {
   leadId: string
@@ -41,7 +41,7 @@ interface UnclaimedLeadData {
   duration: string
 }
 
-interface VendorData {
+interface FacilityData {
   id: string
   name: string
   email: string
@@ -50,14 +50,14 @@ interface VendorData {
 /**
  * Generate HTML email template for claimed vendor lead notification (full details)
  */
-function generateVendorEmailHtml(lead: LeadData, vendor: VendorData): string {
+function generateVendorEmailHtml(lead: LeadData, vendor: FacilityData): string {
   return `
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>New Lead from Team Building MY</title>
+  <title>New Lead from Nursing Home MY</title>
 </head>
 <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f4f4f5;">
   <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #f4f4f5;">
@@ -72,7 +72,7 @@ function generateVendorEmailHtml(lead: LeadData, vendor: VendorData): string {
                 New Lead Alert
               </h1>
               <p style="margin: 8px 0 0; color: #a1a1aa; font-size: 14px;">
-                A potential client is looking for team building services in ${lead.location}
+                A potential client is looking for nursing home services in ${lead.location}
               </p>
             </td>
           </tr>
@@ -203,7 +203,7 @@ function generateVendorEmailHtml(lead: LeadData, vendor: VendorData): string {
                 This lead was sent to you because your listing is claimed and active in ${lead.location}.
               </p>
               <p style="margin: 16px 0 0; color: #a1a1aa; font-size: 11px;">
-                Team Building MY | <a href="https://teambuildingmy.com" style="color: #a1a1aa;">teambuildingmy.com</a>
+                Nursing Home MY | <a href="https://nursinghomemy.com" style="color: #a1a1aa;">nursinghomemy.com</a>
               </p>
             </td>
           </tr>
@@ -220,9 +220,9 @@ function generateVendorEmailHtml(lead: LeadData, vendor: VendorData): string {
 /**
  * Generate plain text email for claimed vendor lead notification
  */
-function generateVendorEmailText(lead: LeadData, vendor: VendorData): string {
+function generateVendorEmailText(lead: LeadData, vendor: FacilityData): string {
   return `
-NEW LEAD ALERT - Team Building MY
+NEW LEAD ALERT - Nursing Home MY
 ================================
 
 Hi ${vendor.name},
@@ -259,7 +259,7 @@ Tips for a successful response:
 Lead ID: ${lead.leadId}
 This lead was sent to you because your listing is claimed and active in ${lead.location}.
 
-Team Building MY | teambuildingmy.com
+Nursing Home MY | nursinghomemy.com
 `
 }
 
@@ -268,7 +268,7 @@ Team Building MY | teambuildingmy.com
  */
 function generateUnclaimedVendorEmailHtml(
   lead: UnclaimedLeadData,
-  vendor: VendorData,
+  vendor: FacilityData,
   monthlyLeadCount: number
 ): string {
   const claimUrl = `${BASE_URL}/claim?vendor=${vendor.id}`
@@ -279,7 +279,7 @@ function generateUnclaimedVendorEmailHtml(
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>New Team Building Lead in ${lead.location} - Claim Your Listing</title>
+  <title>New Nursing Home Lead in ${lead.location} - Claim Your Listing</title>
 </head>
 <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f4f4f5;">
   <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #f4f4f5;">
@@ -306,8 +306,8 @@ function generateUnclaimedVendorEmailHtml(
                 Hi ${vendor.name},
               </p>
               <p style="margin: 0 0 24px; color: #3f3f46; font-size: 16px;">
-                You received this lead because <strong>your company is listed on TeamBuildingMY.com</strong>.
-                A potential client is looking for team building services in your area!
+                You received this lead because <strong>your company is listed on Nursing Home Malaysia.com</strong>.
+                A potential client is looking for nursing home services in your area!
               </p>
 
               <!-- Lead Preview Card -->
@@ -383,12 +383,12 @@ function generateUnclaimedVendorEmailHtml(
               <ul style="margin: 0 0 24px; padding-left: 20px; color: #3f3f46; font-size: 14px; line-height: 1.8;">
                 <li><strong>FREE</strong> — No cost to claim your business listing</li>
                 <li><strong>Get full lead details</strong> — Name, email, phone, budget, requirements</li>
-                <li><strong>Receive more leads</strong> — Claimed vendors get priority for lead distribution</li>
+                <li><strong>Receive more leads</strong> — Claimed facilities get priority for lead distribution</li>
                 <li><strong>Update your profile</strong> — Add photos, description, and highlight your services</li>
               </ul>
 
               <p style="margin: 0; padding: 16px; background-color: #f0fdf4; border-radius: 6px; color: #166534; font-size: 14px; border: 1px solid #bbf7d0;">
-                ⏱️ <strong>Act fast!</strong> This lead is also being sent to other vendors in ${lead.location}.
+                ⏱️ <strong>Act fast!</strong> This lead is also being sent to other facilities in ${lead.location}.
               </p>
             </td>
           </tr>
@@ -400,10 +400,10 @@ function generateUnclaimedVendorEmailHtml(
                 This is 1 of ${monthlyLeadCount} lead${monthlyLeadCount !== 1 ? 's' : ''} this month in your area. Don't miss out.
               </p>
               <p style="margin: 0 0 8px; color: #71717a; font-size: 12px;">
-                You received this email because your company is listed on TeamBuildingMY.com in ${lead.location}.
+                You received this email because your company is listed on Nursing Home Malaysia.com in ${lead.location}.
               </p>
               <p style="margin: 16px 0 0; color: #a1a1aa; font-size: 11px;">
-                Team Building MY | <a href="https://teambuildingmy.com" style="color: #a1a1aa;">teambuildingmy.com</a>
+                Nursing Home MY | <a href="https://nursinghomemy.com" style="color: #a1a1aa;">nursinghomemy.com</a>
               </p>
             </td>
           </tr>
@@ -422,7 +422,7 @@ function generateUnclaimedVendorEmailHtml(
  */
 function generateUnclaimedVendorEmailText(
   lead: UnclaimedLeadData,
-  vendor: VendorData,
+  vendor: FacilityData,
   monthlyLeadCount: number
 ): string {
   const claimUrl = `${BASE_URL}/claim?vendor=${vendor.id}`
@@ -433,8 +433,8 @@ NEW TEAM BUILDING LEAD IN ${lead.location.toUpperCase()}
 
 Hi ${vendor.name},
 
-You received this lead because your company is listed on TeamBuildingMY.com.
-A potential client is looking for team building services in your area!
+You received this lead because your company is listed on Nursing Home Malaysia.com.
+A potential client is looking for nursing home services in your area!
 
 LEAD PREVIEW
 ------------
@@ -454,15 +454,15 @@ ${claimUrl}
 WHY CLAIM YOUR LISTING?
 - FREE — No cost to claim your business listing
 - Get full lead details — Name, email, phone, budget, requirements
-- Receive more leads — Claimed vendors get priority
+- Receive more leads — Claimed facilities get priority
 - Update your profile — Add photos, description, services
 
-⏱️ ACT FAST! This lead is also being sent to other vendors in ${lead.location}.
+⏱️ ACT FAST! This lead is also being sent to other facilities in ${lead.location}.
 
 ---
 This is 1 of ${monthlyLeadCount} lead${monthlyLeadCount !== 1 ? 's' : ''} this month in your area. Don't miss out.
 
-Team Building MY | teambuildingmy.com
+Nursing Home MY | nursinghomemy.com
 `
 }
 
@@ -471,7 +471,7 @@ Team Building MY | teambuildingmy.com
  */
 export async function sendLeadNotificationEmail(
   lead: LeadData,
-  vendor: VendorData
+  vendor: FacilityData
 ): Promise<{ success: boolean; messageId?: string; error?: string }> {
   console.log(`[sendLeadNotificationEmail] Attempting to send email to ${vendor.name} (${vendor.email})`)
   console.log(`[sendLeadNotificationEmail] RESEND_API_KEY exists: ${!!process.env.RESEND_API_KEY}`)
@@ -489,13 +489,13 @@ export async function sendLeadNotificationEmail(
     const { data, error } = await resend.emails.send({
       from: FROM_EMAIL,
       to: vendor.email,
-      subject: `New Lead: ${lead.companyName} looking for team building in ${lead.location}`,
+      subject: `New Lead: ${lead.companyName} looking for nursing home in ${lead.location}`,
       html: generateVendorEmailHtml(lead, vendor),
       text: generateVendorEmailText(lead, vendor),
       tags: [
         { name: 'type', value: 'lead_notification' },
         { name: 'lead_id', value: lead.leadId },
-        { name: 'vendor_id', value: vendor.id },
+        { name: 'facility_id', value: vendor.id },
         { name: 'location', value: lead.location },
         { name: 'vendor_claimed', value: 'true' },
       ],
@@ -519,7 +519,7 @@ export async function sendLeadNotificationEmail(
  */
 export async function sendUnclaimedVendorNotificationEmail(
   lead: UnclaimedLeadData,
-  vendor: VendorData,
+  vendor: FacilityData,
   monthlyLeadCount: number
 ): Promise<{ success: boolean; messageId?: string; error?: string }> {
   console.log(`[sendUnclaimedVendorNotificationEmail] Attempting to send email to ${vendor.name} (${vendor.email})`)
@@ -535,13 +535,13 @@ export async function sendUnclaimedVendorNotificationEmail(
     const { data, error } = await resend.emails.send({
       from: FROM_EMAIL,
       to: vendor.email,
-      subject: `New Team Building Lead in ${lead.location} - Claim Your Listing`,
+      subject: `New Nursing Home Lead in ${lead.location} - Claim Your Listing`,
       html: generateUnclaimedVendorEmailHtml(lead, vendor, monthlyLeadCount),
       text: generateUnclaimedVendorEmailText(lead, vendor, monthlyLeadCount),
       tags: [
         { name: 'type', value: 'lead_notification_unclaimed' },
         { name: 'lead_id', value: lead.leadId },
-        { name: 'vendor_id', value: vendor.id },
+        { name: 'facility_id', value: vendor.id },
         { name: 'location', value: lead.location },
         { name: 'vendor_claimed', value: 'false' },
       ],
@@ -561,14 +561,14 @@ export async function sendUnclaimedVendorNotificationEmail(
 }
 
 /**
- * Send batch lead notifications to multiple claimed vendors
+ * Send batch lead notifications to multiple claimed facilities
  */
-export async function sendLeadNotificationsToVendors(
+export async function sendLeadNotificationsToFacilities(
   lead: LeadData,
-  vendors: VendorData[]
-): Promise<{ vendor: VendorData; result: { success: boolean; messageId?: string; error?: string } }[]> {
+  facilities: FacilityData[]
+): Promise<{ vendor: FacilityData; result: { success: boolean; messageId?: string; error?: string } }[]> {
   const results = await Promise.all(
-    vendors.map(async (vendor) => {
+    facilities.map(async (vendor) => {
       const result = await sendLeadNotificationEmail(lead, vendor)
       return { vendor, result }
     })
@@ -578,15 +578,15 @@ export async function sendLeadNotificationsToVendors(
 }
 
 /**
- * Send batch lead notifications to multiple unclaimed vendors
+ * Send batch lead notifications to multiple unclaimed facilities
  */
 export async function sendUnclaimedVendorNotifications(
   lead: UnclaimedLeadData,
-  vendors: VendorData[],
+  facilities: FacilityData[],
   monthlyLeadCount: number
-): Promise<{ vendor: VendorData; result: { success: boolean; messageId?: string; error?: string } }[]> {
+): Promise<{ vendor: FacilityData; result: { success: boolean; messageId?: string; error?: string } }[]> {
   const results = await Promise.all(
-    vendors.map(async (vendor) => {
+    facilities.map(async (vendor) => {
       const result = await sendUnclaimedVendorNotificationEmail(lead, vendor, monthlyLeadCount)
       return { vendor, result }
     })

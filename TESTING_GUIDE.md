@@ -144,7 +144,7 @@ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_51SVrTG3b8mgauXiQ...
 3. **Check database**:
    ```sql
    SELECT id, name, is_premium, is_featured, premium_since
-   FROM companies
+   FROM nursing_homes
    WHERE user_id = 'your-test-user-id';
    ```
 
@@ -183,7 +183,7 @@ SELECT
   is_featured,
   premium_since,
   featured_until
-FROM companies
+FROM nursing_homes
 WHERE is_premium = true;
 ```
 
@@ -238,7 +238,7 @@ stripe listen --forward-to localhost:3000/api/webhooks/stripe
 
 ### Premium badge not showing?
 1. Refresh the page (hard refresh: Ctrl+Shift+R)
-2. Check database: `SELECT * FROM companies WHERE id = 'company-id'`
+2. Check database: `SELECT * FROM nursing_homes WHERE id = 'company-id'`
 3. Verify `is_premium = true` in database
 
 ## 🎯 Success Criteria

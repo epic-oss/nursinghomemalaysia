@@ -69,9 +69,9 @@ export async function POST(request: NextRequest) {
 
     // Update the company's user_id
     const { error: updateError } = await supabaseAdmin
-      .from('companies')
+      .from('nursing_homes')
       .update({ user_id: claimRequest.user_id })
-      .eq('id', claimRequest.company_id)
+      .eq('id', claimRequest.nursing_home_id)
 
     if (updateError) {
       console.error('Error updating company:', updateError)

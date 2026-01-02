@@ -8,7 +8,7 @@ import { UpgradeButton } from '@/components/UpgradeButton'
 async function getUserCompanies(userId: string) {
   const supabase = await createClient()
   const { data } = await supabase
-    .from('companies')
+    .from('nursing_homes')
     .select('*')
     .eq('user_id', userId)
     .order('created_at', { ascending: false })
@@ -156,7 +156,7 @@ export default async function UpgradePage() {
 
             {/* CTA Buttons */}
             {!hasPremium && companyToUpgrade ? (
-              <UpgradeButton companyId={companyToUpgrade.id} />
+              <UpgradeButton nursingHomeId={companyToUpgrade.id} />
             ) : hasPremium ? (
               <Link
                 href="/dashboard"

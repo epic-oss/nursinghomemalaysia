@@ -37,7 +37,7 @@ export async function submitVendorApplication(formData: FormData) {
     const supabase = await createClient()
 
     // Extract activities from form data
-    const activities = formData.getAll('activities') as string[]
+    const activities = formData.getAll('services') as string[]
 
     if (activities.length === 0) {
       return { success: false, error: 'Please select at least one activity type' }
@@ -55,7 +55,7 @@ export async function submitVendorApplication(formData: FormData) {
       company_type: formData.get('companyType') as string,
       description: formData.get('description') as string,
       activities_offered: activities,
-      hrdf_claimable: formData.get('hrdfClaimable') === 'yes',
+      ,
       referral_source: formData.get('referralSource') as string || null,
       status: 'pending',
     }

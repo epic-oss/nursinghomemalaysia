@@ -5,15 +5,15 @@ import type { Metadata } from 'next'
 import { ClaimButton } from './ClaimButton'
 
 export const metadata: Metadata = {
-  title: 'Claim Your Listing | Team Building MY',
-  description: 'Claim your business listing on Team Building MY to receive leads and manage your profile.',
+  title: 'Claim Your Listing | Nursing Home MY',
+  description: 'Claim your business listing on Nursing Home MY to receive leads and manage your profile.',
 }
 
 interface ClaimPageProps {
   searchParams: Promise<{ vendor?: string }>
 }
 
-interface VendorData {
+interface FacilityData {
   id: string
   name: string
   state: string | null
@@ -22,15 +22,15 @@ interface VendorData {
   user_id: string | null
 }
 
-async function getVendor(vendorId: string): Promise<VendorData | null> {
+async function getVendor(facilityId: string): Promise<FacilityData | null> {
   const supabase = createAdminClient()
 
-  console.log('[getVendor] Looking up vendor:', vendorId)
+  console.log('[getVendor] Looking up vendor:', facilityId)
 
   const { data, error } = await supabase
-    .from('companies')
+    .from('nursing_homes')
     .select('id, name, state, activities, contact_email, user_id')
-    .eq('id', vendorId)
+    .eq('id', facilityId)
     .single()
 
   if (error) {
@@ -54,10 +54,10 @@ async function getCurrentUser() {
 }
 
 export default async function ClaimPage({ searchParams }: ClaimPageProps) {
-  const { vendor: vendorId } = await searchParams
+  const { vendor: facilityId } = await searchParams
 
   // No vendor ID provided
-  if (!vendorId) {
+  if (!facilityId) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-zinc-50 px-4 dark:bg-zinc-950">
         <div className="w-full max-w-md text-center">
@@ -84,7 +84,7 @@ export default async function ClaimPage({ searchParams }: ClaimPageProps) {
   }
 
   // Fetch vendor data
-  const vendor = await getVendor(vendorId)
+  const vendor = await getVendor(facilityId)
 
   // Vendor not found
   if (!vendor) {
@@ -155,8 +155,8 @@ export default async function ClaimPage({ searchParams }: ClaimPageProps) {
                 </p>
                 <p className="mt-4 text-xs text-zinc-500 dark:text-zinc-500">
                   If you believe this is an error, please contact us at{' '}
-                  <a href="mailto:support@teambuildingmy.com" className="text-blue-600 hover:underline dark:text-blue-400">
-                    support@teambuildingmy.com
+                  <a href="mailto:support@nursinghomemy.com" className="text-blue-600 hover:underline dark:text-blue-400">
+                    support@nursinghomemy.com
                   </a>
                 </p>
                 <Link
@@ -175,7 +175,7 @@ export default async function ClaimPage({ searchParams }: ClaimPageProps) {
 
   // Not logged in - show landing page
   if (!user) {
-    const redirectUrl = `/claim?vendor=${vendorId}`
+    const redirectUrl = `/claim?vendor=${facilityId}`
     const loginUrl = `/login?redirect=${encodeURIComponent(redirectUrl)}`
     const registerUrl = `/register?redirect=${encodeURIComponent(redirectUrl)}`
 
@@ -211,10 +211,10 @@ export default async function ClaimPage({ searchParams }: ClaimPageProps) {
                     <dd className="font-medium text-zinc-900 dark:text-zinc-50">{vendor.state}</dd>
                   </div>
                 )}
-                {vendor.activities && (
+                {vendor.services && (
                   <div className="flex justify-between">
                     <dt className="text-zinc-500 dark:text-zinc-400">Services</dt>
-                    <dd className="max-w-[200px] truncate font-medium text-zinc-900 dark:text-zinc-50">{vendor.activities}</dd>
+                    <dd className="max-w-[200px] truncate font-medium text-zinc-900 dark:text-zinc-50">{vendor.services}</dd>
                   </div>
                 )}
               </dl>
@@ -323,7 +323,7 @@ export default async function ClaimPage({ searchParams }: ClaimPageProps) {
           </div>
 
           {/* Claim Button */}
-          <ClaimButton vendorId={vendor.id} vendorName={vendor.name} />
+          <ClaimButton facilityId={vendor.id} vendorName={vendor.name} />
         </div>
       </div>
     </div>

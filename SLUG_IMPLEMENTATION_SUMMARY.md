@@ -6,12 +6,12 @@ Your company URLs are now SEO-friendly! This document summarizes what was implem
 
 ### Before:
 ```
-/listings/company/123e4567-e89b-12d3-a456-426614174000
+/listings/nursing_home/123e4567-e89b-12d3-a456-426614174000
 ```
 
 ### After:
 ```
-/listings/company/md-events-asia
+/listings/nursing_home/md-events-asia
 ```
 
 ## 📁 Files Created
@@ -30,7 +30,7 @@ Your company URLs are now SEO-friendly! This document summarizes what was implem
    - Handles duplicates automatically
    - Provides detailed progress feedback
 
-4. **`app/listings/company/[slug]/page.tsx`**
+4. **`app/listings/nursing_home/[slug]/page.tsx`**
    - New company detail page that uses slugs
    - Queries database by slug instead of ID
    - Optimized for SEO with clean URLs
@@ -49,7 +49,7 @@ Your company URLs are now SEO-friendly! This document summarizes what was implem
    - Added `slug: string` field to Company interface
 
 2. **`components/ListingCard.tsx`**
-   - Updated to generate slug URLs for companies: `/listings/company/{slug}`
+   - Updated to generate slug URLs for companies: `/listings/nursing_home/{slug}`
    - Falls back to ID URLs for venues/activities: `/listings/{type}/{id}`
 
 3. **`DATABASE_SCHEMA.md`**
@@ -72,8 +72,8 @@ npm install
 
 In Supabase SQL Editor:
 ```sql
-ALTER TABLE companies ADD COLUMN slug text;
-CREATE UNIQUE INDEX idx_companies_slug ON companies(slug);
+ALTER TABLE nursing_homes ADD COLUMN slug text;
+CREATE UNIQUE INDEX idx_nursing_homes_slug ON nursing_homes(slug);
 ```
 
 ### 3. Populate Slugs
@@ -96,7 +96,7 @@ node scripts/run-slug-migration.js
 | Company Name | Generated Slug |
 |--------------|----------------|
 | MD Events Asia SDN BHD | `md-events-asia` |
-| Team Building Co. | `team-building-co` |
+| Nursing Home Co. | `nursing-home-co` |
 | Adventure Parks (Malaysia) Sdn Bhd | `adventure-parks-malaysia` |
 | A+ Solutions Inc. | `a-solutions` |
 | 123 Events | `123-events` |
@@ -105,9 +105,9 @@ node scripts/run-slug-migration.js
 
 ### Companies (NEW - Slug-based)
 - Listing page: `/listings?type=company`
-- Company detail: `/listings/company/{slug}`
-  - Example: `/listings/company/md-events-asia`
-  - Example: `/listings/company/team-building-pro`
+- Company detail: `/listings/nursing_home/{slug}`
+  - Example: `/listings/nursing_home/md-events-asia`
+  - Example: `/listings/nursing_home/nursing-home-pro`
 
 ### Venues (Unchanged - ID-based)
 - Listing page: `/listings?type=venue`
@@ -123,7 +123,7 @@ node scripts/run-slug-migration.js
 2. **👁️ Increased Click-Through**: Users prefer readable URLs
 3. **🔗 Easier Link Building**: Clean URLs are more shareable
 4. **📱 Social Media Friendly**: Look professional when shared
-5. **🎯 Keyword Rich**: Company names include relevant keywords
+5. **🎯 Keyword Rich**: NursingHome names include relevant keywords
 
 ## 🧪 Testing Checklist
 
@@ -146,19 +146,19 @@ node scripts/run-slug-migration.js
 slug text unique -- URL-safe slug for SEO
 
 -- Added index
-CREATE UNIQUE INDEX idx_companies_slug ON companies(slug);
+CREATE UNIQUE INDEX idx_nursing_homes_slug ON nursing_homes(slug);
 ```
 
 ## 🔄 How It Works
 
 1. **On Listing Page**:
    - ListingCard component checks if listing is a company
-   - If company has a slug, uses `/listings/company/{slug}`
+   - If company has a slug, uses `/listings/nursing_home/{slug}`
    - Otherwise, falls back to `/listings/{type}/{id}`
 
 2. **On Detail Page**:
-   - Next.js matches URL pattern `/listings/company/[slug]`
-   - Page queries database: `SELECT * FROM companies WHERE slug = ?`
+   - Next.js matches URL pattern `/listings/nursing_home/[slug]`
+   - Page queries database: `SELECT * FROM nursing_homes WHERE slug = ?`
    - Displays company information
 
 3. **Slug Generation**:
@@ -180,7 +180,7 @@ import { createClient } from '@/lib/supabase/server'
 const supabase = await createClient()
 const slug = await generateUniqueSlug(supabase, companyName)
 
-await supabase.from('companies').insert({
+await supabase.from('nursing_homes').insert({
   slug,
   name: companyName,
   // ... other fields

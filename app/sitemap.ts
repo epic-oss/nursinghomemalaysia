@@ -3,18 +3,18 @@ import { createClient } from '@/lib/supabase/server'
 import { getBlogPosts, getLocationPages } from '@/lib/mdx'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://www.teambuildingmy.com'
+  const baseUrl = 'https://www.nursinghomemalaysia.com'
   const supabase = await createClient()
 
-  // Get all companies with their slugs and updated dates
-  const { data: companies } = await supabase
-    .from('companies')
+  // Get all nursing homes with their slugs and updated dates
+  const { data: nursing_homes } = await supabase
+    .from('nursing_homes')
     .select('slug, updated_at')
     .order('updated_at', { ascending: false })
 
-  const companyUrls = (companies || []).map((company) => ({
-    url: `${baseUrl}/listings/company/${company.slug}`,
-    lastModified: company.updated_at || new Date().toISOString(),
+  const nursingHomeUrls = (nursing_homes || []).map((nursing_home) => ({
+    url: `${baseUrl}/listings/nursing_home/${nursing_home.slug}`,
+    lastModified: nursing_home.updated_at || new Date().toISOString(),
     changeFrequency: 'weekly' as const,
     priority: 0.8,
   }))
@@ -113,5 +113,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ]
 
-  return [...staticPages, ...guideUrls, ...locationUrls, ...companyUrls]
+  return [...staticPages, ...guideUrls, ...locationUrls, ...nursingHomeUrls]
 }

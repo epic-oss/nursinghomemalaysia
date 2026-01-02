@@ -6,32 +6,32 @@ import { createClient, createAdminClient } from '@/lib/supabase/server'
 async function getAdminStats() {
   const supabase = await createClient()
 
-  // Get total vendors count
-  const { count: totalVendors } = await supabase
-    .from('companies')
+  // Get total facilities count
+  const { count: totalFacilities } = await supabase
+    .from('nursing_homes')
     .select('*', { count: 'exact', head: true })
 
-  // Get premium vendors count
-  const { count: premiumVendors } = await supabase
-    .from('companies')
+  // Get premium facilities count
+  const { count: premiumFacilities } = await supabase
+    .from('nursing_homes')
     .select('*', { count: 'exact', head: true })
     .eq('is_premium', true)
 
   // Get unclaimed listings count
   const { count: unclaimedListings } = await supabase
-    .from('companies')
+    .from('nursing_homes')
     .select('*', { count: 'exact', head: true })
     .is('user_id', null)
 
   // Get claimed listings count
   const { count: claimedListings } = await supabase
-    .from('companies')
+    .from('nursing_homes')
     .select('*', { count: 'exact', head: true })
     .not('user_id', 'is', null)
 
   return {
-    totalVendors: totalVendors || 0,
-    premiumVendors: premiumVendors || 0,
+    totalFacilities: totalFacilities || 0,
+    premiumFacilities: premiumFacilities || 0,
     unclaimedListings: unclaimedListings || 0,
     claimedListings: claimedListings || 0,
   }
@@ -42,7 +42,7 @@ async function getRecentActivity() {
 
   // Get recently claimed listings
   const { data: recentClaims } = await supabase
-    .from('companies')
+    .from('nursing_homes')
     .select('name, user_id, updated_at')
     .not('user_id', 'is', null)
     .order('updated_at', { ascending: false })
@@ -50,7 +50,7 @@ async function getRecentActivity() {
 
   // Get recently created premium listings
   const { data: recentPremium } = await supabase
-    .from('companies')
+    .from('nursing_homes')
     .select('name, is_premium, updated_at')
     .eq('is_premium', true)
     .order('updated_at', { ascending: false })
@@ -138,10 +138,10 @@ export default async function AdminDashboard() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-zinc-600 dark:text-zinc-400">
-                Total Vendors
+                Total Facilities
               </p>
               <p className="mt-2 text-3xl font-bold text-zinc-900 dark:text-zinc-50">
-                {stats.totalVendors}
+                {stats.totalFacilities}
               </p>
             </div>
             <div className="rounded-full bg-blue-100 p-3 dark:bg-blue-900/20">
@@ -154,10 +154,10 @@ export default async function AdminDashboard() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-zinc-600 dark:text-zinc-400">
-                Premium Vendors
+                Premium Facilities
               </p>
               <p className="mt-2 text-3xl font-bold text-zinc-900 dark:text-zinc-50">
-                {stats.premiumVendors}
+                {stats.premiumFacilities}
               </p>
             </div>
             <div className="rounded-full bg-yellow-100 p-3 dark:bg-yellow-900/20">
@@ -211,7 +211,7 @@ export default async function AdminDashboard() {
           >
             <span className="mb-2 text-3xl">📝</span>
             <span className="font-medium text-zinc-900 dark:text-zinc-50">
-              View All Vendors
+              View All Facilities
             </span>
           </Link>
 
@@ -226,12 +226,12 @@ export default async function AdminDashboard() {
           </Link>
 
           <Link
-            href="/admin/vendors"
+            href="/admin/facilities"
             className="flex flex-col items-center justify-center rounded-lg border-2 border-zinc-200 p-6 text-center transition-colors hover:border-zinc-900 hover:bg-zinc-50 dark:border-zinc-800 dark:hover:border-zinc-50 dark:hover:bg-zinc-800"
           >
             <span className="mb-2 text-3xl">👥</span>
             <span className="font-medium text-zinc-900 dark:text-zinc-50">
-              View Vendors
+              View Facilities
             </span>
           </Link>
 
@@ -300,7 +300,7 @@ export default async function AdminDashboard() {
                   <tr key={claim.id} className="hover:bg-zinc-50 dark:hover:bg-zinc-800/50">
                     <td className="py-3">
                       <Link
-                        href={`/listings/company/${claim.companies?.slug}`}
+                        href={`/listings/nursing_home/${claim.companies?.slug}`}
                         className="font-medium text-zinc-900 hover:underline dark:text-zinc-50"
                         target="_blank"
                       >

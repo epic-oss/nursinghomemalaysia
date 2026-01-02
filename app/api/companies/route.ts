@@ -13,8 +13,8 @@ export async function GET(request: NextRequest) {
 
   const supabase = await createClient()
 
-  const { data, error } = await supabase
-    .from('companies')
+  const { data, error} = await supabase
+    .from('nursing_homes')
     .select('*')
     .eq('state', state)
     .order('is_premium', { ascending: false })

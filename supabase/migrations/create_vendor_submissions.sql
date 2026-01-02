@@ -20,7 +20,7 @@ CREATE TABLE vendor_submissions (
   activities_offered TEXT[] NOT NULL, -- Array of activity types
 
   -- Additional
-  hrdf_claimable BOOLEAN NOT NULL DEFAULT false,
+  ,
   referral_source TEXT,
 
   -- Status tracking

@@ -11,8 +11,8 @@
 ## 🚀 What to Do Next
 
 ### Step 1: Test the Website
-1. Visit your production site: **www.teambuildingmy.com**
-2. Verify all 81 companies are showing up
+1. Visit your production site: **www.nursinghomemalaysia.com**
+2. Verify all nursing homes are showing up
 3. If not, do a hard refresh (Ctrl+Shift+R)
 
 ### Step 2: Test Claim Listing Flow
@@ -22,12 +22,12 @@
 4. This should now work with the fixed RLS policy
 
 ### Step 3: Set Up Stripe Webhook (IMPORTANT!)
-Your webhook endpoint is ready at: `https://www.teambuildingmy.com/api/webhooks/stripe`
+Your webhook endpoint is ready at: `https://www.nursinghomemalaysia.com/api/webhooks/stripe`
 
 **Create the webhook in Stripe Dashboard:**
 1. Go to: https://dashboard.stripe.com/test/webhooks
 2. Click "+ Add endpoint"
-3. Enter URL: `https://www.teambuildingmy.com/api/webhooks/stripe`
+3. Enter URL: `https://www.nursinghomemalaysia.com/api/webhooks/stripe`
 4. Select events to listen to:
    - `checkout.session.completed`
    - `customer.subscription.updated`

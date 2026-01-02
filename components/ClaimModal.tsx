@@ -2,11 +2,11 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Company } from '@/lib/types'
+import { NursingHome } from '@/lib/types'
 import { createClient } from '@/lib/supabase/client'
 
 interface ClaimModalProps {
-  company: Company
+  company: NursingHome
   onClose: () => void
 }
 
@@ -35,7 +35,7 @@ export function ClaimModal({ company, onClose }: ClaimModalProps) {
 
       if (!user) {
         // Redirect to login with return URL
-        router.push(`/login?redirect=/listings/company/${company.slug}`)
+        router.push(`/login?redirect=/listings/nursing_home/${company.slug}`)
         return
       }
 
@@ -58,7 +58,7 @@ export function ClaimModal({ company, onClose }: ClaimModalProps) {
         .from('claim_requests')
         .select('status')
         .eq('user_id', user.id)
-        .eq('company_id', company.id)
+        .eq('nursing_home_id', company.id)
         .single()
 
       if (existingClaim) {
@@ -95,7 +95,7 @@ export function ClaimModal({ company, onClose }: ClaimModalProps) {
         .from('claim_requests')
         .insert({
           user_id: user.id,
-          company_id: company.id,
+          nursing_home_id: company.id,
           role_at_company: formData.role,
           verification_phone: formData.phone,
           proof_notes: `Business Email: ${formData.businessEmail}\n\nVerification Notes: ${formData.verificationNotes}`,

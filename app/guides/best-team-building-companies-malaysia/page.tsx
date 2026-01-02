@@ -2,21 +2,21 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { BreadcrumbSchema, ArticleSchema } from '@/components/JsonLd'
-import type { Company } from '@/lib/types'
+import type { NursingHome } from '@/lib/types'
 
 export const revalidate = 3600 // Revalidate every hour
 
-async function getTopCompanies(): Promise<{ companies: Company[]; totalCount: number }> {
+async function getTopCompanies(): Promise<{ companies: NursingHome[]; totalCount: number }> {
   const supabase = await createClient()
 
   // Get total count of all companies
   const { count: totalCount } = await supabase
-    .from('companies')
+    .from('nursing_homes')
     .select('*', { count: 'exact', head: true })
 
   // Get top 15 companies sorted by rating
   const { data } = await supabase
-    .from('companies')
+    .from('nursing_homes')
     .select('*')
     .order('average_rating', { ascending: false, nullsFirst: false })
     .order('review_count', { ascending: false, nullsFirst: false })
@@ -24,36 +24,36 @@ async function getTopCompanies(): Promise<{ companies: Company[]; totalCount: nu
     .limit(15)
 
   return {
-    companies: (data as Company[]) || [],
+    companies: (data as NursingHome[]) || [],
     totalCount: totalCount || 0,
   }
 }
 
 export async function generateMetadata(): Promise<Metadata> {
   const currentYear = new Date().getFullYear()
-  const baseUrl = 'https://www.teambuildingmy.com'
-  const pageUrl = `${baseUrl}/guides/best-team-building-companies-malaysia`
+  const baseUrl = 'https://www.nursinghomemy.com'
+  const pageUrl = `${baseUrl}/guides/best-nursing-home-companies-malaysia`
 
   return {
-    title: `15 Best Team Building Companies in Malaysia (${currentYear}) - Reviewed & Rated`,
+    title: `15 Best Nursing Home Companies in Malaysia (${currentYear}) - Reviewed & Rated`,
     description:
-      "Compare Malaysia's top-rated team building companies. We reviewed 80+ providers across KL, Selangor, Penang & JB. Find HRDF-claimable options, pricing & real client reviews.",
+      "Compare Malaysia's top-rated nursing home companies. We reviewed 80+ providers across KL, Selangor, Penang & JB. Find HRDF-claimable options, pricing & real client reviews.",
     alternates: {
       canonical: pageUrl,
     },
     openGraph: {
-      title: `15 Best Team Building Companies in Malaysia (${currentYear}) - Reviewed & Rated`,
+      title: `15 Best Nursing Home Companies in Malaysia (${currentYear}) - Reviewed & Rated`,
       description:
-        "Compare Malaysia's top-rated team building companies. We reviewed 80+ providers across KL, Selangor, Penang & JB.",
+        "Compare Malaysia's top-rated nursing home companies. We reviewed 80+ providers across KL, Selangor, Penang & JB.",
       type: 'article',
       url: pageUrl,
-      siteName: 'Team Building MY',
+      siteName: 'Nursing Home MY',
     },
     twitter: {
       card: 'summary_large_image',
-      title: `15 Best Team Building Companies in Malaysia (${currentYear})`,
+      title: `15 Best Nursing Home Companies in Malaysia (${currentYear})`,
       description:
-        "Compare Malaysia's top-rated team building companies. Find HRDF-claimable options, pricing & real client reviews.",
+        "Compare Malaysia's top-rated nursing home companies. Find HRDF-claimable options, pricing & real client reviews.",
     },
   }
 }
@@ -89,26 +89,26 @@ function StarRating({ rating }: { rating: number | null }) {
   )
 }
 
-export default async function BestTeamBuildingCompaniesPage() {
+export default async function BestNursingHomeCompaniesPage() {
   const { companies, totalCount } = await getTopCompanies()
   const currentYear = new Date().getFullYear()
-  const baseUrl = 'https://www.teambuildingmy.com'
-  const pageUrl = `${baseUrl}/guides/best-team-building-companies-malaysia`
+  const baseUrl = 'https://www.nursinghomemy.com'
+  const pageUrl = `${baseUrl}/guides/best-nursing-home-companies-malaysia`
 
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
       <ArticleSchema
-        title={`15 Best Team Building Companies in Malaysia (${currentYear})`}
-        description="Compare Malaysia's top-rated team building companies. We reviewed 80+ providers across KL, Selangor, Penang & JB."
+        title={`15 Best Nursing Home Companies in Malaysia (${currentYear})`}
+        description="Compare Malaysia's top-rated nursing home companies. We reviewed 80+ providers across KL, Selangor, Penang & JB."
         publishedDate={`${currentYear}-01-01`}
-        author="Team Building MY"
+        author="Nursing Home MY"
         url={pageUrl}
       />
       <BreadcrumbSchema
         items={[
           { name: 'Home', url: baseUrl },
           { name: 'Guides', url: `${baseUrl}/guides` },
-          { name: `Best Team Building Companies Malaysia ${currentYear}`, url: pageUrl },
+          { name: `Best Nursing Home Companies Malaysia ${currentYear}`, url: pageUrl },
         ]}
       />
 
@@ -123,16 +123,16 @@ export default async function BestTeamBuildingCompaniesPage() {
             Guides
           </Link>
           {' > '}
-          <span className="text-zinc-900 dark:text-zinc-50">Best Team Building Companies</span>
+          <span className="text-zinc-900 dark:text-zinc-50">Best Nursing Home Companies</span>
         </nav>
 
         {/* Header */}
         <header className="mb-12">
           <h1 className="mb-4 text-3xl font-bold text-zinc-900 dark:text-zinc-50 sm:text-4xl lg:text-5xl">
-            15 Best Team Building Companies in Malaysia ({currentYear})
+            15 Best Nursing Home Companies in Malaysia ({currentYear})
           </h1>
           <p className="text-lg text-zinc-600 dark:text-zinc-400">
-            We reviewed {totalCount}+ team building providers across Malaysia. Here are the
+            We reviewed {totalCount}+ nursing home providers across Malaysia. Here are the
             top-rated companies based on client reviews, program variety, and HRDF compliance.
           </p>
           <div className="mt-4 text-sm text-zinc-500 dark:text-zinc-500">
@@ -163,7 +163,7 @@ export default async function BestTeamBuildingCompaniesPage() {
                   <div className="mb-2 flex flex-wrap items-center gap-3">
                     <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-50">
                       <Link
-                        href={`/listings/company/${company.slug}`}
+                        href={`/listings/nursing_home/${company.slug}`}
                         className="hover:text-blue-600 dark:hover:text-blue-400"
                       >
                         {company.name}
@@ -210,7 +210,7 @@ export default async function BestTeamBuildingCompaniesPage() {
 
                   {/* Tags */}
                   <div className="flex flex-wrap gap-2">
-                    {company.hrdf_claimable && (
+                    {company.
                       <span className="inline-flex items-center rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-800 dark:bg-green-900 dark:text-green-200">
                         HRDF Claimable
                       </span>
@@ -236,7 +236,7 @@ export default async function BestTeamBuildingCompaniesPage() {
                 {/* View Profile Button */}
                 <div className="hidden flex-shrink-0 sm:block">
                   <Link
-                    href={`/listings/company/${company.slug}`}
+                    href={`/listings/nursing_home/${company.slug}`}
                     className="inline-flex items-center rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
                   >
                     View Profile
@@ -255,7 +255,7 @@ export default async function BestTeamBuildingCompaniesPage() {
               {/* Mobile View Button */}
               <div className="mt-4 sm:hidden">
                 <Link
-                  href={`/listings/company/${company.slug}`}
+                  href={`/listings/nursing_home/${company.slug}`}
                   className="inline-flex w-full items-center justify-center rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
                 >
                   View Profile
@@ -322,7 +322,7 @@ export default async function BestTeamBuildingCompaniesPage() {
         {/* What to Look For Section */}
         <section className="mt-12">
           <h2 className="mb-6 text-2xl font-bold text-zinc-900 dark:text-zinc-50">
-            What to Look for in a Team Building Provider
+            What to Look for in a Nursing Home Provider
           </h2>
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="rounded-lg border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900">
@@ -397,7 +397,7 @@ export default async function BestTeamBuildingCompaniesPage() {
             href="/listings"
             className="text-sm font-semibold text-blue-600 hover:text-blue-700 dark:text-blue-400"
           >
-            Browse All {totalCount}+ Team Building Companies
+            Browse All {totalCount}+ Nursing Home Companies
           </Link>
         </div>
 

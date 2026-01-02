@@ -45,7 +45,7 @@ export default function PrivacyPage() {
               3. Information Sharing
             </h2>
             <p>
-              We share your contact information with team building service providers when you submit
+              We share your contact information with nursing home service providers when you submit
               an inquiry through our platform. We do not sell your personal information to third
               parties.
             </p>
@@ -110,8 +110,8 @@ export default function PrivacyPage() {
             </h2>
             <p>
               For privacy-related questions or requests, please contact us at{' '}
-              <a href="mailto:hello@teambuildingmy.com" className="underline">
-                hello@teambuildingmy.com
+              <a href="mailto:hello@nursinghomemy.com" className="underline">
+                hello@nursinghomemy.com
               </a>
               .
             </p>

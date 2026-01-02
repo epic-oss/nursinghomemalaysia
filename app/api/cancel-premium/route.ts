@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
 
     // Verify ownership
     const { data: listing, error: fetchError } = await supabase
-      .from('companies')
+      .from('nursing_homes')
       .select('user_id, is_premium')
       .eq('id', listingId)
       .single()
@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
 
     // Cancel premium (keep listing claimed, just remove premium features)
     const { error: updateError } = await supabase
-      .from('companies')
+      .from('nursing_homes')
       .update({
         is_premium: false,
         is_featured: false,

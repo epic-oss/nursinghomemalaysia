@@ -1,4 +1,4 @@
-# Team Building Directory - Setup Guide
+# Nursing Home Directory - Setup Guide
 
 ## Quick Start
 
@@ -44,48 +44,48 @@ npm install
 In Supabase Studio:
 
 1. Go to Table Editor
-2. Select a table (companies, venues, or activities)
+2. Select a table (nursing_homes, facilities, or services)
 3. Click "Insert row" to add sample data
 
-**Example Company:**
+**Example Nursing Home:**
 ```
-name: "Adventure Team Malaysia"
-description: "Leading team building company specializing in outdoor adventures and corporate training programs."
-contact_email: "info@adventureteam.my"
+name: "Golden Years Care Centre"
+description: "Leading elderly care facility specializing in residential care and rehabilitation programs."
+contact_email: "info@goldenyears.my"
 contact_phone: "+60 12-345 6789"
 location: "Kuala Lumpur"
 state: "Kuala Lumpur"
-price_range: "RM 500 - RM 2000 per person"
-services: ["Outdoor Adventures", "Corporate Training", "Leadership Development"]
+price_range: "RM 500 - RM 2000 per month"
+services: ["Residential Care", "Medical Care", "Rehabilitation Services"]
 featured: true
 ```
 
-**Example Venue:**
+**Example Facility:**
 ```
-name: "Port Dickson Beach Resort"
-description: "Beautiful beachfront resort perfect for team building activities with modern facilities."
-contact_email: "events@pdresort.my"
-location: "Jalan Pantai, Port Dickson"
-city: "Port Dickson"
-state: "Negeri Sembilan"
-capacity: 200
-price_range: "RM 3000 - RM 8000 per day"
-amenities: ["Beach Access", "Meeting Rooms", "Outdoor Spaces", "Accommodation"]
-venue_type: "Resort"
+name: "Sunshine Elderly Care Center"
+description: "Modern care facility with professional staff and comprehensive elderly care services."
+contact_email: "care@sunshinecare.my"
+location: "Jalan Utama, Petaling Jaya"
+city: "Petaling Jaya"
+state: "Selangor"
+capacity: 50
+price_range: "RM 3000 - RM 8000 per month"
+amenities: ["Medical Care", "Physiotherapy", "Recreational Activities", "24/7 Nursing"]
+venue_type: "Residential Care Facility"
 featured: true
 ```
 
-**Example Activity:**
+**Example Service:**
 ```
-name: "Amazing Race Challenge"
-description: "Fast-paced team competition combining physical and mental challenges across the city."
-category: "Outdoor"
-duration: "4-6 hours"
-group_size: "20-100 people"
-price_range: "RM 150 per person"
-difficulty_level: "Moderate"
-objectives: ["Team Bonding", "Communication", "Problem Solving", "Fun & Engagement"]
-suitable_for: ["Corporate Teams", "Schools", "Organizations"]
+name: "Day Care Program"
+description: "Comprehensive day care services for seniors with medical supervision and activities."
+category: "Day Care Services"
+duration: "8 hours daily"
+group_size: "10-30 people"
+price_range: "RM 150 per day"
+difficulty_level: "Easy"
+objectives: ["Health Monitoring", "Social Interaction", "Physical Activities", "Mental Stimulation"]
+suitable_for: ["Seniors", "Elderly with Mobility", "Active Seniors"]
 featured: true
 ```
 
@@ -109,7 +109,7 @@ All content is managed through Supabase Studio:
 
 1. Go to your Supabase project dashboard
 2. Navigate to Table Editor
-3. Select the table you want to edit (companies, venues, activities)
+3. Select the table you want to edit (nursing_homes, facilities, services)
 4. Add, edit, or delete rows as needed
 5. Changes appear immediately on the website
 

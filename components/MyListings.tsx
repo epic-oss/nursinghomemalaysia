@@ -3,12 +3,12 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useState } from 'react'
-import { Company } from '@/lib/types'
+import { NursingHome } from '@/lib/types'
 import { getHighResLogoUrl } from '@/lib/image-utils'
 import { useRouter } from 'next/navigation'
 
 interface MyListingsProps {
-  listings: Company[]
+  listings: NursingHome[]
 }
 
 export function MyListings({ listings }: MyListingsProps) {
@@ -37,7 +37,7 @@ export function MyListings({ listings }: MyListingsProps) {
       }
 
       // Show success message
-      alert('Listing unclaimed successfully! It can now be claimed by other vendors.')
+      alert('Listing unclaimed successfully! It can now be claimed by other facilities.')
 
       // Refresh the page to show updated listings
       router.refresh()
@@ -179,7 +179,7 @@ export function MyListings({ listings }: MyListingsProps) {
               <div className="flex flex-col gap-2">
                 <div className="flex gap-2">
                   <Link
-                    href={`/listings/company/${listing.slug}`}
+                    href={`/listings/nursing_home/${listing.slug}`}
                     className="flex-1 rounded-md border border-zinc-300 px-3 py-2 text-center text-sm font-medium text-zinc-900 transition-colors hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-50 dark:hover:bg-zinc-800"
                   >
                     View
@@ -228,7 +228,7 @@ export function MyListings({ listings }: MyListingsProps) {
             <ul className="mb-6 ml-6 list-disc space-y-1 text-sm text-zinc-600 dark:text-zinc-400">
               <li>Return the listing to unclaimed status</li>
               <li>Remove any premium features</li>
-              <li>Allow other vendors to claim it</li>
+              <li>Allow other facilities to claim it</li>
             </ul>
             <p className="mb-6 text-sm font-medium text-red-600 dark:text-red-400">
               This action cannot be undone. You'll need to submit a new claim request to reclaim this listing.

@@ -13,7 +13,7 @@
  *
  * @example
  * generateSlug('MD Events Asia SDN BHD') // Returns: 'md-events-asia'
- * generateSlug('Team Building Co.') // Returns: 'team-building-co'
+ * generateSlug('Nursing Home Co.') // Returns: 'nursing-home-co'
  */
 export function generateSlug(name: string): string {
   return name
@@ -27,7 +27,7 @@ export function generateSlug(name: string): string {
     // Remove leading/trailing hyphens
     .replace(/^-+|-+$/g, '')
     // Ensure it's not empty
-    || 'company'
+    || 'nursing_home'
 }
 
 /**
@@ -44,7 +44,7 @@ export async function slugExists(
   excludeId?: string
 ): Promise<boolean> {
   let query = supabase
-    .from('companies')
+    .from('nursing_homes')
     .select('id')
     .eq('slug', slug)
 

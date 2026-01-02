@@ -8,7 +8,7 @@ import Link from 'next/link'
 async function getUserListings(userId: string) {
   const supabase = await createClient()
   const { data, error } = await supabase
-    .from('companies')
+    .from('nursing_homes')
     .select('*')
     .eq('user_id', userId)
     .order('created_at', { ascending: false })

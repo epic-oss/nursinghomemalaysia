@@ -122,7 +122,7 @@ We're using **Option A: External Stripe Payment Link** for simplicity.
 
 ### Step 6: Pass Metadata in Payment Link
 
-IMPORTANT: The webhook needs `user_id` and `company_id` to work correctly.
+IMPORTANT: The webhook needs `user_id` and `nursing_home_id` to work correctly.
 
 **Method 1: Dynamic Payment Links (Recommended)**
 
@@ -139,7 +139,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2025-11-17.clover',
 })
 
-export async function createCheckoutSession(companyId: string) {
+export async function createCheckoutSession(nursingHomeId: string) {
   const user = await requireAuth()
 
   const session = await stripe.checkout.sessions.create({
@@ -147,7 +147,7 @@ export async function createCheckoutSession(companyId: string) {
     customer_email: user.email,
     metadata: {
       user_id: user.id,
-      company_id: companyId,
+      nursing_home_id: nursingHomeId,
     },
     line_items: [
       {
@@ -247,7 +247,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
 
 ### Company not upgrading after payment:
 - Check webhook logs in Stripe Dashboard
-- Verify metadata (user_id, company_id) is passed correctly
+- Verify metadata (user_id, nursing_home_id) is passed correctly
 - Check server logs for errors
 
 ### Premium badge not showing:

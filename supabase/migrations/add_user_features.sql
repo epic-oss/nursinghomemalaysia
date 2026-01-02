@@ -1,19 +1,19 @@
 -- Add user ownership and featured listing columns to companies table
-ALTER TABLE companies ADD COLUMN IF NOT EXISTS user_id UUID REFERENCES auth.users(id) ON DELETE SET NULL;
-ALTER TABLE companies ADD COLUMN IF NOT EXISTS is_featured BOOLEAN DEFAULT false NOT NULL;
-ALTER TABLE companies ADD COLUMN IF NOT EXISTS featured_until DATE;
-ALTER TABLE companies ADD COLUMN IF NOT EXISTS featured_images TEXT[] DEFAULT '{}';
+ALTER TABLE nursing_homes ADD COLUMN IF NOT EXISTS user_id UUID REFERENCES auth.users(id) ON DELETE SET NULL;
+ALTER TABLE nursing_homes ADD COLUMN IF NOT EXISTS is_featured BOOLEAN DEFAULT false NOT NULL;
+ALTER TABLE nursing_homes ADD COLUMN IF NOT EXISTS featured_until DATE;
+ALTER TABLE nursing_homes ADD COLUMN IF NOT EXISTS featured_images TEXT[] DEFAULT '{}';
 
 -- Create indexes for better query performance
-CREATE INDEX IF NOT EXISTS idx_companies_user_id ON companies(user_id);
-CREATE INDEX IF NOT EXISTS idx_companies_is_featured ON companies(is_featured) WHERE is_featured = true;
-CREATE INDEX IF NOT EXISTS idx_companies_featured_until ON companies(featured_until) WHERE featured_until IS NOT NULL;
+CREATE INDEX IF NOT EXISTS idx_nursing_homes_user_id ON nursing_homes(user_id);
+CREATE INDEX IF NOT EXISTS idx_nursing_homes_is_featured ON nursing_homes(is_featured) WHERE is_featured = true;
+CREATE INDEX IF NOT EXISTS idx_nursing_homes_featured_until ON nursing_homes(featured_until) WHERE featured_until IS NOT NULL;
 
 -- Create claim_requests table for users claiming existing listings
 CREATE TABLE IF NOT EXISTS claim_requests (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
-  company_id UUID NOT NULL REFERENCES companies(id) ON DELETE CASCADE,
+  nursing_home_id UUID NOT NULL REFERENCES companies(id) ON DELETE CASCADE,
   role_at_company TEXT NOT NULL,
   verification_phone TEXT NOT NULL,
   proof_notes TEXT,
@@ -23,12 +23,12 @@ CREATE TABLE IF NOT EXISTS claim_requests (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   reviewed_at TIMESTAMP WITH TIME ZONE,
   reviewed_by UUID REFERENCES auth.users(id),
-  UNIQUE(user_id, company_id) -- Prevent duplicate claims from same user
+  UNIQUE(user_id, nursing_home_id) -- Prevent duplicate claims from same user
 );
 
 -- Create indexes for claim_requests
 CREATE INDEX IF NOT EXISTS idx_claim_requests_user_id ON claim_requests(user_id);
-CREATE INDEX IF NOT EXISTS idx_claim_requests_company_id ON claim_requests(company_id);
+CREATE INDEX IF NOT EXISTS idx_claim_requests_nursing_home_id ON claim_requests(nursing_home_id);
 CREATE INDEX IF NOT EXISTS idx_claim_requests_status ON claim_requests(status);
 CREATE INDEX IF NOT EXISTS idx_claim_requests_created_at ON claim_requests(created_at DESC);
 

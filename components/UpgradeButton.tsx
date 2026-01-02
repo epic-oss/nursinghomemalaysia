@@ -4,10 +4,10 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 interface UpgradeButtonProps {
-  companyId: string
+  nursingHomeId: string
 }
 
-export function UpgradeButton({ companyId }: UpgradeButtonProps) {
+export function UpgradeButton({ nursingHomeId }: UpgradeButtonProps) {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -22,7 +22,7 @@ export function UpgradeButton({ companyId }: UpgradeButtonProps) {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ companyId }),
+        body: JSON.stringify({ nursingHomeId }),
       })
 
       const data = await response.json()

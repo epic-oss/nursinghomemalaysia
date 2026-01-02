@@ -82,7 +82,7 @@ export async function POST(request: NextRequest) {
 
     // Update the company record with the new logo URL
     const { error: updateError } = await adminClient
-      .from('companies')
+      .from('nursing_homes')
       .update({
         logo_url: logoUrl,
         updated_at: new Date().toISOString()

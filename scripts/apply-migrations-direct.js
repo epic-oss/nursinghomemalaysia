@@ -41,7 +41,7 @@ async function applyMigrations() {
 
   // Step 1: Add columns to companies table
   await runSQL(`
-ALTER TABLE companies
+ALTER TABLE nursing_homes
 ADD COLUMN IF NOT EXISTS user_id UUID REFERENCES auth.users(id) ON DELETE SET NULL,
 ADD COLUMN IF NOT EXISTS is_featured BOOLEAN DEFAULT false,
 ADD COLUMN IF NOT EXISTS is_premium BOOLEAN DEFAULT false,
@@ -52,9 +52,9 @@ ADD COLUMN IF NOT EXISTS featured_images TEXT[];
 
   // Step 2: Create indexes
   await runSQL(`
-CREATE INDEX IF NOT EXISTS idx_companies_user_id ON companies(user_id);
-CREATE INDEX IF NOT EXISTS idx_companies_featured ON companies(is_featured, featured_until);
-CREATE INDEX IF NOT EXISTS idx_companies_premium ON companies(is_premium);
+CREATE INDEX IF NOT EXISTS idx_nursing_homes_user_id ON nursing_homes(user_id);
+CREATE INDEX IF NOT EXISTS idx_nursing_homes_featured ON nursing_homes(is_featured, featured_until);
+CREATE INDEX IF NOT EXISTS idx_nursing_homes_premium ON nursing_homes(is_premium);
   `, 'Creating indexes')
 
   // Step 3: Create claim_requests table
@@ -62,7 +62,7 @@ CREATE INDEX IF NOT EXISTS idx_companies_premium ON companies(is_premium);
 CREATE TABLE IF NOT EXISTS claim_requests (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
-  company_id UUID NOT NULL REFERENCES companies(id) ON DELETE CASCADE,
+  nursing_home_id UUID NOT NULL REFERENCES companies(id) ON DELETE CASCADE,
   role_at_company TEXT NOT NULL,
   verification_phone TEXT NOT NULL,
   proof_notes TEXT,
@@ -72,14 +72,14 @@ CREATE TABLE IF NOT EXISTS claim_requests (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   reviewed_at TIMESTAMP WITH TIME ZONE,
   reviewed_by UUID,
-  UNIQUE(user_id, company_id)
+  UNIQUE(user_id, nursing_home_id)
 );
   `, 'Creating claim_requests table')
 
   // Step 4: Create claim_requests indexes
   await runSQL(`
 CREATE INDEX IF NOT EXISTS idx_claim_requests_user_id ON claim_requests(user_id);
-CREATE INDEX IF NOT EXISTS idx_claim_requests_company_id ON claim_requests(company_id);
+CREATE INDEX IF NOT EXISTS idx_claim_requests_nursing_home_id ON claim_requests(nursing_home_id);
 CREATE INDEX IF NOT EXISTS idx_claim_requests_status ON claim_requests(status);
   `, 'Creating claim_requests indexes')
 
@@ -131,7 +131,7 @@ BEGIN
     AND policyname = 'Anyone can view companies'
   ) THEN
     CREATE POLICY "Anyone can view companies"
-      ON companies FOR SELECT
+      ON nursing_homes FOR SELECT
       TO public
       USING (true);
   END IF;
@@ -147,7 +147,7 @@ BEGIN
     AND policyname = 'Users can update their own companies'
   ) THEN
     CREATE POLICY "Users can update their own companies"
-      ON companies FOR UPDATE
+      ON nursing_homes FOR UPDATE
       TO authenticated
       USING (auth.uid() = user_id)
       WITH CHECK (auth.uid() = user_id);
@@ -164,7 +164,7 @@ BEGIN
     AND policyname = 'Authenticated users can insert companies'
   ) THEN
     CREATE POLICY "Authenticated users can insert companies"
-      ON companies FOR INSERT
+      ON nursing_homes FOR INSERT
       TO authenticated
       WITH CHECK (auth.uid() = user_id);
   END IF;

@@ -42,7 +42,7 @@ Both API routes now send identical field names to Make.com webhooks for consiste
 - `source` - Lead source
 - `status` - Lead status (default: "NEW")
 - `contactedDate` - Empty string (for tracking)
-- `vendorsSentTo` - Empty string (for tracking)
+- `facilitiesSentTo` - Empty string (for tracking)
 - `converted` - Empty string (for tracking)
 - `revenue` - Empty string (for tracking)
 - `notes` - Empty string (for tracking)

@@ -20,7 +20,7 @@ DROP POLICY IF EXISTS "Users can update their own companies" ON companies;
 
 -- Create the new policy that allows claiming
 CREATE POLICY "Users can update their own companies or claim unclaimed"
-  ON companies FOR UPDATE
+  ON nursing_homes FOR UPDATE
   TO authenticated
   USING (auth.uid() = user_id OR user_id IS NULL)
   WITH CHECK (auth.uid() = user_id);

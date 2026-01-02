@@ -5,7 +5,7 @@
 Your code has been committed and pushed to GitHub:
 ```
 Commit: 4c70a4e - Add authentication, claim listing, and premium subscription features
-Repository: https://github.com/epic-oss/teambuilding.git
+Repository: https://github.com/epic-oss/nursinghome.git
 Branch: main
 ```
 
@@ -67,7 +67,7 @@ You need to complete these steps first:
 
 2. **Import Your Repository**
    - Click "Add New..." → "Project"
-   - Select your GitHub repository: `epic-oss/teambuilding`
+   - Select your GitHub repository: `epic-oss/nursinghome`
    - Click "Import"
 
 3. **Configure Project**
@@ -87,7 +87,7 @@ You need to complete these steps first:
    - Watch build logs for any errors
 
 6. **Get Your Production URL**
-   - Vercel will give you a URL like: `https://teambuilding-xxx.vercel.app`
+   - Vercel will give you a URL like: `https://nursinghome-xxx.vercel.app`
    - You can also add a custom domain later
 
 ### Option 2: Deploy to Other Platforms

@@ -7,7 +7,7 @@ async function getPremiumListings() {
   const supabase = await createClient()
 
   const { data, error } = await supabase
-    .from('companies')
+    .from('nursing_homes')
     .select('*')
     .eq('is_premium', true)
     .order('updated_at', { ascending: false })
@@ -147,7 +147,7 @@ export default async function AdminPremiumPage() {
                   <td className="px-4 py-3 text-right">
                     <div className="flex items-center justify-end gap-2">
                       <Link
-                        href={`/listings/company/${listing.slug}`}
+                        href={`/listings/nursing_home/${listing.slug}`}
                         target="_blank"
                         className="rounded-md border border-zinc-300 px-3 py-1 text-xs font-medium text-zinc-700 transition-colors hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
                       >

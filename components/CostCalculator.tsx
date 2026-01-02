@@ -380,7 +380,7 @@ export function CostCalculator() {
             Get Exact Quotes from Verified Providers
           </h2>
           <p className="mb-6 text-sm text-zinc-600 dark:text-zinc-400">
-            Fill in your details to receive personalized quotes from 3-5 team building companies
+            Fill in your details to receive personalized quotes from 3-5 nursing home companies
           </p>
 
           <form onSubmit={handleSubmitLead} className="space-y-4">

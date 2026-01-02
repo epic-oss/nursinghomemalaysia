@@ -4,9 +4,9 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Team Building Guides | Insights & Tips | Team Building MY',
-  description: 'Expert insights, tips, and guides for planning successful team building activities in Malaysia. Learn best practices and discover new ideas.',
-  keywords: ['team building guides', 'corporate events Malaysia', 'team activities tips', 'employee engagement'],
+  title: 'Nursing Home Guides | Insights & Tips | Nursing Home MY',
+  description: 'Expert insights, tips, and guides for planning successful nursing home activities in Malaysia. Learn best practices and discover new ideas.',
+  keywords: ['nursing home guides', 'corporate events Malaysia', 'team activities tips', 'employee engagement'],
 }
 
 export default function GuidesPage() {
@@ -19,17 +19,17 @@ export default function GuidesPage() {
         {/* Header */}
         <div className="mb-12 text-center">
           <h1 className="text-4xl font-bold text-zinc-900 dark:text-zinc-50 sm:text-5xl">
-            Team Building Guides
+            Nursing Home Guides
           </h1>
           <p className="mt-4 text-lg text-zinc-600 dark:text-zinc-400">
-            Expert insights, tips, and guides for successful team building
+            Expert insights, tips, and guides for successful nursing home
           </p>
         </div>
 
         {/* Featured Guide */}
         <div className="mb-12">
           <Link
-            href="/guides/best-team-building-companies-malaysia"
+            href="/guides/best-nursing-home-companies-malaysia"
             className="group block overflow-hidden rounded-xl border-2 border-blue-200 bg-gradient-to-r from-blue-50 to-indigo-50 transition-all hover:border-blue-400 hover:shadow-xl dark:border-blue-800 dark:from-blue-950 dark:to-indigo-950 dark:hover:border-blue-600"
           >
             <div className="p-8">
@@ -43,11 +43,11 @@ export default function GuidesPage() {
               </div>
 
               <h2 className="mb-3 text-2xl font-bold text-zinc-900 transition-colors group-hover:text-blue-600 dark:text-zinc-50 dark:group-hover:text-blue-400 sm:text-3xl">
-                15 Best Team Building Companies in Malaysia ({currentYear})
+                15 Best Nursing Home Companies in Malaysia ({currentYear})
               </h2>
 
               <p className="mb-4 text-zinc-600 dark:text-zinc-400">
-                Compare Malaysia&apos;s top-rated team building companies. We reviewed 80+ providers across KL, Selangor, Penang & JB. Find HRDF-claimable options, pricing & real client reviews.
+                Compare Malaysia&apos;s top-rated nursing home companies. We reviewed 80+ providers across KL, Selangor, Penang & JB. Find HRDF-claimable options, pricing & real client reviews.
               </p>
 
               <div className="flex items-center gap-4 text-sm">
@@ -81,9 +81,9 @@ export default function GuidesPage() {
 
         {/* Standalone Guides + Blog Posts Grid */}
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {/* Team Building Exercises Guide */}
+          {/* Nursing Home Exercises Guide */}
           <Link
-            href="/guides/team-building-exercises-malaysia"
+            href="/guides/nursing-home-exercises-malaysia"
             className="group overflow-hidden rounded-lg border border-zinc-200 bg-white transition-shadow hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900"
           >
             <div className="p-6">
@@ -100,15 +100,15 @@ export default function GuidesPage() {
               </div>
 
               <h2 className="mb-3 text-xl font-bold text-zinc-900 transition-colors group-hover:text-blue-600 dark:text-zinc-50 dark:group-hover:text-blue-400">
-                30 Best Team Building Exercises Malaysia
+                30 Best Nursing Home Exercises Malaysia
               </h2>
 
               <p className="mb-4 text-sm text-zinc-600 dark:text-zinc-400">
-                Best team building exercises in Malaysia. Indoor games, outdoor challenges, trust activities & problem-solving tasks. Free ideas + professional providers.
+                Best nursing home exercises in Malaysia. Indoor games, outdoor challenges, trust activities & problem-solving tasks. Free ideas + professional providers.
               </p>
 
               <div className="text-xs text-zinc-500 dark:text-zinc-500">
-                By Team Building MY
+                By Nursing Home MY
               </div>
 
               <div className="mt-4 text-sm font-semibold text-blue-600 dark:text-blue-400">
@@ -119,7 +119,7 @@ export default function GuidesPage() {
 
           {/* HRDF Training Provider Guide */}
           <Link
-            href="/guides/team-building-training-provider-malaysia"
+            href="/guides/nursing-home-training-provider-malaysia"
             className="group overflow-hidden rounded-lg border border-zinc-200 bg-white transition-shadow hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900"
           >
             <div className="p-6">
@@ -136,15 +136,15 @@ export default function GuidesPage() {
               </div>
 
               <h2 className="mb-3 text-xl font-bold text-zinc-900 transition-colors group-hover:text-blue-600 dark:text-zinc-50 dark:group-hover:text-blue-400">
-                Team Building Training Provider Malaysia
+                Nursing Home Training Provider Malaysia
               </h2>
 
               <p className="mb-4 text-sm text-zinc-600 dark:text-zinc-400">
-                Find HRDF-registered team building training providers in Malaysia. Learn what distinguishes training providers from regular vendors.
+                Find HRDF-registered nursing home training providers in Malaysia. Learn what distinguishes training providers from regular facilities.
               </p>
 
               <div className="text-xs text-zinc-500 dark:text-zinc-500">
-                By Team Building MY
+                By Nursing Home MY
               </div>
 
               <div className="mt-4 text-sm font-semibold text-blue-600 dark:text-blue-400">

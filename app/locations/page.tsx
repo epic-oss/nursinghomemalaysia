@@ -4,9 +4,9 @@ import { Suspense } from 'react'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Team Building by Location - All Malaysian States | Team Building MY',
-  description: 'Find team building companies and activities across all Malaysian states. Browse by location to discover the best providers in your area.',
-  keywords: ['team building Malaysia', 'corporate events by location', 'team activities by state'],
+  title: 'Nursing Home by Location - All Malaysian States | Nursing Home MY',
+  description: 'Find nursing home companies and activities across all Malaysian states. Browse by location to discover the best providers in your area.',
+  keywords: ['nursing home Malaysia', 'corporate events by location', 'team activities by state'],
 }
 
 const MALAYSIAN_STATES = [
@@ -36,7 +36,7 @@ async function getStateCompanyCounts() {
 
   for (const state of MALAYSIAN_STATES) {
     const { count } = await supabase
-      .from('companies')
+      .from('nursing_homes')
       .select('*', { count: 'exact', head: true })
       .eq('state', state.name)
 
@@ -64,10 +64,10 @@ export default function LocationsPage() {
         {/* Header */}
         <div className="mb-12 text-center">
           <h1 className="text-4xl font-bold text-zinc-900 dark:text-zinc-50 sm:text-5xl">
-            Team Building by Location
+            Nursing Home by Location
           </h1>
           <p className="mt-4 text-lg text-zinc-600 dark:text-zinc-400">
-            Find the best team building companies and activities across Malaysia
+            Find the best nursing home companies and activities across Malaysia
           </p>
         </div>
 
@@ -79,7 +79,7 @@ export default function LocationsPage() {
         {/* Info Section */}
         <div className="mt-16 rounded-lg border border-zinc-200 bg-white p-8 dark:border-zinc-800 dark:bg-zinc-900">
           <h2 className="mb-4 text-2xl font-bold text-zinc-900 dark:text-zinc-50">
-            Why Choose Team Building MY?
+            Why Choose Nursing Home MY?
           </h2>
           <div className="grid gap-6 md:grid-cols-2">
             <div>
@@ -87,7 +87,7 @@ export default function LocationsPage() {
                 Comprehensive Coverage
               </h3>
               <p className="text-sm text-zinc-600 dark:text-zinc-400">
-                We feature team building providers across all 16 Malaysian states and federal territories, making it easy to find services in your area.
+                We feature nursing home providers across all 16 Malaysian states and federal territories, making it easy to find services in your area.
               </p>
             </div>
             <div>
@@ -95,7 +95,7 @@ export default function LocationsPage() {
                 Verified Providers
               </h3>
               <p className="text-sm text-zinc-600 dark:text-zinc-400">
-                All listed companies are verified providers offering professional team building activities, from outdoor adventures to creative workshops.
+                All listed companies are verified providers offering professional nursing home activities, from outdoor adventures to creative workshops.
               </p>
             </div>
             <div>

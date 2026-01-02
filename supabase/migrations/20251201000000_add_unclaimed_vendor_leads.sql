@@ -17,39 +17,39 @@ COMMENT ON COLUMN lead_notifications.is_claimed_vendor IS 'true = claimed vendor
 -- ============================================
 
 -- Track when unclaimed vendor last received a lead (for rotation)
-ALTER TABLE companies
+ALTER TABLE nursing_homes
 ADD COLUMN IF NOT EXISTS last_lead_sent_at TIMESTAMP WITH TIME ZONE;
 
 -- Track total leads sent to unclaimed vendor (for analytics)
-ALTER TABLE companies
+ALTER TABLE nursing_homes
 ADD COLUMN IF NOT EXISTS unclaimed_leads_sent INTEGER DEFAULT 0;
 
 -- Add comments for documentation
-COMMENT ON COLUMN companies.last_lead_sent_at IS 'Last time this vendor received a lead notification (used for fair rotation of unclaimed vendors)';
+COMMENT ON COLUMN companies.last_lead_sent_at IS 'Last time this vendor received a lead notification (used for fair rotation of unclaimed facilities)';
 COMMENT ON COLUMN companies.unclaimed_leads_sent IS 'Total number of leads sent to this vendor while unclaimed';
 
 -- ============================================
 -- 3. CREATE INDEXES FOR PERFORMANCE
 -- ============================================
 
--- Index for finding unclaimed vendors by location with rotation priority
-CREATE INDEX IF NOT EXISTS idx_companies_unclaimed_rotation
-ON companies(state, last_lead_sent_at NULLS FIRST)
+-- Index for finding unclaimed facilities by location with rotation priority
+CREATE INDEX IF NOT EXISTS idx_nursing_homes_unclaimed_rotation
+ON nursing_homes(state, last_lead_sent_at NULLS FIRST)
 WHERE user_id IS NULL;
 
--- Index for checking recent lead notifications to unclaimed vendors
+-- Index for checking recent lead notifications to unclaimed facilities
 CREATE INDEX IF NOT EXISTS idx_lead_notifications_unclaimed
-ON lead_notifications(company_id, sent_at DESC)
+ON lead_notifications(nursing_home_id, sent_at DESC)
 WHERE is_claimed_vendor = false;
 
 -- ============================================
 -- 4. CREATE HELPER FUNCTION FOR ROTATION
 -- ============================================
 
--- Function to get unclaimed vendors for a location with fair rotation
--- Returns vendors who haven't received a lead in the past 7 days
--- Prioritizes vendors who have never received a lead or received one longest ago
-CREATE OR REPLACE FUNCTION get_unclaimed_vendors_for_rotation(
+-- Function to get unclaimed facilities for a location with fair rotation
+-- Returns facilities who haven't received a lead in the past 7 days
+-- Prioritizes facilities who have never received a lead or received one longest ago
+CREATE OR REPLACE FUNCTION get_unclaimed_facilities_for_rotation(
   p_states TEXT[],
   p_limit INTEGER DEFAULT 3,
   p_cooldown_days INTEGER DEFAULT 7
@@ -69,9 +69,9 @@ BEGIN
     c.contact_email,
     c.state,
     c.last_lead_sent_at
-  FROM companies c
+  FROM nursing_homes c
   WHERE
-    c.user_id IS NULL  -- Unclaimed vendors only
+    c.user_id IS NULL  -- Unclaimed facilities only
     AND c.state = ANY(p_states)  -- Match location
     AND c.contact_email IS NOT NULL  -- Must have email
     AND c.contact_email LIKE '%@%'  -- Basic email validation
@@ -92,7 +92,7 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
 
 -- Function to update vendor's last_lead_sent_at and increment counter
 CREATE OR REPLACE FUNCTION update_vendor_lead_tracking(
-  p_vendor_id UUID
+  p_facility_id UUID
 )
 RETURNS VOID AS $$
 BEGIN
@@ -100,7 +100,7 @@ BEGIN
   SET
     last_lead_sent_at = NOW(),
     unclaimed_leads_sent = COALESCE(unclaimed_leads_sent, 0) + 1
-  WHERE id = p_vendor_id AND user_id IS NULL;
+  WHERE id = p_facility_id AND user_id IS NULL;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
@@ -114,8 +114,8 @@ SELECT
   COUNT(*) FILTER (WHERE ln.is_claimed_vendor = true) as claimed_vendor_notifications,
   COUNT(*) FILTER (WHERE ln.is_claimed_vendor = false) as unclaimed_vendor_notifications,
   COUNT(DISTINCT ln.lead_id) as total_leads,
-  COUNT(DISTINCT ln.company_id) FILTER (WHERE ln.is_claimed_vendor = true) as unique_claimed_vendors,
-  COUNT(DISTINCT ln.company_id) FILTER (WHERE ln.is_claimed_vendor = false) as unique_unclaimed_vendors
+  COUNT(DISTINCT ln.nursing_home_id) FILTER (WHERE ln.is_claimed_vendor = true) as unique_claimed_facilities,
+  COUNT(DISTINCT ln.nursing_home_id) FILTER (WHERE ln.is_claimed_vendor = false) as unique_unclaimed_facilities
 FROM lead_notifications ln
 GROUP BY DATE_TRUNC('month', ln.sent_at)
 ORDER BY month DESC;

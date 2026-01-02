@@ -1,12 +1,12 @@
 import { getLocationPage, getLocationPages } from '@/lib/mdx'
 import { MDXContent } from '@/components/MDXContent'
 import { BreadcrumbSchema } from '@/components/JsonLd'
-import { CompanyList } from '@/components/CompanyList'
+import { NursingHomeList } from '@/components/CompanyList'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import type { Metadata } from 'next'
-import type { Company } from '@/lib/types'
+import type { NursingHome } from '@/lib/types'
 
 interface LocationPageProps {
   params: Promise<{ slug: string }>
@@ -25,7 +25,7 @@ export async function generateStaticParams() {
 async function getCompanyCount(state: string): Promise<number> {
   const supabase = await createClient()
   const { count } = await supabase
-    .from('companies')
+    .from('nursing_homes')
     .select('*', { count: 'exact', head: true })
     .eq('state', state)
   return count || 0
@@ -43,10 +43,10 @@ export async function generateMetadata({ params }: LocationPageProps): Promise<M
 
   const count = await getCompanyCount(location.state)
   const currentYear = new Date().getFullYear()
-  const baseUrl = 'https://www.teambuildingmy.com'
+  const baseUrl = 'https://www.nursinghomemy.com'
   const pageUrl = `${baseUrl}/locations/${location.slug}`
 
-  const dynamicTitle = `Best Team Building Company in ${location.location} - ${count} Providers (${currentYear})`
+  const dynamicTitle = `Best Nursing Home Company in ${location.location} - ${count} Providers (${currentYear})`
 
   return {
     title: dynamicTitle,
@@ -59,7 +59,7 @@ export async function generateMetadata({ params }: LocationPageProps): Promise<M
       title: dynamicTitle,
       description: location.description,
       url: pageUrl,
-      siteName: 'Team Building MY',
+      siteName: 'Nursing Home MY',
       images: location.image ? [location.image] : [],
     },
     twitter: {
@@ -76,13 +76,13 @@ async function getCompaniesInState(state: string, limit: number = 12) {
 
   // Get total count
   const { count } = await supabase
-    .from('companies')
+    .from('nursing_homes')
     .select('*', { count: 'exact', head: true })
     .eq('state', state)
 
   // Get first page of companies
   const { data } = await supabase
-    .from('companies')
+    .from('nursing_homes')
     .select('*')
     .eq('state', state)
     .order('is_premium', { ascending: false })
@@ -95,19 +95,19 @@ async function getCompaniesInState(state: string, limit: number = 12) {
   }
 }
 
-async function getTopRatedCompanies(state: string, limit: number = 5): Promise<Company[]> {
+async function getTopRatedCompanies(state: string, limit: number = 5): Promise<NursingHome[]> {
   const supabase = await createClient()
 
   // Get top 5 companies by rating (include those with 0 or null ratings)
   const { data: ratedCompanies } = await supabase
-    .from('companies')
+    .from('nursing_homes')
     .select('*')
     .eq('state', state)
     .order('average_rating', { ascending: false, nullsFirst: false })
     .order('review_count', { ascending: false, nullsFirst: false })
     .limit(limit)
 
-  return (ratedCompanies as Company[]) || []
+  return (ratedCompanies as NursingHome[]) || []
 }
 
 function StarRating({ rating }: { rating: number | null }) {
@@ -154,7 +154,7 @@ export default async function LocationPage({ params }: LocationPageProps) {
     getTopRatedCompanies(location.state, 5)
   ])
 
-  const baseUrl = 'https://www.teambuildingmy.com'
+  const baseUrl = 'https://www.nursinghomemy.com'
   const pageUrl = `${baseUrl}/locations/${location.slug}`
 
   return (
@@ -182,14 +182,14 @@ export default async function LocationPage({ params }: LocationPageProps) {
 
         {/* H1 Title */}
         <h1 className="mb-8 text-3xl font-bold text-zinc-900 dark:text-zinc-50 md:text-4xl">
-          Best Team Building Companies in {location.location}
+          Best Nursing Home Companies in {location.location}
         </h1>
 
         {/* Best X Companies Section - immediately after H1 */}
         {topRatedCompanies.length > 0 && (
           <div className="mb-12">
             <h2 className="mb-6 text-2xl font-bold text-zinc-900 dark:text-zinc-50">
-              Best {topRatedCompanies.length} Team Building Organizers & Providers in {location.location}
+              Best {topRatedCompanies.length} Nursing Home Organizers & Providers in {location.location}
             </h2>
             <div className="space-y-6">
               {topRatedCompanies.map((company, index) => (
@@ -208,7 +208,7 @@ export default async function LocationPage({ params }: LocationPageProps) {
                       <div className="mb-2 flex flex-wrap items-center gap-3">
                         <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-50">
                           <Link
-                            href={`/listings/company/${company.slug}`}
+                            href={`/listings/nursing_home/${company.slug}`}
                             className="hover:text-blue-600 dark:hover:text-blue-400"
                           >
                             {company.name}
@@ -255,7 +255,7 @@ export default async function LocationPage({ params }: LocationPageProps) {
 
                       {/* Tags */}
                       <div className="flex flex-wrap gap-2">
-                        {company.hrdf_claimable && (
+                        {company.
                           <span className="inline-flex items-center rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-800 dark:bg-green-900 dark:text-green-200">
                             HRDF Claimable
                           </span>
@@ -281,7 +281,7 @@ export default async function LocationPage({ params }: LocationPageProps) {
                     {/* View Profile Button */}
                     <div className="hidden flex-shrink-0 sm:block">
                       <Link
-                        href={`/listings/company/${company.slug}`}
+                        href={`/listings/nursing_home/${company.slug}`}
                         className="inline-flex items-center rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
                       >
                         View Profile
@@ -300,7 +300,7 @@ export default async function LocationPage({ params }: LocationPageProps) {
                   {/* Mobile View Button */}
                   <div className="mt-4 sm:hidden">
                     <Link
-                      href={`/listings/company/${company.slug}`}
+                      href={`/listings/nursing_home/${company.slug}`}
                       className="inline-flex w-full items-center justify-center rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
                     >
                       View Profile
@@ -315,7 +315,7 @@ export default async function LocationPage({ params }: LocationPageProps) {
         {/* All Companies Section */}
         <div className="mb-16">
           <h2 className="mb-6 text-2xl font-bold text-zinc-900 dark:text-zinc-50">
-            All {totalCount} Team Building Companies in {location.location}
+            All {totalCount} Nursing Home Companies in {location.location}
           </h2>
           <CompanyList
             initialCompanies={companies}

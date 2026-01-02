@@ -12,10 +12,10 @@ export function OrganizationSchema() {
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'Team Building MY',
-    description: 'Malaysia\'s leading directory for team building companies, venues, and activities.',
-    url: 'https://www.teambuildingmy.com',
-    logo: 'https://www.teambuildingmy.com/logo.png',
+    name: 'Nursing Home MY',
+    description: 'Malaysia\'s leading directory for nursing home companies, venues, and activities.',
+    url: 'https://www.nursinghomemy.com',
+    logo: 'https://www.nursinghomemy.com/logo.png',
     sameAs: [
       // Add social media URLs when available
     ],
@@ -60,14 +60,14 @@ export function ArticleSchema({
     dateModified: modifiedDate || publishedDate,
     author: {
       '@type': 'Organization',
-      name: author || 'Team Building MY',
+      name: author || 'Nursing Home MY',
     },
     publisher: {
       '@type': 'Organization',
-      name: 'Team Building MY',
+      name: 'Nursing Home MY',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://www.teambuildingmy.com/logo.png',
+        url: 'https://www.nursinghomemy.com/logo.png',
       },
     },
     mainEntityOfPage: {

@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
       state,
       average_rating,
       review_count,
-      hrdf_claimable,
+      ,
       is_premium,
       is_featured,
     } = body
@@ -90,7 +90,7 @@ export async function POST(request: NextRequest) {
 
     // Update the listing (admin can update all fields)
     const { error: updateError } = await adminClient
-      .from('companies')
+      .from('nursing_homes')
       .update({
         name,
         description,
@@ -101,7 +101,7 @@ export async function POST(request: NextRequest) {
         state,
         average_rating: parsedRating,
         review_count: parsedReviewCount,
-        hrdf_claimable,
+        ,
         is_premium,
         is_featured,
         updated_at: new Date().toISOString(),

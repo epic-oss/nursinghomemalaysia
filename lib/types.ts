@@ -1,4 +1,4 @@
-export interface Company {
+export interface NursingHome {
   id: string
   slug: string
   name: string
@@ -15,9 +15,8 @@ export interface Company {
   price_range: string | null
   services: string[] | null
   category: string | null
-  activities: string | null
+  services: string | null
   featured: boolean
-  hrdf_claimable: boolean | null
   user_id: string | null
   is_featured: boolean
   is_premium: boolean
@@ -28,7 +27,7 @@ export interface Company {
   updated_at: string
 }
 
-export interface Venue {
+export interface Facility {
   id: string
   name: string
   description: string
@@ -48,7 +47,7 @@ export interface Venue {
   updated_at: string
 }
 
-export interface Activity {
+export interface Service {
   id: string
   name: string
   description: string
@@ -67,7 +66,7 @@ export interface Activity {
 }
 
 export interface Inquiry {
-  listing_type: 'company' | 'venue' | 'activity'
+  listing_type: 'nursing_home' | 'facility' | 'service'
   listing_id: string
   listing_name: string
   name: string
@@ -79,8 +78,8 @@ export interface Inquiry {
   group_size?: string
 }
 
-export type Listing = Company | Venue | Activity
-export type ListingType = 'company' | 'venue' | 'activity'
+export type Listing = NursingHome | Facility | Service
+export type ListingType = 'nursing_home' | 'facility' | 'service'
 
 export const MALAYSIAN_STATES = [
   'Johor',
@@ -102,32 +101,32 @@ export const MALAYSIAN_STATES = [
 ] as const
 
 export const CATEGORIES = [
-  'Outdoor',
-  'Indoor',
-  'Virtual',
-  'Sports',
-  'Adventure',
-  'Creative',
-  'Problem Solving',
-  'Communication',
+  'Residential Care',
+  'Day Care Services',
+  'Rehabilitation',
+  'Medical Care',
+  'Respite Care',
+  'Memory Care',
+  'Palliative Care',
+  'Home Care',
 ] as const
 
 export const VENUE_TYPES = [
-  'Indoor',
-  'Outdoor',
-  'Resort',
-  'Hotel',
-  'Conference Center',
-  'Adventure Park',
-  'Beach',
-  'Farm',
+  'Residential Care Facility',
+  'Day Care Center',
+  'Nursing Home',
+  'Assisted Living',
+  'Rehabilitation Center',
+  'Memory Care Unit',
+  'Hospice',
+  'Home Care Services',
 ] as const
 
 export interface ClaimRequest {
   id: string
   user_id: string
-  company_id: string
-  role_at_company: string
+  nursing_home_id: string
+  role_at_facility: string
   verification_phone: string
   proof_notes: string | null
   status: 'pending' | 'approved' | 'rejected'

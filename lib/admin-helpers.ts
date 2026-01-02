@@ -3,7 +3,7 @@ import { createClient } from '@/lib/supabase/server'
 // Admin email whitelist
 const ADMIN_EMAILS = [
   'jayooi5115@gmail.com',
-  'hello@teambuildingmy.com',
+  'hello@nursinghomemy.com',
 ]
 
 // Admin user ID whitelist

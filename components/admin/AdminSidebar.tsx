@@ -15,7 +15,7 @@ export function AdminSidebar({ userEmail }: AdminSidebarProps) {
   const navItems = [
     { href: '/admin', label: 'Dashboard', icon: '📊', badge: null },
     { href: '/admin/listings', label: 'All Listings', icon: '📝', badge: null },
-    { href: '/admin/vendors', label: 'Vendors', icon: '👥', badge: null },
+    { href: '/admin/facilities', label: 'Facilities', icon: '👥', badge: null },
     { href: '/admin/premium', label: 'Premium', icon: '💰', badge: null },
   ]
 
@@ -39,7 +39,7 @@ export function AdminSidebar({ userEmail }: AdminSidebarProps) {
           {/* Logo */}
           <div className="border-b border-zinc-200 px-6 py-6 dark:border-zinc-800">
             <Link href="/admin" className="text-xl font-bold text-zinc-900 dark:text-zinc-50">
-              Team Building MY
+              Nursing Home MY
             </Link>
             <p className="mt-1 text-xs text-zinc-500 dark:text-zinc-500">Admin Panel</p>
           </div>

@@ -6,52 +6,52 @@ export const revalidate = 3600 // Revalidate every hour
 
 export async function generateMetadata(): Promise<Metadata> {
   const currentYear = new Date().getFullYear()
-  const baseUrl = 'https://www.teambuildingmy.com'
-  const pageUrl = `${baseUrl}/guides/team-building-exercises-malaysia`
+  const baseUrl = 'https://www.nursinghomemy.com'
+  const pageUrl = `${baseUrl}/guides/nursing-home-exercises-malaysia`
 
   return {
-    title: `30 Best Team Building Exercises Malaysia - Fun Games & Challenges (${currentYear})`,
+    title: `30 Best Nursing Home Exercises Malaysia - Fun Games & Challenges (${currentYear})`,
     description:
-      "Best team building exercises in Malaysia. Indoor games, outdoor challenges, trust activities & problem-solving tasks. Free ideas + professional providers.",
+      "Best nursing home exercises in Malaysia. Indoor games, outdoor challenges, trust activities & problem-solving tasks. Free ideas + professional providers.",
     alternates: {
       canonical: pageUrl,
     },
     openGraph: {
-      title: `30 Best Team Building Exercises Malaysia - Fun Games & Challenges (${currentYear})`,
+      title: `30 Best Nursing Home Exercises Malaysia - Fun Games & Challenges (${currentYear})`,
       description:
-        "Best team building exercises in Malaysia. Indoor games, outdoor challenges, trust activities & problem-solving tasks. Free ideas + professional providers.",
+        "Best nursing home exercises in Malaysia. Indoor games, outdoor challenges, trust activities & problem-solving tasks. Free ideas + professional providers.",
       type: 'article',
       url: pageUrl,
-      siteName: 'Team Building MY',
+      siteName: 'Nursing Home MY',
     },
     twitter: {
       card: 'summary_large_image',
-      title: `30 Best Team Building Exercises Malaysia - Fun Games & Challenges (${currentYear})`,
+      title: `30 Best Nursing Home Exercises Malaysia - Fun Games & Challenges (${currentYear})`,
       description:
-        "Best team building exercises in Malaysia. Indoor games, outdoor challenges, trust activities & problem-solving tasks.",
+        "Best nursing home exercises in Malaysia. Indoor games, outdoor challenges, trust activities & problem-solving tasks.",
     },
   }
 }
 
-export default async function TeamBuildingExercisesPage() {
+export default async function NursingHomeExercisesPage() {
   const currentYear = new Date().getFullYear()
-  const baseUrl = 'https://www.teambuildingmy.com'
-  const pageUrl = `${baseUrl}/guides/team-building-exercises-malaysia`
+  const baseUrl = 'https://www.nursinghomemy.com'
+  const pageUrl = `${baseUrl}/guides/nursing-home-exercises-malaysia`
 
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
       <ArticleSchema
-        title={`30 Best Team Building Exercises Malaysia - Fun Games & Challenges (${currentYear})`}
-        description="Best team building exercises in Malaysia. Indoor games, outdoor challenges, trust activities & problem-solving tasks."
+        title={`30 Best Nursing Home Exercises Malaysia - Fun Games & Challenges (${currentYear})`}
+        description="Best nursing home exercises in Malaysia. Indoor games, outdoor challenges, trust activities & problem-solving tasks."
         publishedDate="2025-10-01"
-        author="Team Building MY"
+        author="Nursing Home MY"
         url={pageUrl}
       />
       <BreadcrumbSchema
         items={[
           { name: 'Home', url: baseUrl },
           { name: 'Guides', url: `${baseUrl}/guides` },
-          { name: 'Team Building Exercises Malaysia', url: pageUrl },
+          { name: 'Nursing Home Exercises Malaysia', url: pageUrl },
         ]}
       />
 
@@ -66,16 +66,16 @@ export default async function TeamBuildingExercisesPage() {
             Guides
           </Link>
           {' > '}
-          <span className="text-zinc-900 dark:text-zinc-50">Team Building Exercises</span>
+          <span className="text-zinc-900 dark:text-zinc-50">Nursing Home Exercises</span>
         </nav>
 
         {/* Header */}
         <header className="mb-12">
           <h1 className="mb-4 text-3xl font-bold text-zinc-900 dark:text-zinc-50 sm:text-4xl lg:text-5xl">
-            30 Best Team Building Exercises Malaysia
+            30 Best Nursing Home Exercises Malaysia
           </h1>
           <p className="text-lg text-zinc-600 dark:text-zinc-400">
-            Looking for effective team building exercises? Whether you need quick 5-minute energizers or structured half-day programs, these exercises will strengthen your team's collaboration, communication, and trust.
+            Looking for effective nursing home exercises? Whether you need quick 5-minute energizers or structured half-day programs, these exercises will strengthen your team's collaboration, communication, and trust.
           </p>
           <div className="mt-4 text-sm text-zinc-500 dark:text-zinc-500">
             Last updated:{' '}
@@ -89,7 +89,7 @@ export default async function TeamBuildingExercisesPage() {
 
         {/* Main Content */}
         <article className="prose prose-zinc max-w-none dark:prose-invert">
-          <h2>Why Team Building Exercises Matter</h2>
+          <h2>Why Nursing Home Exercises Matter</h2>
 
           <p><strong>Benefits of regular exercises:</strong></p>
           <ul>
@@ -290,7 +290,7 @@ export default async function TeamBuildingExercisesPage() {
           <hr />
 
           <h2>30-60 Minute Structured Exercises</h2>
-          <p>Perfect for team building sessions or away days.</p>
+          <p>Perfect for nursing home sessions or away days.</p>
 
           <h3>11. Escape Room Challenge</h3>
           <p><strong>Time:</strong> 45-60 minutes<br />
@@ -388,7 +388,7 @@ export default async function TeamBuildingExercisesPage() {
 
           <hr />
 
-          <h2>Outdoor Team Building Exercises</h2>
+          <h2>Outdoor Nursing Home Exercises</h2>
           <p>Best done at retreats or outdoor venues.</p>
 
           <h3>16. Human Knot</h3>
@@ -739,7 +739,7 @@ export default async function TeamBuildingExercisesPage() {
                 <td className="px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300">Fully managed</td>
               </tr>
               <tr>
-                <td className="px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300">HRDF claimable</td>
+                <td className="px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300"></td>
                 <td className="px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300">Difficult</td>
                 <td className="px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300">Yes, with registered providers</td>
               </tr>
@@ -755,7 +755,7 @@ export default async function TeamBuildingExercisesPage() {
             <li>No internal facilitation skills</li>
           </ul>
 
-          <p><Link href="/listings">Browse team building providers →</Link></p>
+          <p><Link href="/listings">Browse nursing home providers →</Link></p>
 
           <hr />
 
@@ -781,7 +781,7 @@ export default async function TeamBuildingExercisesPage() {
 
           <hr />
 
-          <h2>Ready to Plan Team Building Exercises?</h2>
+          <h2>Ready to Plan Nursing Home Exercises?</h2>
 
           <p>Use our <Link href="/calculator">Cost Calculator</Link> to estimate budget for professional facilitation.</p>
 

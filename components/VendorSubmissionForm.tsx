@@ -24,7 +24,7 @@ const MALAYSIAN_STATES = [
 
 const COMPANY_TYPES = [
   'Event Management Company',
-  'Team Building Provider',
+  'Nursing Home Provider',
   'Training Provider',
   'Adventure Activity Provider',
   'Venue Operator',
@@ -40,7 +40,7 @@ const ACTIVITY_TYPES = [
   'Problem Solving',
   'Communication Activities',
   'Leadership Training',
-  'Virtual Team Building',
+  'Virtual Nursing Home',
   'Sports Activities',
 ]
 
@@ -73,9 +73,9 @@ export function VendorSubmissionForm() {
     const formData = new FormData(e.currentTarget)
 
     // Add selected activities to form data
-    formData.delete('activities') // Remove any existing
+    formData.delete('services') // Remove any existing
     selectedActivities.forEach(activity => {
-      formData.append('activities', activity)
+      formData.append('services', activity)
     })
 
     try {

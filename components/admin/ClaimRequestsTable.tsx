@@ -7,7 +7,7 @@ import Link from 'next/link'
 interface ClaimRequest {
   id: string
   user_id: string
-  company_id: string
+  nursing_home_id: string
   role_at_company: string
   verification_phone: string
   proof_notes: string
@@ -161,7 +161,7 @@ export function ClaimRequestsTable({ requests }: ClaimRequestsTableProps) {
                   <td className="px-6 py-4">
                     <div>
                       <Link
-                        href={`/listings/company/${request.companies.slug}`}
+                        href={`/listings/nursing_home/${request.companies.slug}`}
                         className="font-medium text-zinc-900 hover:underline dark:text-zinc-50"
                         target="_blank"
                       >

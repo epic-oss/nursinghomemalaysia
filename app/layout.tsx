@@ -18,8 +18,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Team Building Directory for Malaysia",
-  description: "Discover the best team building companies, venues, and activities across Malaysia. Build stronger teams through engaging experiences.",
+  title: "Nursing Home Malaysia | Elderly Care Directory",
+  description: "Discover the best nursing homes and elderly care facilities across Malaysia. Quality care and compassionate services for your loved ones.",
   verification: {
     google: "CsrwzTlHjaQ9_SVJaAvNnfu-c7FsGQ0knJPT",
   },

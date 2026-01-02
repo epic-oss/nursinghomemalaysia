@@ -55,10 +55,10 @@ export async function POST(request: NextRequest) {
         // Get the customer email and metadata
         const customerEmail = session.customer_email
         let userId = session.metadata?.user_id
-        let companyId = session.metadata?.company_id
+        let nursingHomeId = session.metadata?.nursing_home_id
 
         // Fallback: If no metadata, try to find user by email and their company
-        if (!userId || !companyId) {
+        if (!userId || !nursingHomeId) {
           console.log('No metadata found, trying email fallback...')
 
           if (!customerEmail) {
@@ -85,7 +85,7 @@ export async function POST(request: NextRequest) {
 
           // Find the user's claimed company
           const { data: companies } = await supabase
-            .from('companies')
+            .from('nursing_homes')
             .select('id')
             .eq('user_id', userId)
             .limit(1)
@@ -98,13 +98,13 @@ export async function POST(request: NextRequest) {
             )
           }
 
-          companyId = companies[0].id
-          console.log(`✓ Found user ${userId} and company ${companyId} via email`)
+          nursingHomeId = companies[0].id
+          console.log(`✓ Found user ${userId} and company ${nursingHomeId} via email`)
         }
 
         // Update the company to be premium and featured
         const { error: updateError } = await supabase
-          .from('companies')
+          .from('nursing_homes')
           .update({
             is_premium: true,
             is_featured: true,
@@ -113,7 +113,7 @@ export async function POST(request: NextRequest) {
               Date.now() + 30 * 24 * 60 * 60 * 1000
             ).toISOString(), // 30 days from now
           })
-          .eq('id', companyId)
+          .eq('id', nursingHomeId)
           .eq('user_id', userId)
 
         if (updateError) {
@@ -124,17 +124,17 @@ export async function POST(request: NextRequest) {
           )
         }
 
-        console.log(`✓ Company ${companyId} upgraded to premium`)
+        console.log(`✓ Company ${nursingHomeId} upgraded to premium`)
         break
       }
 
       case 'customer.subscription.updated': {
         const subscription = event.data.object as Stripe.Subscription
         const userId = subscription.metadata?.user_id
-        const companyId = subscription.metadata?.company_id
+        const nursingHomeId = subscription.metadata?.nursing_home_id
 
-        if (!userId || !companyId) {
-          console.error('Missing user_id or company_id in subscription metadata')
+        if (!userId || !nursingHomeId) {
+          console.error('Missing user_id or nursing_home_id in subscription metadata')
           break
         }
 
@@ -142,39 +142,39 @@ export async function POST(request: NextRequest) {
         const isActive = subscription.status === 'active'
 
         await supabase
-          .from('companies')
+          .from('nursing_homes')
           .update({
             is_premium: isActive,
             is_featured: isActive,
           })
-          .eq('id', companyId)
+          .eq('id', nursingHomeId)
           .eq('user_id', userId)
 
-        console.log(`✓ Company ${companyId} subscription updated: ${subscription.status}`)
+        console.log(`✓ Company ${nursingHomeId} subscription updated: ${subscription.status}`)
         break
       }
 
       case 'customer.subscription.deleted': {
         const subscription = event.data.object as Stripe.Subscription
         const userId = subscription.metadata?.user_id
-        const companyId = subscription.metadata?.company_id
+        const nursingHomeId = subscription.metadata?.nursing_home_id
 
-        if (!userId || !companyId) {
-          console.error('Missing user_id or company_id in subscription metadata')
+        if (!userId || !nursingHomeId) {
+          console.error('Missing user_id or nursing_home_id in subscription metadata')
           break
         }
 
         // Deactivate premium and featured status
         await supabase
-          .from('companies')
+          .from('nursing_homes')
           .update({
             is_premium: false,
             is_featured: false,
           })
-          .eq('id', companyId)
+          .eq('id', nursingHomeId)
           .eq('user_id', userId)
 
-        console.log(`✓ Company ${companyId} premium cancelled`)
+        console.log(`✓ Company ${nursingHomeId} premium cancelled`)
         break
       }
 

@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
-import { CompanyDetailContent } from '@/components/CompanyDetailContent'
-import { Company } from '@/lib/types'
+import { NursingHomeDetailContent } from '@/components/CompanyDetailContent'
+import { NursingHome } from '@/lib/types'
 import { getHighResLogoUrl } from '@/lib/image-utils'
 import type { Metadata } from 'next'
 
@@ -11,57 +11,56 @@ interface PageProps {
   }>
 }
 
-async function getCompanyBySlug(slug: string) {
+async function getNursingHomeBySlug(slug: string) {
   const supabase = await createClient()
 
   const { data, error } = await supabase
-    .from('companies')
+    .from('nursing_homes')
     .select('*')
     .eq('slug', slug)
     .single()
 
-  return { data: data as Company | null, error }
+  return { data: data as NursingHome | null, error }
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params
-  const { data: company } = await getCompanyBySlug(slug)
+  const { data: nursing_home } = await getNursingHomeBySlug(slug)
 
-  if (!company) {
+  if (!nursing_home) {
     return {
-      title: 'Company Not Found',
+      title: 'Nursing Home Not Found',
     }
   }
 
   // Base URL for canonical and OG tags
-  const baseUrl = 'https://www.teambuildingmy.com'
-  const pageUrl = `${baseUrl}/listings/company/${company.slug}`
+  const baseUrl = 'https://www.nursinghomemalaysia.com'
+  const pageUrl = `${baseUrl}/listings/nursing_home/${nursing_home.slug}`
 
-  // Use company's logo or first image for OG
-  const ogImage = getHighResLogoUrl(company.logo_url) || company.images?.[0] || `${baseUrl}/og-placeholder.jpg`
+  // Use nursing home's logo or first image for OG
+  const ogImage = getHighResLogoUrl(nursing_home.logo_url) || nursing_home.images?.[0] || `${baseUrl}/og-placeholder.jpg`
 
   // Create meta description
   let description: string
-  if (company.description && company.description.trim().length > 0) {
-    // Use first 160 characters of company description
-    description = company.description.length > 160
-      ? `${company.description.substring(0, 157)}...`
-      : company.description
+  if (nursing_home.description && nursing_home.description.trim().length > 0) {
+    // Use first 160 characters of nursing home description
+    description = nursing_home.description.length > 160
+      ? `${nursing_home.description.substring(0, 157)}...`
+      : nursing_home.description
   } else {
     // Generate fallback description
-    description = `${company.name} offers professional team building services in ${company.state}. View packages, activities${company.hrdf_claimable ? ', and HRDF certification status' : ''}.`
+    description = `${nursing_home.name} offers professional elderly care services in ${nursing_home.state}. View care packages and amenities.`
   }
 
   return {
-    title: `${company.name} - Team Building Malaysia | Team Building MY`,
+    title: `${nursing_home.name} - Nursing Home Malaysia | Elderly Care`,
     description: description,
     keywords: [
-      company.name,
-      'team building Malaysia',
-      company.state,
-      'team building activities',
-      'corporate events',
-      company.hrdf_claimable ? 'HRDF claimable' : '',
+      nursing_home.name,
+      'nursing home Malaysia',
+      nursing_home.state,
+      'elderly care',
+      'senior care',
     ].filter(Boolean),
 
     // Canonical URL
@@ -71,16 +70,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
     // Open Graph tags
     openGraph: {
-      title: `${company.name} - Team Building Malaysia`,
+      title: `${nursing_home.name} - Nursing Home Malaysia`,
       description: description,
       url: pageUrl,
-      siteName: 'Team Building MY',
+      siteName: 'Nursing Home Malaysia',
       images: [
         {
           url: ogImage,
           width: 1200,
           height: 630,
-          alt: `${company.name} - Team Building Provider`,
+          alt: `${nursing_home.name} - Elderly Care Provider`,
         },
       ],
       locale: 'en_MY',
@@ -90,29 +89,29 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     // Twitter Card tags
     twitter: {
       card: 'summary_large_image',
-      title: `${company.name} - Team Building Malaysia`,
+      title: `${nursing_home.name} - Nursing Home Malaysia`,
       description: description,
       images: [ogImage],
     },
 
     // Additional metadata
     other: {
-      'og:phone_number': company.contact_phone || '',
-      'og:email': company.contact_email || '',
-      'og:locality': company.state,
+      'og:phone_number': nursing_home.contact_phone || '',
+      'og:email': nursing_home.contact_email || '',
+      'og:locality': nursing_home.state,
       'og:country-name': 'Malaysia',
     },
   }
 }
 
-export default async function CompanyDetailPage({ params }: PageProps) {
+export default async function NursingHomeDetailPage({ params }: PageProps) {
   const { slug } = await params
 
-  const { data: company, error } = await getCompanyBySlug(slug)
+  const { data: nursing_home, error } = await getNursingHomeBySlug(slug)
 
-  if (error || !company) {
+  if (error || !nursing_home) {
     notFound()
   }
 
-  return <CompanyDetailContent company={company} />
+  return <CompanyDetailContent company={nursing_home} />
 }

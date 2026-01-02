@@ -4,17 +4,17 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 import { ContactForm } from '@/components/ContactForm'
-import { Company } from '@/lib/types'
+import { NursingHome } from '@/lib/types'
 import { getHighResLogoUrl } from '@/lib/image-utils'
 
 interface CompanyDetailContentProps {
-  company: Company
+  company: NursingHome
 }
 
-export function CompanyDetailContent({ company }: CompanyDetailContentProps) {
+export function NursingHomeDetailContent({ company }: NursingHomeDetailContentProps) {
   const [logoError, setLogoError] = useState(false)
 
-  const hrdfClaimable = !!company.hrdf_claimable
+  const hrdfClaimable = !!company.
   let ratingDisplay: string | null = null
   if (
     typeof company.average_rating === 'number' &&
@@ -200,7 +200,7 @@ export function CompanyDetailContent({ company }: CompanyDetailContentProps) {
               <ContactForm
                 listingId={company.id}
                 listingName={company.name}
-                listingType="company"
+                listingType="nursing_home"
               />
             </div>
           </div>

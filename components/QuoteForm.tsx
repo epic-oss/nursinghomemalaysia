@@ -159,7 +159,7 @@ export function QuoteForm({ onSuccess, source }: QuoteFormProps) {
     } catch (error) {
       console.error('Form submission error:', error)
       setErrors({
-        name: error instanceof Error ? error.message : 'Something went wrong. Please try again or email us at hello@teambuildingmy.com',
+        name: error instanceof Error ? error.message : 'Something went wrong. Please try again or email us at hello@nursinghomemy.com',
       })
 
       // Track error
@@ -183,7 +183,7 @@ export function QuoteForm({ onSuccess, source }: QuoteFormProps) {
           ✓ Request Received!
         </h3>
         <p className="mb-6 text-lg text-zinc-700 dark:text-zinc-300">
-          Thank you, {formData.name}! We've received your team building quote request.
+          Thank you, {formData.name}! We've received your nursing home quote request.
         </p>
 
         <div className="mb-6 rounded-lg border border-zinc-200 bg-zinc-50 p-6 text-left dark:border-zinc-800 dark:bg-zinc-800">
@@ -191,8 +191,8 @@ export function QuoteForm({ onSuccess, source }: QuoteFormProps) {
             What Happens Next:
           </h4>
           <ol className="mb-4 ml-5 list-decimal space-y-2 text-sm text-zinc-700 dark:text-zinc-300">
-            <li>We'll match you with 3-5 suitable vendors (within 24 hours)</li>
-            <li>Vendors will contact you directly with customized quotes</li>
+            <li>We'll match you with 3-5 suitable facilities (within 24 hours)</li>
+            <li>Facilities will contact you directly with customized quotes</li>
             <li>Compare quotes and choose the best fit for your team</li>
           </ol>
 
@@ -204,13 +204,13 @@ export function QuoteForm({ onSuccess, source }: QuoteFormProps) {
             <li>• {formData.duration} program in {formData.location}</li>
             <li>• Date: {formData.flexibleDates ? 'Flexible' : new Date(formData.date).toLocaleDateString()}</li>
             {formData.budget && <li>• Budget: {formData.budget}/person</li>}
-            <li>• HRDF claimable: {formData.hrdf === 'yes' ? 'Yes' : formData.hrdf === 'no' ? 'No' : 'Not sure'}</li>
+            <li>•: {formData.hrdf === 'yes' ? 'Yes' : formData.hrdf === 'no' ? 'No' : 'Not sure'}</li>
           </ul>
         </div>
 
         <div className="mb-6 text-sm text-zinc-600 dark:text-zinc-400">
           <p className="mb-2 font-semibold">Questions in the meantime?</p>
-          <p>📧 hello@teambuildingmy.com</p>
+          <p>📧 hello@nursinghomemy.com</p>
           <p>💬 WhatsApp: +6012-298 8091</p>
         </div>
 
@@ -262,12 +262,12 @@ export function QuoteForm({ onSuccess, source }: QuoteFormProps) {
 
           {/* Company Name */}
           <div>
-            <label htmlFor="company" className="mb-1 block text-sm font-medium text-zinc-700 dark:text-zinc-300">
+            <label htmlFor="nursing_home" className="mb-1 block text-sm font-medium text-zinc-700 dark:text-zinc-300">
               Company Name *
             </label>
             <input
               type="text"
-              id="company"
+              id="nursing_home"
               value={formData.company}
               onChange={(e) => setFormData({ ...formData, company: e.target.value })}
               placeholder="Your company name"
@@ -337,7 +337,7 @@ export function QuoteForm({ onSuccess, source }: QuoteFormProps) {
       {/* TEAM BUILDING REQUIREMENTS SECTION */}
       <div>
         <h3 className="mb-4 text-lg font-semibold text-zinc-900 dark:text-zinc-50">
-          Team Building Requirements
+          Nursing Home Requirements
         </h3>
 
         <div className="space-y-4">
@@ -356,7 +356,7 @@ export function QuoteForm({ onSuccess, source }: QuoteFormProps) {
               className="w-full"
             />
             <p className="mt-1 text-xs text-zinc-500 dark:text-zinc-400">
-              Most vendors require minimum 20 participants
+              Most facilities require minimum 20 participants
             </p>
           </div>
 
@@ -473,7 +473,7 @@ export function QuoteForm({ onSuccess, source }: QuoteFormProps) {
               <option value="Not Sure / Need Guidance">Not Sure / Need Guidance</option>
             </select>
             <p className="mt-1 text-xs text-zinc-500 dark:text-zinc-400">
-              This helps us match you with suitable vendors
+              This helps us match you with suitable facilities
             </p>
           </div>
 
@@ -513,7 +513,7 @@ export function QuoteForm({ onSuccess, source }: QuoteFormProps) {
               id="additionalRequirements"
               value={formData.additionalRequirements}
               onChange={(e) => setFormData({ ...formData, additionalRequirements: e.target.value })}
-              placeholder="Tell us more about your team building goals, activity preferences, or special requests...&#10;Example: Looking for beach activities, need halal catering, team of 50 sales staff, focus on communication skills, etc."
+              placeholder="Tell us more about your nursing home goals, activity preferences, or special requests...&#10;Example: Looking for beach activities, need halal catering, team of 50 sales staff, focus on communication skills, etc."
               rows={4}
               maxLength={500}
               className="w-full rounded-lg border border-zinc-300 bg-white px-4 py-3 transition-colors focus:border-blue-500 focus:ring-blue-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-50"
@@ -535,7 +535,7 @@ export function QuoteForm({ onSuccess, source }: QuoteFormProps) {
             className="mr-2 mt-1"
           />
           <span>
-            I agree to receive quotes from verified vendors and accept the{' '}
+            I agree to receive quotes from verified facilities and accept the{' '}
             <a href="/terms" target="_blank" className="text-blue-600 underline hover:text-blue-700">
               Terms of Service
             </a>{' '}

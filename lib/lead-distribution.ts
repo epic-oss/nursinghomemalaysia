@@ -1,6 +1,6 @@
 import { createAdminClient } from '@/lib/supabase/server'
 import {
-  sendLeadNotificationsToVendors,
+  sendLeadNotificationsToFacilities,
   sendUnclaimedVendorNotifications,
 } from '@/lib/email'
 
@@ -57,83 +57,83 @@ const LOCATION_MAPPING: Record<string, string[]> = {
 }
 
 /**
- * Find claimed vendors that match the lead's location
+ * Find claimed facilities that match the lead's location
  */
-async function findClaimedVendors(location: string): Promise<MatchedVendor[]> {
-  console.log(`[findClaimedVendors] Starting search for location: "${location}"`)
+async function findClaimedFacilities(location: string): Promise<MatchedVendor[]> {
+  console.log(`[findClaimedFacilities] Starting search for location: "${location}"`)
 
   const supabase = createAdminClient()
 
   // Get possible state matches
   const stateMatches = LOCATION_MAPPING[location] || [location]
-  console.log(`[findClaimedVendors] State matches to search: ${JSON.stringify(stateMatches)}`)
+  console.log(`[findClaimedFacilities] State matches to search: ${JSON.stringify(stateMatches)}`)
 
-  // Query claimed vendors in matching states
-  const { data: vendors, error } = await supabase
-    .from('companies')
+  // Query claimed facilities in matching states
+  const { data: facilities, error } = await supabase
+    .from('nursing_homes')
     .select('id, name, contact_email, state, activities, user_id')
-    .not('user_id', 'is', null) // Only claimed vendors
+    .not('user_id', 'is', null) // Only claimed facilities
     .in('state', stateMatches)
 
   if (error) {
-    console.error('[findClaimedVendors] Database error:', error)
+    console.error('[findClaimedFacilities] Database error:', error)
     return []
   }
 
-  console.log(`[findClaimedVendors] Raw query returned ${vendors?.length || 0} vendors`)
-  if (vendors && vendors.length > 0) {
-    vendors.forEach((v, i) => {
-      console.log(`[findClaimedVendors] Vendor ${i + 1}: ${v.name} | State: ${v.state} | Email: ${v.contact_email || 'NULL'} | user_id: ${v.user_id}`)
+  console.log(`[findClaimedFacilities] Raw query returned ${facilities?.length || 0} facilities`)
+  if (facilities && facilities.length > 0) {
+    facilities.forEach((v, i) => {
+      console.log(`[findClaimedFacilities] Vendor ${i + 1}: ${v.name} | State: ${v.state} | Email: ${v.contact_email || 'NULL'} | user_id: ${v.user_id}`)
     })
   }
 
-  // Filter out vendors without valid emails
-  const validVendors = (vendors || []).filter(
+  // Filter out facilities without valid emails
+  const validFacilities = (facilities || []).filter(
     (v) => v.contact_email && v.contact_email.includes('@')
   )
 
-  console.log(`[findClaimedVendors] After email filter: ${validVendors.length} vendors with valid emails`)
+  console.log(`[findClaimedFacilities] After email filter: ${validFacilities.length} facilities with valid emails`)
 
-  return validVendors.map((v) => ({
+  return validFacilities.map((v) => ({
     id: v.id,
     name: v.name,
     email: v.contact_email,
     state: v.state,
-    activities: v.activities,
+    activities: v.services,
   }))
 }
 
 /**
- * Find unclaimed vendors for rotation (max 3, respecting 7-day cooldown)
+ * Find unclaimed facilities for rotation (max 3, respecting 7-day cooldown)
  */
-async function findUnclaimedVendorsForRotation(
+async function findUnclaimedFacilitiesForRotation(
   location: string,
   limit: number = 3
 ): Promise<UnclaimedVendor[]> {
-  console.log(`[findUnclaimedVendorsForRotation] Starting search for location: "${location}", limit: ${limit}`)
+  console.log(`[findUnclaimedFacilitiesForRotation] Starting search for location: "${location}", limit: ${limit}`)
 
   const supabase = createAdminClient()
 
   // Get possible state matches
   const stateMatches = LOCATION_MAPPING[location] || [location]
-  console.log(`[findUnclaimedVendorsForRotation] State matches: ${JSON.stringify(stateMatches)}`)
+  console.log(`[findUnclaimedFacilitiesForRotation] State matches: ${JSON.stringify(stateMatches)}`)
 
   // Use the database function for fair rotation
-  const { data: vendors, error } = await supabase.rpc('get_unclaimed_vendors_for_rotation', {
+  const { data: facilities, error } = await supabase.rpc('get_unclaimed_facilities_for_rotation', {
     p_states: stateMatches,
     p_limit: limit,
     p_cooldown_days: 7,
   })
 
   if (error) {
-    console.error('[findUnclaimedVendorsForRotation] Database error:', error)
+    console.error('[findUnclaimedFacilitiesForRotation] Database error:', error)
     // Fallback to direct query if function doesn't exist yet
-    return findUnclaimedVendorsFallback(stateMatches, limit)
+    return findUnclaimedFacilitiesFallback(stateMatches, limit)
   }
 
-  console.log(`[findUnclaimedVendorsForRotation] Found ${vendors?.length || 0} unclaimed vendors`)
+  console.log(`[findUnclaimedFacilitiesForRotation] Found ${facilities?.length || 0} unclaimed facilities`)
 
-  return (vendors || []).map((v: { id: string; name: string; contact_email: string; state: string }) => ({
+  return (facilities || []).map((v: { id: string; name: string; contact_email: string; state: string }) => ({
     id: v.id,
     name: v.name,
     email: v.contact_email,
@@ -144,11 +144,11 @@ async function findUnclaimedVendorsForRotation(
 /**
  * Fallback query if database function doesn't exist
  */
-async function findUnclaimedVendorsFallback(
+async function findUnclaimedFacilitiesFallback(
   stateMatches: string[],
   limit: number
 ): Promise<UnclaimedVendor[]> {
-  console.log('[findUnclaimedVendorsFallback] Using fallback query')
+  console.log('[findUnclaimedFacilitiesFallback] Using fallback query')
 
   const supabase = createAdminClient()
 
@@ -156,10 +156,10 @@ async function findUnclaimedVendorsFallback(
   const sevenDaysAgo = new Date()
   sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7)
 
-  const { data: vendors, error } = await supabase
-    .from('companies')
+  const { data: facilities, error } = await supabase
+    .from('nursing_homes')
     .select('id, name, contact_email, state, last_lead_sent_at, unclaimed_leads_sent')
-    .is('user_id', null) // Only unclaimed vendors
+    .is('user_id', null) // Only unclaimed facilities
     .in('state', stateMatches)
     .not('contact_email', 'is', null)
     .or(`last_lead_sent_at.is.null,last_lead_sent_at.lt.${sevenDaysAgo.toISOString()}`)
@@ -168,18 +168,18 @@ async function findUnclaimedVendorsFallback(
     .limit(limit)
 
   if (error) {
-    console.error('[findUnclaimedVendorsFallback] Database error:', error)
+    console.error('[findUnclaimedFacilitiesFallback] Database error:', error)
     return []
   }
 
   // Filter for valid emails
-  const validVendors = (vendors || []).filter(
+  const validFacilities = (facilities || []).filter(
     (v) => v.contact_email && v.contact_email.includes('@')
   )
 
-  console.log(`[findUnclaimedVendorsFallback] Found ${validVendors.length} vendors`)
+  console.log(`[findUnclaimedFacilitiesFallback] Found ${validFacilities.length} facilities`)
 
-  return validVendors.map((v) => ({
+  return validFacilities.map((v) => ({
     id: v.id,
     name: v.name,
     email: v.contact_email,
@@ -190,31 +190,31 @@ async function findUnclaimedVendorsFallback(
 /**
  * Update vendor tracking after sending lead notification
  */
-async function updateVendorLeadTracking(vendorId: string): Promise<void> {
+async function updateVendorLeadTracking(facilityId: string): Promise<void> {
   const supabase = createAdminClient()
 
   // Try using the database function first
   const { error: rpcError } = await supabase.rpc('update_vendor_lead_tracking', {
-    p_vendor_id: vendorId,
+    p_facility_id: facilityId,
   })
 
   if (rpcError) {
     // Fallback to direct update
     const { error } = await supabase
-      .from('companies')
+      .from('nursing_homes')
       .update({
         last_lead_sent_at: new Date().toISOString(),
-        unclaimed_leads_sent: supabase.rpc('increment_unclaimed_leads', { row_id: vendorId }),
+        unclaimed_leads_sent: supabase.rpc('increment_unclaimed_leads', { row_id: facilityId }),
       })
-      .eq('id', vendorId)
+      .eq('id', facilityId)
       .is('user_id', null)
 
     if (error) {
       // Simple fallback without increment
       await supabase
-        .from('companies')
+        .from('nursing_homes')
         .update({ last_lead_sent_at: new Date().toISOString() })
-        .eq('id', vendorId)
+        .eq('id', facilityId)
         .is('user_id', null)
     }
   }
@@ -263,7 +263,7 @@ interface VendorForLogging {
 }
 
 /**
- * Log which vendors received the lead notification
+ * Log which facilities received the lead notification
  */
 async function logLeadNotifications(
   leadDbId: string,
@@ -273,7 +273,7 @@ async function logLeadNotifications(
 
   const records = notifications.map((n) => ({
     lead_id: leadDbId,
-    company_id: n.vendor.id,
+    nursing_home_id: n.vendor.id,
     email_sent_to: n.vendor.email,
     email_status: n.result.success ? 'sent' : 'failed',
     resend_message_id: n.result.messageId || null,
@@ -314,13 +314,13 @@ async function getMonthlyLeadCount(location: string): Promise<number> {
 }
 
 /**
- * Main function: Process a new lead and distribute to matching vendors
+ * Main function: Process a new lead and distribute to matching facilities
  */
 export async function processAndDistributeLead(lead: LeadData): Promise<{
   success: boolean
   leadId: string | null
-  claimedVendorsNotified: number
-  unclaimedVendorsNotified: number
+  claimedFacilitiesNotified: number
+  unclaimedFacilitiesNotified: number
   vendorNames: string[]
   errors: string[]
 }> {
@@ -332,8 +332,8 @@ export async function processAndDistributeLead(lead: LeadData): Promise<{
 
   const errors: string[] = []
   const vendorNames: string[] = []
-  let claimedVendorsNotified = 0
-  let unclaimedVendorsNotified = 0
+  let claimedFacilitiesNotified = 0
+  let unclaimedFacilitiesNotified = 0
 
   // 1. Save lead to database
   console.log(`[Lead ${lead.leadId}] Saving to database...`)
@@ -341,18 +341,18 @@ export async function processAndDistributeLead(lead: LeadData): Promise<{
 
   if (!leadDbId) {
     errors.push('Failed to save lead to database')
-    // Continue anyway - we still want to notify vendors
+    // Continue anyway - we still want to notify facilities
   }
 
-  // 2. Find claimed vendors (existing flow)
-  console.log(`[Lead ${lead.leadId}] Finding claimed vendors in ${lead.location}...`)
-  const claimedVendors = await findClaimedVendors(lead.location)
-  console.log(`[Lead ${lead.leadId}] Found ${claimedVendors.length} claimed vendors`)
+  // 2. Find claimed facilities (existing flow)
+  console.log(`[Lead ${lead.leadId}] Finding claimed facilities in ${lead.location}...`)
+  const claimedFacilities = await findClaimedFacilities(lead.location)
+  console.log(`[Lead ${lead.leadId}] Found ${claimedFacilities.length} claimed facilities`)
 
-  // 3. Find unclaimed vendors for rotation (new flow)
-  console.log(`[Lead ${lead.leadId}] Finding unclaimed vendors for rotation...`)
-  const unclaimedVendors = await findUnclaimedVendorsForRotation(lead.location, 3)
-  console.log(`[Lead ${lead.leadId}] Found ${unclaimedVendors.length} unclaimed vendors for rotation`)
+  // 3. Find unclaimed facilities for rotation (new flow)
+  console.log(`[Lead ${lead.leadId}] Finding unclaimed facilities for rotation...`)
+  const unclaimedFacilities = await findUnclaimedFacilitiesForRotation(lead.location, 3)
+  console.log(`[Lead ${lead.leadId}] Found ${unclaimedFacilities.length} unclaimed facilities for rotation`)
 
   // 4. Get monthly lead count for email footer
   const monthlyLeadCount = await getMonthlyLeadCount(lead.location)
@@ -360,11 +360,11 @@ export async function processAndDistributeLead(lead: LeadData): Promise<{
 
   const allNotificationResults: { vendor: VendorForLogging; result: { success: boolean; messageId?: string; error?: string }; isClaimed: boolean }[] = []
 
-  // 5. Send notifications to claimed vendors (full lead details)
-  if (claimedVendors.length > 0) {
-    console.log(`[Lead ${lead.leadId}] Sending notifications to ${claimedVendors.length} claimed vendors...`)
+  // 5. Send notifications to claimed facilities (full lead details)
+  if (claimedFacilities.length > 0) {
+    console.log(`[Lead ${lead.leadId}] Sending notifications to ${claimedFacilities.length} claimed facilities...`)
 
-    const claimedResults = await sendLeadNotificationsToVendors(
+    const claimedResults = await sendLeadNotificationsToFacilities(
       {
         leadId: lead.leadId,
         name: lead.name,
@@ -379,14 +379,14 @@ export async function processAndDistributeLead(lead: LeadData): Promise<{
         hrdfRequired: lead.hrdfRequired,
         additionalRequirements: lead.additionalRequirements,
       },
-      claimedVendors.map((v) => ({ id: v.id, name: v.name, email: v.email }))
+      claimedFacilities.map((v) => ({ id: v.id, name: v.name, email: v.email }))
     )
 
     claimedResults.forEach((r) => {
       allNotificationResults.push({ ...r, isClaimed: true })
       if (r.result.success) {
         vendorNames.push(r.vendor.name)
-        claimedVendorsNotified++
+        claimedFacilitiesNotified++
         console.log(`[Lead ${lead.leadId}] Notified claimed vendor: ${r.vendor.name} (${r.vendor.email})`)
       } else {
         errors.push(`Failed to notify claimed vendor ${r.vendor.name}: ${r.result.error}`)
@@ -394,9 +394,9 @@ export async function processAndDistributeLead(lead: LeadData): Promise<{
     })
   }
 
-  // 6. Send notifications to unclaimed vendors (limited details + claim CTA)
-  if (unclaimedVendors.length > 0) {
-    console.log(`[Lead ${lead.leadId}] Sending notifications to ${unclaimedVendors.length} unclaimed vendors...`)
+  // 6. Send notifications to unclaimed facilities (limited details + claim CTA)
+  if (unclaimedFacilities.length > 0) {
+    console.log(`[Lead ${lead.leadId}] Sending notifications to ${unclaimedFacilities.length} unclaimed facilities...`)
 
     const unclaimedResults = await sendUnclaimedVendorNotifications(
       {
@@ -407,7 +407,7 @@ export async function processAndDistributeLead(lead: LeadData): Promise<{
         location: lead.location,
         duration: lead.duration,
       },
-      unclaimedVendors.map((v) => ({ id: v.id, name: v.name, email: v.email })),
+      unclaimedFacilities.map((v) => ({ id: v.id, name: v.name, email: v.email })),
       monthlyLeadCount
     )
 
@@ -415,7 +415,7 @@ export async function processAndDistributeLead(lead: LeadData): Promise<{
       allNotificationResults.push({ ...r, isClaimed: false })
       if (r.result.success) {
         vendorNames.push(`${r.vendor.name} (unclaimed)`)
-        unclaimedVendorsNotified++
+        unclaimedFacilitiesNotified++
         // Update vendor tracking for rotation
         await updateVendorLeadTracking(r.vendor.id)
         console.log(`[Lead ${lead.leadId}] Notified unclaimed vendor: ${r.vendor.name} (${r.vendor.email})`)
@@ -430,14 +430,14 @@ export async function processAndDistributeLead(lead: LeadData): Promise<{
     await logLeadNotifications(leadDbId, allNotificationResults)
   }
 
-  const totalNotified = claimedVendorsNotified + unclaimedVendorsNotified
-  console.log(`[Lead ${lead.leadId}] Distribution complete. ${totalNotified} vendors notified (${claimedVendorsNotified} claimed, ${unclaimedVendorsNotified} unclaimed).`)
+  const totalNotified = claimedFacilitiesNotified + unclaimedFacilitiesNotified
+  console.log(`[Lead ${lead.leadId}] Distribution complete. ${totalNotified} facilities notified (${claimedFacilitiesNotified} claimed, ${unclaimedFacilitiesNotified} unclaimed).`)
 
   return {
     success: true,
     leadId: leadDbId,
-    claimedVendorsNotified,
-    unclaimedVendorsNotified,
+    claimedFacilitiesNotified,
+    unclaimedFacilitiesNotified,
     vendorNames,
     errors,
   }

@@ -4,7 +4,7 @@ import { createClient } from '@/lib/supabase/server'
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { listingId, name, description, contact_phone, contact_email, website, location, state, hrdf_claimable } = body
+    const { listingId, name, description, contact_phone, contact_email, website, location, state, 
 
     if (!listingId) {
       return NextResponse.json(
@@ -78,7 +78,7 @@ export async function POST(request: NextRequest) {
 
     // Verify ownership
     const { data: listing, error: fetchError } = await supabase
-      .from('companies')
+      .from('nursing_homes')
       .select('user_id')
       .eq('id', listingId)
       .single()
@@ -99,7 +99,7 @@ export async function POST(request: NextRequest) {
 
     // Update the listing
     const { error: updateError } = await supabase
-      .from('companies')
+      .from('nursing_homes')
       .update({
         name,
         description,
@@ -108,7 +108,7 @@ export async function POST(request: NextRequest) {
         website: website || null,
         location,
         state,
-        hrdf_claimable,
+        ,
         updated_at: new Date().toISOString(),
       })
       .eq('id', listingId)

@@ -43,7 +43,7 @@ async function debugClaim() {
   // 2. Find FGNC Event Management company
   console.log('\n2️⃣ Finding "FGNC Event Management" company...')
   const { data: company, error: companyError } = await supabase
-    .from('companies')
+    .from('nursing_homes')
     .select('*')
     .ilike('name', '%FGNC%')
     .single()
@@ -70,7 +70,7 @@ async function debugClaim() {
     console.log(`✅ Found ${claims?.length || 0} claim request(s)`)
     if (claims && claims.length > 0) {
       claims.forEach(claim => {
-        console.log(`   - Company ID: ${claim.company_id}`)
+        console.log(`   - Company ID: ${claim.nursing_home_id}`)
         console.log(`   - Status: ${claim.status}`)
         console.log(`   - Created: ${claim.created_at}`)
       })
@@ -87,7 +87,7 @@ async function debugClaim() {
     console.log('\n   Fixing now...')
 
     const { error: updateError } = await supabase
-      .from('companies')
+      .from('nursing_homes')
       .update({ user_id: jayUser.id })
       .eq('id', company.id)
 
@@ -103,7 +103,7 @@ async function debugClaim() {
   // 5. Test the dashboard query
   console.log('\n5️⃣ Testing dashboard query...')
   const { data: userListings, error: listingsError } = await supabase
-    .from('companies')
+    .from('nursing_homes')
     .select('*')
     .eq('user_id', jayUser.id)
     .order('created_at', { ascending: false })

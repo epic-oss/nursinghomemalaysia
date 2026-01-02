@@ -15,7 +15,7 @@ async function getListings(params: SearchParams) {
   const supabase = await createClient()
 
   let query = supabase
-    .from('companies')
+    .from('nursing_homes')
     .select('*')
     .order('created_at', { ascending: false })
 

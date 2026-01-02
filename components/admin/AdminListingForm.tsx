@@ -3,10 +3,10 @@
 import { useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
-import { Company } from '@/lib/types'
+import { NursingHome } from '@/lib/types'
 
 interface AdminListingFormProps {
-  listing: Company
+  listing: NursingHome
 }
 
 export function AdminListingForm({ listing }: AdminListingFormProps) {
@@ -27,7 +27,7 @@ export function AdminListingForm({ listing }: AdminListingFormProps) {
     state: listing.state || '',
     average_rating: listing.average_rating ?? '',
     review_count: listing.review_count ?? '',
-    hrdf_claimable: listing.hrdf_claimable || false,
+    ,
     is_premium: listing.is_premium || false,
     is_featured: listing.is_featured || false,
   })
@@ -375,8 +375,8 @@ export function AdminListingForm({ listing }: AdminListingFormProps) {
           <label className="flex items-center gap-2">
             <input
               type="checkbox"
-              checked={formData.hrdf_claimable}
-              onChange={(e) => setFormData({ ...formData, hrdf_claimable: e.target.checked })}
+              checked={formData.
+              onChange={(e) => setFormData({ ...formData, 
               className="h-4 w-4 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900 dark:border-zinc-700"
             />
             <span className="text-sm text-zinc-900 dark:text-zinc-50">HRDF Claimable</span>

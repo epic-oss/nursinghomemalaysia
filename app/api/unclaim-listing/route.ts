@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
 
     // Get the listing and verify ownership
     const { data: listing, error: fetchError } = await supabase
-      .from('companies')
+      .from('nursing_homes')
       .select('*')
       .eq('id', listingId)
       .single()
@@ -60,7 +60,7 @@ export async function POST(request: NextRequest) {
 
     // Unclaim the listing
     const { error: updateError } = await supabaseAdmin
-      .from('companies')
+      .from('nursing_homes')
       .update({
         user_id: null,
         is_premium: false,

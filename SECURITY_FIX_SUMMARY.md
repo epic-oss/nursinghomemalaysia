@@ -66,7 +66,7 @@ Admin reviews      → APPROVED → Company ownership granted
 
 ### Step 1: Access Admin Panel
 1. Log in to your account
-2. Navigate to: `https://www.teambuildingmy.com/admin/claims`
+2. Navigate to: `https://www.nursinghomemy.com/admin/claims`
 3. Your user ID will be shown in yellow banner
 4. Copy your user ID
 
@@ -149,7 +149,7 @@ Before approving, verify the claimant:
 ```sql
 - id (uuid, primary key)
 - user_id (uuid, references auth.users)
-- company_id (uuid, references companies)
+- nursing_home_id (uuid, references companies)
 - role_at_company (text) - e.g., "Owner", "Director"
 - verification_phone (text)
 - proof_notes (text) - Business email + verification notes

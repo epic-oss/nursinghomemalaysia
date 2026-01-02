@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { ContactForm } from '@/components/ContactForm'
-import { Company, Venue, Activity, ListingType } from '@/lib/types'
+import { NursingHome, Facility, Service, ListingType } from '@/lib/types'
 import { getHighResLogoUrl } from '@/lib/image-utils'
 
 interface PageProps {
@@ -16,27 +16,27 @@ interface PageProps {
 async function getListingData(type: string, id: string) {
   const supabase = await createClient()
 
-  if (type === 'company') {
+  if (type === 'nursing_home') {
     const { data, error } = await supabase
-      .from('companies')
+      .from('nursing_homes')
       .select('*')
       .eq('id', id)
       .single()
-    return { data: data as Company | null, error }
-  } else if (type === 'venue') {
+    return { data: data as NursingHome | null, error }
+  } else if (type === 'facility') {
     const { data, error } = await supabase
-      .from('venues')
+      .from('facilities')
       .select('*')
       .eq('id', id)
       .single()
-    return { data: data as Venue | null, error }
-  } else if (type === 'activity') {
+    return { data: data as Facility | null, error }
+  } else if (type === 'service') {
     const { data, error } = await supabase
-      .from('activities')
+      .from('services')
       .select('*')
       .eq('id', id)
       .single()
-    return { data: data as Activity | null, error }
+    return { data: data as Service | null, error }
   }
 
   return { data: null, error: { message: 'Invalid type' } }
@@ -45,7 +45,7 @@ async function getListingData(type: string, id: string) {
 export default async function ListingDetailPage({ params }: PageProps) {
   const { type, id } = await params
 
-  if (!['company', 'venue', 'activity'].includes(type)) {
+  if (!['nursing_home', 'facility', 'service'].includes(type)) {
     notFound()
   }
 
@@ -57,17 +57,16 @@ export default async function ListingDetailPage({ params }: PageProps) {
 
   const images = listing.images || []
   const mainImage = images[0] || '/placeholder.svg'
-  const isCompany = type === 'company'
-  const company = isCompany ? (listing as Company) : null
-  const hrdfClaimable = !!company?.hrdf_claimable
+  const isNursingHome = type === 'nursing_home'
+  const nursing_home = isNursingHome ? (listing as NursingHome) : null
   let ratingDisplay: string | null = null
   if (
-    company &&
-    typeof company.average_rating === 'number' &&
-    typeof company.review_count === 'number'
+    nursing_home &&
+    typeof nursing_home.average_rating === 'number' &&
+    typeof nursing_home.review_count === 'number'
   ) {
-    ratingDisplay = `${company.average_rating.toFixed(1)} ⭐ (${company.review_count} ${
-      company.review_count === 1 ? 'review' : 'reviews'
+    ratingDisplay = `${nursing_home.average_rating.toFixed(1)} ⭐ (${nursing_home.review_count} ${
+      nursing_home.review_count === 1 ? 'review' : 'reviews'
     })`
   }
   const logoInitials = listing.name
@@ -112,24 +111,19 @@ export default async function ListingDetailPage({ params }: PageProps) {
                     Featured
                   </span>
                 )}
-                {hrdfClaimable && (
-                  <span className="rounded-full bg-green-600/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-green-700 dark:bg-green-500/20 dark:text-green-100">
-                    HRDF Claimable
-                  </span>
-                )}
               </div>
             </div>
 
             {/* Main Image */}
             <div
               className={`relative mb-6 h-96 w-full overflow-hidden rounded-lg ${
-                isCompany ? 'bg-zinc-50 dark:bg-zinc-900/80' : 'bg-zinc-100 dark:bg-zinc-800'
+                isNursingHome ? 'bg-zinc-50 dark:bg-zinc-900/80' : 'bg-zinc-100 dark:bg-zinc-800'
               }`}
             >
-              {isCompany ? (
-                getHighResLogoUrl(company?.logo_url || null) ? (
+              {isNursingHome ? (
+                getHighResLogoUrl(nursing_home?.logo_url || null) ? (
                   <Image
-                    src={getHighResLogoUrl(company?.logo_url || null)!}
+                    src={getHighResLogoUrl(nursing_home?.logo_url || null)!}
                     alt={`${listing.name} logo`}
                     fill
                     className="object-contain p-8"
@@ -177,14 +171,14 @@ export default async function ListingDetailPage({ params }: PageProps) {
             </div>
 
             {/* Type-specific Details */}
-            {type === 'company' && (
+            {type === 'nursing_home' && (
               <div className="mb-6 rounded-lg border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900">
                 <h2 className="mb-3 text-xl font-semibold text-zinc-900 dark:text-zinc-50">
-                  Services Offered
+                  Care Services Offered
                 </h2>
-                {(listing as Company).services && (listing as Company).services!.length > 0 ? (
+                {(listing as NursingHome).services && (listing as NursingHome).services!.length > 0 ? (
                   <ul className="list-inside list-disc space-y-1 text-zinc-600 dark:text-zinc-400">
-                    {(listing as Company).services!.map((service, index) => (
+                    {(listing as NursingHome).services!.map((service, index) => (
                       <li key={index}>{service}</li>
                     ))}
                   </ul>
@@ -194,14 +188,14 @@ export default async function ListingDetailPage({ params }: PageProps) {
               </div>
             )}
 
-            {type === 'venue' && (
+            {type === 'facility' && (
               <div className="mb-6 rounded-lg border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900">
                 <h2 className="mb-3 text-xl font-semibold text-zinc-900 dark:text-zinc-50">
                   Amenities
                 </h2>
-                {(listing as Venue).amenities && (listing as Venue).amenities!.length > 0 ? (
+                {(listing as Facility).amenities && (listing as Facility).amenities!.length > 0 ? (
                   <ul className="list-inside list-disc space-y-1 text-zinc-600 dark:text-zinc-400">
-                    {(listing as Venue).amenities!.map((amenity, index) => (
+                    {(listing as Facility).amenities!.map((amenity, index) => (
                       <li key={index}>{amenity}</li>
                     ))}
                   </ul>
@@ -211,27 +205,27 @@ export default async function ListingDetailPage({ params }: PageProps) {
               </div>
             )}
 
-            {type === 'activity' && (
+            {type === 'service' && (
               <div className="mb-6 rounded-lg border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900">
                 <h2 className="mb-3 text-xl font-semibold text-zinc-900 dark:text-zinc-50">
-                  Objectives
+                  Service Details
                 </h2>
-                {(listing as Activity).objectives && (listing as Activity).objectives!.length > 0 ? (
+                {(listing as Service).objectives && (listing as Service).objectives!.length > 0 ? (
                   <ul className="list-inside list-disc space-y-1 text-zinc-600 dark:text-zinc-400">
-                    {(listing as Activity).objectives!.map((objective, index) => (
+                    {(listing as Service).objectives!.map((objective, index) => (
                       <li key={index}>{objective}</li>
                     ))}
                   </ul>
                 ) : (
                   <p className="text-zinc-600 dark:text-zinc-400">Contact for details</p>
                 )}
-                {(listing as Activity).requirements && (
+                {(listing as Service).requirements && (
                   <div className="mt-4">
                     <h3 className="mb-2 font-semibold text-zinc-900 dark:text-zinc-50">
                       Requirements
                     </h3>
                     <p className="text-zinc-600 dark:text-zinc-400">
-                      {(listing as Activity).requirements}
+                      {(listing as Service).requirements}
                     </p>
                   </div>
                 )}
@@ -248,92 +242,92 @@ export default async function ListingDetailPage({ params }: PageProps) {
                   Details
                 </h2>
                 <dl className="space-y-3 text-sm">
-                  {type === 'company' && (
+                  {type === 'nursing_home' && (
                     <>
                       <div>
                         <dt className="font-medium text-zinc-900 dark:text-zinc-50">Location</dt>
-                        <dd className="text-zinc-600 dark:text-zinc-400">{(listing as Company).location}</dd>
+                        <dd className="text-zinc-600 dark:text-zinc-400">{(listing as NursingHome).location}</dd>
                       </div>
                       <div>
                         <dt className="font-medium text-zinc-900 dark:text-zinc-50">State</dt>
-                        <dd className="text-zinc-600 dark:text-zinc-400">{(listing as Company).state}</dd>
+                        <dd className="text-zinc-600 dark:text-zinc-400">{(listing as NursingHome).state}</dd>
                       </div>
                       <div>
                         <dt className="font-medium text-zinc-900 dark:text-zinc-50">Price Range</dt>
                         <dd className="text-zinc-600 dark:text-zinc-400">
-                          {(listing as Company).price_range || 'Contact for pricing'}
+                          {(listing as NursingHome).price_range || 'Contact for pricing'}
                         </dd>
                       </div>
                     </>
                   )}
 
-                  {type === 'venue' && (
+                  {type === 'facility' && (
                     <>
                       <div>
                         <dt className="font-medium text-zinc-900 dark:text-zinc-50">Location</dt>
-                        <dd className="text-zinc-600 dark:text-zinc-400">{(listing as Venue).location}</dd>
+                        <dd className="text-zinc-600 dark:text-zinc-400">{(listing as Facility).location}</dd>
                       </div>
                       <div>
                         <dt className="font-medium text-zinc-900 dark:text-zinc-50">City</dt>
-                        <dd className="text-zinc-600 dark:text-zinc-400">{(listing as Venue).city}</dd>
+                        <dd className="text-zinc-600 dark:text-zinc-400">{(listing as Facility).city}</dd>
                       </div>
                       <div>
                         <dt className="font-medium text-zinc-900 dark:text-zinc-50">State</dt>
-                        <dd className="text-zinc-600 dark:text-zinc-400">{(listing as Venue).state}</dd>
+                        <dd className="text-zinc-600 dark:text-zinc-400">{(listing as Facility).state}</dd>
                       </div>
-                      {(listing as Venue).capacity && (
+                      {(listing as Facility).capacity && (
                         <div>
                           <dt className="font-medium text-zinc-900 dark:text-zinc-50">Capacity</dt>
                           <dd className="text-zinc-600 dark:text-zinc-400">
-                            {(listing as Venue).capacity} people
+                            {(listing as Facility).capacity} residents
                           </dd>
                         </div>
                       )}
-                      {(listing as Venue).venue_type && (
+                      {(listing as Facility).venue_type && (
                         <div>
                           <dt className="font-medium text-zinc-900 dark:text-zinc-50">Type</dt>
-                          <dd className="text-zinc-600 dark:text-zinc-400">{(listing as Venue).venue_type}</dd>
+                          <dd className="text-zinc-600 dark:text-zinc-400">{(listing as Facility).venue_type}</dd>
                         </div>
                       )}
                       <div>
                         <dt className="font-medium text-zinc-900 dark:text-zinc-50">Price Range</dt>
                         <dd className="text-zinc-600 dark:text-zinc-400">
-                          {(listing as Venue).price_range || 'Contact for pricing'}
+                          {(listing as Facility).price_range || 'Contact for pricing'}
                         </dd>
                       </div>
                     </>
                   )}
 
-                  {type === 'activity' && (
+                  {type === 'service' && (
                     <>
                       <div>
                         <dt className="font-medium text-zinc-900 dark:text-zinc-50">Category</dt>
-                        <dd className="text-zinc-600 dark:text-zinc-400">{(listing as Activity).category}</dd>
+                        <dd className="text-zinc-600 dark:text-zinc-400">{(listing as Service).category}</dd>
                       </div>
-                      {(listing as Activity).duration && (
+                      {(listing as Service).duration && (
                         <div>
                           <dt className="font-medium text-zinc-900 dark:text-zinc-50">Duration</dt>
-                          <dd className="text-zinc-600 dark:text-zinc-400">{(listing as Activity).duration}</dd>
+                          <dd className="text-zinc-600 dark:text-zinc-400">{(listing as Service).duration}</dd>
                         </div>
                       )}
-                      {(listing as Activity).group_size && (
+                      {(listing as Service).group_size && (
                         <div>
                           <dt className="font-medium text-zinc-900 dark:text-zinc-50">Group Size</dt>
-                          <dd className="text-zinc-600 dark:text-zinc-400">{(listing as Activity).group_size}</dd>
+                          <dd className="text-zinc-600 dark:text-zinc-400">{(listing as Service).group_size}</dd>
                         </div>
                       )}
-                      {(listing as Activity).difficulty_level && (
+                      {(listing as Service).difficulty_level && (
                         <div>
-                          <dt className="font-medium text-zinc-900 dark:text-zinc-50">Difficulty</dt>
+                          <dt className="font-medium text-zinc-900 dark:text-zinc-50">Care Level</dt>
                           <dd className="text-zinc-600 dark:text-zinc-400">
-                            {(listing as Activity).difficulty_level}
+                            {(listing as Service).difficulty_level}
                           </dd>
                         </div>
                       )}
                       <div>
                         <dt className="font-medium text-zinc-900 dark:text-zinc-50">Price Range</dt>
                         <dd className="text-zinc-600 dark:text-zinc-400">
-                          {(listing as Activity).price_range || 'Contact for pricing'}
+                          {(listing as Service).price_range || 'Contact for pricing'}
                         </dd>
                       </div>
                     </>

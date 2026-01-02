@@ -3,20 +3,19 @@ import { Metadata } from 'next'
 import { createClient } from '@/lib/supabase/server'
 import { ListingCard } from '@/components/ListingCard'
 import { SearchFilter } from '@/components/SearchFilter'
-import { Company } from '@/lib/types'
+import { NursingHome } from '@/lib/types'
 import { getUser } from '@/lib/auth-helpers'
 
 export const metadata: Metadata = {
-  title: 'Team Building Company, Provider & Organizer Malaysia | Directory',
-  description: 'Compare 99+ team building companies, providers, and organisers in Malaysia. Browse packages, read reviews, check HRDF eligibility, and get free quotes.',
+  title: 'Nursing Home Malaysia | Elderly Care Directory',
+  description: 'Compare nursing homes and elderly care facilities in Malaysia. Browse services, read reviews, and get free quotes for quality senior care.',
 }
 
 interface SearchParams {
   search?: string
   state?: string
   category?: string
-  activity?: string
-  hrdf?: string
+  service?: string
 }
 
 async function HomeContent({ searchParams }: { searchParams: SearchParams }) {
@@ -25,26 +24,25 @@ async function HomeContent({ searchParams }: { searchParams: SearchParams }) {
   const search = searchParams.search || ''
   const state = searchParams.state || ''
   const category = searchParams.category || ''
-  const activity = searchParams.activity || ''
-  const hrdf = searchParams.hrdf || 'all'
+  const service = searchParams.service || ''
 
-  // Fetch all companies to extract unique activities
-  const { data: allCompanies } = await supabase.from('companies').select('activities')
+  // Fetch all nursing homes to extract unique services
+  const { data: allNursingHomes } = await supabase.from('nursing_homes').select('services')
 
-  // Extract unique activities from comma-separated strings
-  const uniqueActivities = new Set<string>()
-  allCompanies?.forEach(company => {
-    if (company.activities) {
-      const activities = company.activities.split(',').map((a: string) => a.trim())
-      activities.forEach((a: string) => {
-        if (a) uniqueActivities.add(a)
+  // Extract unique services from comma-separated strings
+  const uniqueServices = new Set<string>()
+  allNursingHomes?.forEach(nursing_home => {
+    if (nursing_home.services) {
+      const services = nursing_home.services.split(',').map((a: string) => a.trim())
+      services.forEach((a: string) => {
+        if (a) uniqueServices.add(a)
       })
     }
   })
-  const activitiesList = Array.from(uniqueActivities).sort()
+  const servicesList = Array.from(uniqueServices).sort()
 
-  // Fetch companies with filters
-  let query = supabase.from('companies').select('*')
+  // Fetch nursing homes with filters
+  let query = supabase.from('nursing_homes').select('*')
 
   if (search) {
     query = query.or(`name.ilike.%${search}%,description.ilike.%${search}%`)
@@ -55,16 +53,11 @@ async function HomeContent({ searchParams }: { searchParams: SearchParams }) {
   if (category) {
     query = query.ilike('category', `%${category}%`)
   }
-  if (activity) {
-    query = query.ilike('activities', `%${activity}%`)
-  }
-  if (hrdf === 'claimable') {
-    query = query.eq('hrdf_claimable', true)
-  } else if (hrdf === 'non') {
-    query = query.eq('hrdf_claimable', false)
+  if (service) {
+    query = query.ilike('services', `%${service}%`)
   }
 
-  const { data: companies } = await query
+  const { data: nursing_homes } = await query
     .order('is_premium', { ascending: false })
     .order('is_featured', { ascending: false })
     .order('featured', { ascending: false })
@@ -77,11 +70,11 @@ async function HomeContent({ searchParams }: { searchParams: SearchParams }) {
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-5xl md:text-6xl">
-              Team Building Company, Provider & Organizer Malaysia
+              Nursing Home Malaysia | Elderly Care Directory
             </h1>
             <p className="mx-auto mt-6 max-w-2xl text-lg text-zinc-600 dark:text-zinc-400">
-              Discover the best team building companies, venues, and activities across Malaysia.
-              Build stronger teams through engaging experiences.
+              Discover the best nursing homes and elderly care facilities across Malaysia.
+              Quality care and compassionate services for your loved ones.
             </p>
           </div>
         </div>
@@ -93,30 +86,30 @@ async function HomeContent({ searchParams }: { searchParams: SearchParams }) {
           showCategoryFilter={true}
           showStateFilter={true}
           showActivityFilter={true}
-          showHrdfFilter={true}
-          activities={activitiesList}
+          showHrdfFilter={false}
+          activities={servicesList}
         />
       </section>
 
       {/* Results Section */}
       <section className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8">
-        {!companies || companies.length === 0 ? (
+        {!nursing_homes || nursing_homes.length === 0 ? (
           <div className="rounded-lg border border-zinc-200 bg-white p-12 text-center dark:border-zinc-800 dark:bg-zinc-900">
             <p className="text-lg text-zinc-600 dark:text-zinc-400">
-              No companies found. Try adjusting your filters.
+              No nursing homes found. Try adjusting your filters.
             </p>
           </div>
         ) : (
           <>
             <p className="mb-4 text-sm text-zinc-600 dark:text-zinc-400">
-              Showing {companies.length} {companies.length === 1 ? 'result' : 'results'}
+              Showing {nursing_homes.length} {nursing_homes.length === 1 ? 'result' : 'results'}
             </p>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {companies.map((company) => (
+              {nursing_homes.map((nursing_home) => (
                 <ListingCard
-                  key={company.id}
-                  listing={company as Company}
-                  type="company"
+                  key={nursing_home.id}
+                  listing={nursing_home as NursingHome}
+                  type="nursing_home"
                   currentUserId={user?.id}
                 />
               ))}

@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
 
     // Delete the listing
     const { error: deleteError } = await supabase
-      .from('companies')
+      .from('nursing_homes')
       .delete()
       .eq('id', listingId)
 

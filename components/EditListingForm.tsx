@@ -2,10 +2,10 @@
 
 import { useState, FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
-import { Company } from '@/lib/types'
+import { NursingHome } from '@/lib/types'
 
 interface EditListingFormProps {
-  listing: Company
+  listing: NursingHome
 }
 
 export function EditListingForm({ listing }: EditListingFormProps) {
@@ -22,7 +22,7 @@ export function EditListingForm({ listing }: EditListingFormProps) {
     website: listing.website || '',
     location: listing.location || '',
     state: listing.state || '',
-    hrdf_claimable: listing.hrdf_claimable || false,
+    ,
   })
 
   const [errors, setErrors] = useState<Record<string, string>>({})
@@ -195,7 +195,7 @@ export function EditListingForm({ listing }: EditListingFormProps) {
                 ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
                 : 'border-zinc-300 focus:border-blue-500 focus:ring-blue-500 dark:border-zinc-700'
             } bg-white dark:bg-zinc-800 dark:text-zinc-50`}
-            placeholder="Describe your team building services..."
+            placeholder="Describe your nursing home services..."
           />
           {errors.description && <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.description}</p>}
         </div>
@@ -312,8 +312,8 @@ export function EditListingForm({ listing }: EditListingFormProps) {
           <label className="flex items-center gap-3">
             <input
               type="checkbox"
-              checked={formData.hrdf_claimable}
-              onChange={(e) => setFormData({ ...formData, hrdf_claimable: e.target.checked })}
+              checked={formData.
+              onChange={(e) => setFormData({ ...formData, 
               className="h-5 w-5 rounded border-zinc-300 text-blue-600 focus:ring-blue-500"
             />
             <span className="text-sm font-medium text-zinc-900 dark:text-zinc-50">

@@ -101,7 +101,7 @@ After payment, check these:
 **In Database:**
 ```sql
 SELECT name, is_premium, is_featured, premium_since, featured_until
-FROM companies
+FROM nursing_homes
 WHERE is_premium = true;
 ```
 

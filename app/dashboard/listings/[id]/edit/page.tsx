@@ -8,7 +8,7 @@ import { redirect } from 'next/navigation'
 async function getListing(listingId: string, userId: string) {
   const supabase = await createClient()
   const { data, error } = await supabase
-    .from('companies')
+    .from('nursing_homes')
     .select('*')
     .eq('id', listingId)
     .eq('user_id', userId) // Verify ownership

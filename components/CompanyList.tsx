@@ -2,54 +2,54 @@
 
 import { useState } from 'react'
 import { ListingCard } from '@/components/ListingCard'
-import type { Company } from '@/lib/types'
+import type { NursingHome } from '@/lib/types'
 
-interface CompanyListProps {
-  initialCompanies: Company[]
+interface NursingHomeListProps {
+  initialNursingHomes: NursingHome[]
   totalCount: number
   state: string
   location: string
 }
 
-export function CompanyList({ initialCompanies, totalCount, state, location }: CompanyListProps) {
-  const [companies, setCompanies] = useState(initialCompanies)
+export function NursingHomeList({ initialNursingHomes, totalCount, state, location }: NursingHomeListProps) {
+  const [nursing_homes, setNursingHomes] = useState(initialNursingHomes)
   const [isLoading, setIsLoading] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
-  const COMPANIES_PER_PAGE = 12
+  const NURSING_HOMES_PER_PAGE = 12
 
-  const hasMore = companies.length < totalCount
+  const hasMore = nursing_homes.length < totalCount
 
   const loadMore = async () => {
     setIsLoading(true)
 
     try {
       const nextPage = currentPage + 1
-      const offset = currentPage * COMPANIES_PER_PAGE
+      const offset = currentPage * NURSING_HOMES_PER_PAGE
 
       const response = await fetch(
-        `/api/companies?state=${encodeURIComponent(state)}&offset=${offset}&limit=${COMPANIES_PER_PAGE}`
+        `/api/nursing_homes?state=${encodeURIComponent(state)}&offset=${offset}&limit=${NURSING_HOMES_PER_PAGE}`
       )
 
       if (response.ok) {
-        const newCompanies = await response.json()
-        setCompanies([...companies, ...newCompanies])
+        const newNursingHomes = await response.json()
+        setNursingHomes([...nursing_homes, ...newNursingHomes])
         setCurrentPage(nextPage)
       }
     } catch (error) {
-      console.error('Failed to load more companies:', error)
+      console.error('Failed to load more nursing homes:', error)
     } finally {
       setIsLoading(false)
     }
   }
 
-  if (companies.length === 0) {
+  if (nursing_homes.length === 0) {
     return (
       <div className="rounded-lg border border-zinc-200 bg-white p-12 text-center dark:border-zinc-800 dark:bg-zinc-900">
         <p className="mb-4 text-lg text-zinc-600 dark:text-zinc-400">
-          No companies listed yet in {location}.
+          No nursing homes listed yet in {location}.
         </p>
         <p className="text-sm text-zinc-500 dark:text-zinc-500">
-          Be the first to submit your company!
+          Be the first to submit your facility!
         </p>
       </div>
     )
@@ -60,7 +60,7 @@ export function CompanyList({ initialCompanies, totalCount, state, location }: C
       <div className="mb-6 flex items-center justify-between">
         <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">
           {totalCount > 0 && `${totalCount} `}
-          {totalCount === 1 ? 'Company' : 'Companies'} in {location}
+          {totalCount === 1 ? 'Nursing Home' : 'Nursing Homes'} in {location}
         </h2>
         <a
           href={`/listings?state=${encodeURIComponent(state)}`}
@@ -71,11 +71,11 @@ export function CompanyList({ initialCompanies, totalCount, state, location }: C
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {companies.map((company) => (
+        {nursing_homes.map((nursing_home) => (
           <ListingCard
-            key={company.id}
-            listing={company}
-            type="company"
+            key={nursing_home.id}
+            listing={nursing_home}
+            type="nursing_home"
           />
         ))}
       </div>
@@ -113,9 +113,9 @@ export function CompanyList({ initialCompanies, totalCount, state, location }: C
               </>
             ) : (
               <>
-                Load More Companies
+                Load More Nursing Homes
                 <span className="text-sm opacity-75">
-                  ({companies.length} of {totalCount})
+                  ({nursing_homes.length} of {totalCount})
                 </span>
               </>
             )}
@@ -123,9 +123,9 @@ export function CompanyList({ initialCompanies, totalCount, state, location }: C
         </div>
       )}
 
-      {!hasMore && totalCount > COMPANIES_PER_PAGE && (
+      {!hasMore && totalCount > NURSING_HOMES_PER_PAGE && (
         <div className="mt-8 text-center text-sm text-zinc-500 dark:text-zinc-500">
-          Showing all {totalCount} companies
+          Showing all {totalCount} nursing homes
         </div>
       )}
     </div>

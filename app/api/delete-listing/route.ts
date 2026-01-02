@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
 
     // Verify ownership
     const { data: listing, error: fetchError } = await supabase
-      .from('companies')
+      .from('nursing_homes')
       .select('user_id')
       .eq('id', listingId)
       .single()
@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
 
     // Delete the listing
     const { error: deleteError } = await supabase
-      .from('companies')
+      .from('nursing_homes')
       .delete()
       .eq('id', listingId)
 

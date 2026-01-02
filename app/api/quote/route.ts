@@ -197,7 +197,7 @@ export async function POST(request: NextRequest) {
       source: sanitizedData.source,
       status: 'NEW',
       contactedDate: '',
-      vendorsSentTo: '',
+      facilitiesSentTo: '',
       converted: '',
       revenue: '',
       notes: '',
@@ -205,7 +205,7 @@ export async function POST(request: NextRequest) {
 
     console.log('📤 Processing lead:', JSON.stringify(webhookData, null, 2))
 
-    // Process lead: save to database and distribute to matching vendors
+    // Process lead: save to database and distribute to matching facilities
     const distributionResult = await processAndDistributeLead({
       leadId: leadId,
       name: sanitizedData.name,
@@ -223,8 +223,8 @@ export async function POST(request: NextRequest) {
       source: sanitizedData.source,
     })
 
-    const totalVendorsNotified = distributionResult.claimedVendorsNotified + distributionResult.unclaimedVendorsNotified
-    console.log(`✅ Lead processed. Vendors notified: ${totalVendorsNotified} (${distributionResult.claimedVendorsNotified} claimed, ${distributionResult.unclaimedVendorsNotified} unclaimed)`)
+    const totalFacilitiesNotified = distributionResult.claimedFacilitiesNotified + distributionResult.unclaimedFacilitiesNotified
+    console.log(`✅ Lead processed. Facilities notified: ${totalFacilitiesNotified} (${distributionResult.claimedFacilitiesNotified} claimed, ${distributionResult.unclaimedFacilitiesNotified} unclaimed)`)
     if (distributionResult.vendorNames.length > 0) {
       console.log(`   Notified: ${distributionResult.vendorNames.join(', ')}`)
     }
@@ -239,12 +239,12 @@ export async function POST(request: NextRequest) {
       try {
         console.log('Sending to Make.com webhook...')
         // Add vendor notification info to webhook data
-        const webhookDataWithVendors = {
+        const webhookDataWithFacilities = {
           ...webhookData,
-          vendorsSentTo: distributionResult.vendorNames.join(', ') || 'None (no vendors in area)',
-          vendorsNotifiedCount: totalVendorsNotified.toString(),
-          claimedVendorsNotified: distributionResult.claimedVendorsNotified.toString(),
-          unclaimedVendorsNotified: distributionResult.unclaimedVendorsNotified.toString(),
+          facilitiesSentTo: distributionResult.vendorNames.join(', ') || 'None (no facilities in area)',
+          facilitiesNotifiedCount: totalFacilitiesNotified.toString(),
+          claimedFacilitiesNotified: distributionResult.claimedFacilitiesNotified.toString(),
+          unclaimedFacilitiesNotified: distributionResult.unclaimedFacilitiesNotified.toString(),
         }
 
         const webhookResponse = await fetch(webhookUrl, {
@@ -253,7 +253,7 @@ export async function POST(request: NextRequest) {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
           },
-          body: JSON.stringify(webhookDataWithVendors),
+          body: JSON.stringify(webhookDataWithFacilities),
         })
 
         if (!webhookResponse.ok) {
@@ -271,16 +271,16 @@ export async function POST(request: NextRequest) {
       success: true,
       message: 'Quote request submitted successfully',
       leadId,
-      vendorsNotified: totalVendorsNotified,
-      claimedVendorsNotified: distributionResult.claimedVendorsNotified,
-      unclaimedVendorsNotified: distributionResult.unclaimedVendorsNotified,
+      facilitiesNotified: totalFacilitiesNotified,
+      claimedFacilitiesNotified: distributionResult.claimedFacilitiesNotified,
+      unclaimedFacilitiesNotified: distributionResult.unclaimedFacilitiesNotified,
     })
   } catch (error) {
     console.error('Quote API error:', error)
     return NextResponse.json(
       {
         success: false,
-        error: 'An error occurred while processing your request. Please try again or email us at hello@teambuildingmy.com',
+        error: 'An error occurred while processing your request. Please try again or email us at hello@nursinghomemy.com',
       },
       { status: 500 }
     )

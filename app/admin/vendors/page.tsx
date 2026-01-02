@@ -3,20 +3,20 @@ export const dynamic = 'force-dynamic'
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
 
-interface VendorData {
+interface FacilityData {
   user_id: string
   email: string
   is_premium: boolean
   listing_count: number
-  company_names: string[]
+  nursing_home_names: string[]
 }
 
-async function getVendors() {
+async function getFacilities() {
   const supabase = await createClient()
 
   // Get all claimed listings
   const { data: claimedListings, error } = await supabase
-    .from('companies')
+    .from('nursing_homes')
     .select('user_id, name, contact_email, is_premium, created_at')
     .not('user_id', 'is', null)
 
@@ -25,43 +25,43 @@ async function getVendors() {
   }
 
   // Group by user_id
-  const vendorsMap = new Map<string, VendorData>()
+  const facilitiesMap = new Map<string, FacilityData>()
 
   claimedListings.forEach((listing) => {
     if (!listing.user_id) return
 
-    if (!vendorsMap.has(listing.user_id)) {
-      vendorsMap.set(listing.user_id, {
+    if (!facilitiesMap.has(listing.user_id)) {
+      facilitiesMap.set(listing.user_id, {
         user_id: listing.user_id,
         email: listing.contact_email || '',
         is_premium: listing.is_premium,
         listing_count: 0,
-        company_names: [],
+        nursing_home_names: [],
       })
     }
 
-    const vendor = vendorsMap.get(listing.user_id)!
+    const vendor = facilitiesMap.get(listing.user_id)!
     vendor.listing_count++
-    vendor.company_names.push(listing.name)
+    vendor.nursing_home_names.push(listing.name)
     if (listing.is_premium) {
       vendor.is_premium = true
     }
   })
 
-  return Array.from(vendorsMap.values())
+  return Array.from(facilitiesMap.values())
 }
 
-export default async function AdminVendorsPage() {
-  const vendors = await getVendors()
+export default async function AdminFacilitiesPage() {
+  const facilities = await getFacilities()
 
-  const premiumVendors = vendors.filter((v) => v.is_premium)
-  const freeVendors = vendors.filter((v) => !v.is_premium)
+  const premiumFacilities = facilities.filter((v) => v.is_premium)
+  const freeFacilities = facilities.filter((v) => !v.is_premium)
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">
-          Vendors ({vendors.length})
+          Facilities ({facilities.length})
         </h1>
       </div>
 
@@ -71,10 +71,10 @@ export default async function AdminVendorsPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-zinc-600 dark:text-zinc-400">
-                Premium Vendors
+                Premium Facilities
               </p>
               <p className="mt-1 text-2xl font-bold text-zinc-900 dark:text-zinc-50">
-                {premiumVendors.length}
+                {premiumFacilities.length}
               </p>
             </div>
             <span className="text-2xl">💰</span>
@@ -85,10 +85,10 @@ export default async function AdminVendorsPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-zinc-600 dark:text-zinc-400">
-                Free Plan Vendors
+                Free Plan Facilities
               </p>
               <p className="mt-1 text-2xl font-bold text-zinc-900 dark:text-zinc-50">
-                {freeVendors.length}
+                {freeFacilities.length}
               </p>
             </div>
             <span className="text-2xl">👥</span>
@@ -96,7 +96,7 @@ export default async function AdminVendorsPage() {
         </div>
       </div>
 
-      {/* Vendors Table */}
+      {/* Facilities Table */}
       <div className="overflow-x-auto rounded-lg border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
         <table className="w-full">
           <thead className="border-b border-zinc-200 bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900/50">
@@ -119,14 +119,14 @@ export default async function AdminVendorsPage() {
             </tr>
           </thead>
           <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800">
-            {vendors.length === 0 ? (
+            {facilities.length === 0 ? (
               <tr>
                 <td colSpan={5} className="px-4 py-8 text-center text-zinc-500 dark:text-zinc-500">
-                  No vendors found
+                  No facilities found
                 </td>
               </tr>
             ) : (
-              vendors.map((vendor) => (
+              facilities.map((vendor) => (
                 <tr key={vendor.user_id} className="hover:bg-zinc-50 dark:hover:bg-zinc-900/50">
                   <td className="px-4 py-3">
                     <div className="font-medium text-zinc-900 dark:text-zinc-50">
@@ -151,12 +151,12 @@ export default async function AdminVendorsPage() {
                   </td>
                   <td className="px-4 py-3">
                     <div className="max-w-xs truncate text-sm text-zinc-600 dark:text-zinc-400">
-                      {vendor.company_names.join(', ')}
+                      {vendor.nursing_home_names.join(', ')}
                     </div>
                   </td>
                   <td className="px-4 py-3 text-right">
                     <Link
-                      href={`/admin/vendors/${vendor.user_id}`}
+                      href={`/admin/facilities/${vendor.user_id}`}
                       className="rounded-md border border-zinc-300 px-3 py-1 text-xs font-medium text-zinc-700 transition-colors hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
                     >
                       View Details

@@ -6,17 +6,17 @@ export default function SubmitPage() {
       <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="text-center">
           <h1 className="mb-6 text-4xl font-bold text-zinc-900 dark:text-zinc-50">
-            Submit Your Company
+            Submit Your Facility
           </h1>
           <p className="mb-12 text-lg text-zinc-600 dark:text-zinc-400">
-            Join Malaysia's leading team building directory and reach thousands of potential clients.
+            Join Malaysia's leading nursing home directory and reach thousands of families seeking quality care.
           </p>
         </div>
 
         {/* Benefits Section */}
         <div className="mb-12 rounded-lg border border-zinc-200 bg-white p-8 dark:border-zinc-800 dark:bg-zinc-900">
           <h2 className="mb-6 text-2xl font-semibold text-zinc-900 dark:text-zinc-50">
-            Why List Your Company?
+            Why List Your Facility?
           </h2>
 
           <div className="grid gap-6 md:grid-cols-2">
@@ -25,7 +25,7 @@ export default function SubmitPage() {
                 ✓ Increased Visibility
               </h3>
               <p className="text-sm text-zinc-600 dark:text-zinc-400">
-                Get discovered by businesses looking for team building services across Malaysia
+                Get discovered by families looking for quality elderly care services across Malaysia
               </p>
             </div>
             <div>
@@ -33,7 +33,7 @@ export default function SubmitPage() {
                 ✓ Direct Inquiries
               </h3>
               <p className="text-sm text-zinc-600 dark:text-zinc-400">
-                Receive inquiries directly from interested clients through our platform
+                Receive inquiries directly from interested families through our platform
               </p>
             </div>
             <div>
@@ -46,10 +46,10 @@ export default function SubmitPage() {
             </div>
             <div>
               <h3 className="mb-2 font-semibold text-zinc-900 dark:text-zinc-50">
-                ✓ HRDF Badge
+                ✓ Quality Badge
               </h3>
               <p className="text-sm text-zinc-600 dark:text-zinc-400">
-                Showcase your HRDF claimable status to attract corporate clients
+                Showcase your quality care status to attract families
               </p>
             </div>
           </div>

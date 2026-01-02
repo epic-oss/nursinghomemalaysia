@@ -8,9 +8,9 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 
 export async function POST(request: NextRequest) {
   try {
-    const { companyId } = await request.json()
+    const { nursingHomeId } = await request.json()
 
-    if (!companyId) {
+    if (!nursingHomeId) {
       return NextResponse.json(
         { error: 'Company ID is required' },
         { status: 400 }
@@ -30,9 +30,9 @@ export async function POST(request: NextRequest) {
 
     // Verify the user owns this company
     const { data: company, error: companyError } = await supabase
-      .from('companies')
+      .from('nursing_homes')
       .select('id, name, user_id')
-      .eq('id', companyId)
+      .eq('id', nursingHomeId)
       .eq('user_id', user.id)
       .single()
 
@@ -48,10 +48,10 @@ export async function POST(request: NextRequest) {
       mode: 'subscription',
       payment_method_types: ['card'],
       customer_email: user.email,
-      client_reference_id: `${user.id}_${companyId}`,
+      client_reference_id: `${user.id}_${nursingHomeId}`,
       metadata: {
         user_id: user.id,
-        company_id: companyId,
+        nursing_home_id: nursingHomeId,
         company_name: company.name,
       },
       line_items: [

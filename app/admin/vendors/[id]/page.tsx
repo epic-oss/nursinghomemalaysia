@@ -8,7 +8,7 @@ async function getVendorDetails(userId: string) {
   const supabase = await createClient()
 
   const { data: listings, error } = await supabase
-    .from('companies')
+    .from('nursing_homes')
     .select('*')
     .eq('user_id', userId)
     .order('created_at', { ascending: false })
@@ -43,10 +43,10 @@ export default async function AdminVendorDetailPage({
     <div className="space-y-6">
       {/* Back Button */}
       <Link
-        href="/admin/vendors"
+        href="/admin/facilities"
         className="inline-flex items-center gap-2 text-sm text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50"
       >
-        ← Back to Vendors
+        ← Back to Facilities
       </Link>
 
       {/* Vendor Info */}
@@ -119,7 +119,7 @@ export default async function AdminVendorDetailPage({
 
               <div className="flex items-center gap-2">
                 <Link
-                  href={`/listings/company/${listing.slug}`}
+                  href={`/listings/nursing_home/${listing.slug}`}
                   target="_blank"
                   className="rounded-md border border-zinc-300 px-3 py-1 text-xs font-medium text-zinc-700 transition-colors hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
                 >

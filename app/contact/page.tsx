@@ -14,10 +14,10 @@ export default function ContactPage() {
               <h2 className="mb-2 text-xl font-semibold text-zinc-900 dark:text-zinc-50">Email</h2>
               <p className="text-zinc-600 dark:text-zinc-400">
                 <a
-                  href="mailto:hello@teambuildingmy.com"
+                  href="mailto:hello@nursinghomemalaysia.com"
                   className="text-zinc-900 underline dark:text-zinc-50"
                 >
-                  hello@teambuildingmy.com
+                  hello@nursinghomemalaysia.com
                 </a>
               </p>
             </div>
@@ -27,10 +27,10 @@ export default function ContactPage() {
                 For Business Inquiries
               </h2>
               <p className="text-zinc-600 dark:text-zinc-400">
-                If you're a team building provider interested in listing your company, please visit
+                If you're a nursing home operator interested in listing your facility, please visit
                 our{' '}
                 <a href="/submit" className="text-zinc-900 underline dark:text-zinc-50">
-                  Submit Your Company
+                  Submit Your Facility
                 </a>{' '}
                 page.
               </p>

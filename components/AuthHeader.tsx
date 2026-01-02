@@ -44,7 +44,7 @@ export function AuthHeader() {
         <div className="flex lg:flex-1">
           <Link href="/" className="-m-1.5 p-1.5">
             <span className="text-xl font-bold text-zinc-900 dark:text-zinc-50">
-              Team Building MY
+              Nursing Home MY
             </span>
           </Link>
         </div>

@@ -63,7 +63,7 @@ const variantConfig = {
  * ```markdown
  * > **📋 Get Your Custom Quote**
  * >
- * > Planning team building? Get personalized quotes from verified providers.
+ * > Planning nursing home? Get personalized quotes from verified providers.
  * >
  * > **[Get Free Quotes →](/calculator)**
  * ```
@@ -81,7 +81,7 @@ export function GuideCTA({
 
   // Build contextual defaults
   const displayHeadline = headline || (context
-    ? `Planning ${context} Team Building?`
+    ? `Planning ${context} Nursing Home?`
     : config.defaultHeadline)
 
   const displayDescription = description || (context

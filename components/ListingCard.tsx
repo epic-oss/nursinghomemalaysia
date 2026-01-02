@@ -2,13 +2,13 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { Company, Venue, Activity, ListingType } from '@/lib/types'
+import { NursingHome, Venue, Activity, ListingType } from '@/lib/types'
 import { getHighResLogoUrl } from '@/lib/image-utils'
 import { useState } from 'react'
 import { ClaimModal } from './ClaimModal'
 
 interface ListingCardProps {
-  listing: Company | Venue | Activity
+  listing: NursingHome | Venue | Activity
   type: ListingType
   currentUserId?: string | null
 }
@@ -22,10 +22,10 @@ export function ListingCard({ listing, type, currentUserId }: ListingCardProps) 
     listing.description.length > 150
       ? `${listing.description.slice(0, 150)}...`
       : listing.description
-  const isCompany = type === 'company'
+  const isCompany = type === 'nursing_home'
   const company = isCompany ? (listing as Company) : null
   const logoUrl = getHighResLogoUrl(company?.logo_url || null)
-  const hrdfClaimable = !!company?.hrdf_claimable
+  const hrdfClaimable = !!company?.
   const isUnclaimed = isCompany && !company?.user_id
   const isOwnedByCurrentUser = isCompany && company?.user_id === currentUserId
   let ratingDisplay: string | null = null
@@ -48,7 +48,7 @@ export function ListingCard({ listing, type, currentUserId }: ListingCardProps) 
 
   // Type-specific details
   let details: string[] = []
-  if (type === 'company') {
+  if (type === 'nursing_home') {
     const company = listing as Company
     details = [
       company.state,
@@ -72,7 +72,7 @@ export function ListingCard({ listing, type, currentUserId }: ListingCardProps) 
 
   // Generate the appropriate URL based on listing type
   const listingUrl = isCompany && company?.slug
-    ? `/listings/company/${company.slug}`
+    ? `/listings/nursing_home/${company.slug}`
     : `/listings/${type}/${listing.id}`
 
   const handleClaimClick = (e: React.MouseEvent) => {

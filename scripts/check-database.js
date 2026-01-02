@@ -25,7 +25,7 @@ async function checkDatabase() {
     // Check companies table
     console.log('1️⃣ Checking companies table...')
     const { data: companies, error: companiesError, count } = await supabase
-      .from('companies')
+      .from('nursing_homes')
       .select('*', { count: 'exact' })
       .limit(5)
 
@@ -53,7 +53,7 @@ async function checkDatabase() {
     // Check for missing slugs
     console.log('\n2️⃣ Checking for companies without slugs...')
     const { data: noSlug, error: slugError } = await supabase
-      .from('companies')
+      .from('nursing_homes')
       .select('id, name, slug')
       .is('slug', null)
       .limit(10)
@@ -73,7 +73,7 @@ async function checkDatabase() {
     // Check table schema
     console.log('\n3️⃣ Checking if required columns exist...')
     const { data: sample, error: sampleError } = await supabase
-      .from('companies')
+      .from('nursing_homes')
       .select('id, name, slug, featured, is_featured, is_premium, user_id')
       .limit(1)
       .single()
@@ -96,7 +96,7 @@ async function checkDatabase() {
     // Test the exact query used by the app
     console.log('\n4️⃣ Testing production query (same as homepage)...')
     const { data: testQuery, error: testError } = await supabase
-      .from('companies')
+      .from('nursing_homes')
       .select('*')
       .order('is_premium', { ascending: false })
       .order('is_featured', { ascending: false })
@@ -131,7 +131,7 @@ async function checkDatabase() {
     )
 
     const { data: publicData, error: publicError } = await publicSupabase
-      .from('companies')
+      .from('nursing_homes')
       .select('*')
       .limit(5)
 
@@ -141,7 +141,7 @@ async function checkDatabase() {
       console.error('\nTo fix: Run this SQL in Supabase SQL Editor:')
       console.error(`
 CREATE POLICY "Anyone can view companies"
-  ON companies FOR SELECT
+  ON nursing_homes FOR SELECT
   TO public
   USING (true);
       `)
