@@ -108,7 +108,6 @@ export async function POST(request: NextRequest) {
         website: website || null,
         location,
         state,
-        ,
         updated_at: new Date().toISOString(),
       })
       .eq('id', listingId)

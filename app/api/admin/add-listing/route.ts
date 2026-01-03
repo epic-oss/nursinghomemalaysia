@@ -62,7 +62,6 @@ export async function POST(request: NextRequest) {
         contact_email,
         website: website || null,
         description,
-        ,
         featured: false,
         is_featured: false,
         is_premium: false,

@@ -100,7 +100,6 @@ export async function POST(request: NextRequest) {
         state,
         average_rating: parsedRating,
         review_count: parsedReviewCount,
-        ,
         is_premium,
         is_featured,
         updated_at: new Date().toISOString(),

@@ -374,16 +374,6 @@ export function AdminListingForm({ listing }: AdminListingFormProps) {
           <label className="flex items-center gap-2">
             <input
               type="checkbox"
-              checked={formData.
-              onChange={(e) => setFormData({ ...formData, 
-              className="h-4 w-4 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900 dark:border-zinc-700"
-            />
-            <span className="text-sm text-zinc-900 dark:text-zinc-50">HRDF Claimable</span>
-          </label>
-
-          <label className="flex items-center gap-2">
-            <input
-              type="checkbox"
               checked={formData.is_premium}
               onChange={(e) => setFormData({ ...formData, is_premium: e.target.checked })}
               className="h-4 w-4 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900 dark:border-zinc-700"

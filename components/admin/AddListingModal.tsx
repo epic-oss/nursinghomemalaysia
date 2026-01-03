@@ -80,8 +80,7 @@ export function AddListingModal({ isOpen, onClose }: AddListingModalProps) {
         contact_phone: '',
         contact_email: '',
         website: '',
-        description: '',
-        ,
+        description: ''
       })
 
       // Close modal and refresh
