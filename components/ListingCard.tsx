@@ -2,13 +2,13 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { NursingHome, Venue, Activity, ListingType } from '@/lib/types'
+import { NursingHome, Facility, Service, ListingType } from '@/lib/types'
 import { getHighResLogoUrl } from '@/lib/image-utils'
 import { useState } from 'react'
 import { ClaimModal } from './ClaimModal'
 
 interface ListingCardProps {
-  listing: NursingHome | Venue | Activity
+  listing: NursingHome | Facility | Service
   type: ListingType
   currentUserId?: string | null
 }
@@ -53,19 +53,19 @@ export function ListingCard({ listing, type, currentUserId }: ListingCardProps) 
       nursingHome.state,
       nursingHome.price_range || 'Contact for pricing',
     ]
-  } else if (type === 'venue') {
-    const venue = listing as Venue
+  } else if (type === 'facility') {
+    const facility = listing as Facility
     details = [
-      `${venue.city}, ${venue.state}`,
-      venue.capacity ? `Capacity: ${venue.capacity}` : '',
-      venue.price_range || 'Contact for pricing',
+      `${facility.city}, ${facility.state}`,
+      facility.capacity ? `Capacity: ${facility.capacity}` : '',
+      facility.price_range || 'Contact for pricing',
     ].filter(Boolean)
-  } else if (type === 'activity') {
-    const activity = listing as Activity
+  } else if (type === 'service') {
+    const service = listing as Service
     details = [
-      activity.category,
-      activity.duration || '',
-      activity.price_range || 'Contact for pricing',
+      service.category,
+      service.duration || '',
+      service.price_range || 'Contact for pricing',
     ].filter(Boolean)
   }
 

@@ -26,7 +26,7 @@ interface MatchedVendor {
   name: string
   email: string
   state: string
-  activities: string | null
+  services: string | null
 }
 
 interface UnclaimedVendor {
@@ -71,7 +71,7 @@ async function findClaimedFacilities(location: string): Promise<MatchedVendor[]>
   // Query claimed facilities in matching states
   const { data: facilities, error } = await supabase
     .from('nursing_homes')
-    .select('id, name, contact_email, state, activities, user_id')
+    .select('id, name, contact_email, state, services, user_id')
     .not('user_id', 'is', null) // Only claimed facilities
     .in('state', stateMatches)
 
@@ -99,7 +99,7 @@ async function findClaimedFacilities(location: string): Promise<MatchedVendor[]>
     name: v.name,
     email: v.contact_email,
     state: v.state,
-    activities: v.services,
+    services: v.services,
   }))
 }
 

@@ -7,14 +7,13 @@ import { ContactForm } from '@/components/ContactForm'
 import { NursingHome } from '@/lib/types'
 import { getHighResLogoUrl } from '@/lib/image-utils'
 
-interface CompanyDetailContentProps {
+interface NursingHomeDetailContentProps {
   company: NursingHome
 }
 
 export function NursingHomeDetailContent({ company }: NursingHomeDetailContentProps) {
   const [logoError, setLogoError] = useState(false)
 
-  const hrdfClaimable = !!company.
   let ratingDisplay: string | null = null
   if (
     typeof company.average_rating === 'number' &&
@@ -69,11 +68,6 @@ export function NursingHomeDetailContent({ company }: NursingHomeDetailContentPr
                     Featured
                   </span>
                 )}
-                {hrdfClaimable && (
-                  <span className="rounded-full bg-green-600/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-green-700 dark:bg-green-500/20 dark:text-green-100">
-                    HRDF Claimable
-                  </span>
-                )}
               </div>
             </div>
 
@@ -126,11 +120,7 @@ export function NursingHomeDetailContent({ company }: NursingHomeDetailContentPr
                 Services Offered
               </h2>
               {company.services && company.services.length > 0 ? (
-                <ul className="list-inside list-disc space-y-1 text-zinc-600 dark:text-zinc-400">
-                  {company.services.map((service, index) => (
-                    <li key={index}>{service}</li>
-                  ))}
-                </ul>
+                <p className="text-zinc-600 dark:text-zinc-400">{company.services}</p>
               ) : (
                 <p className="text-zinc-600 dark:text-zinc-400">Contact for details</p>
               )}

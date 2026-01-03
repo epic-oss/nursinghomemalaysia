@@ -13,7 +13,6 @@ export interface NursingHome {
   location: string
   state: string
   price_range: string | null
-  services: string[] | null
   category: string | null
   services: string | null
   featured: boolean

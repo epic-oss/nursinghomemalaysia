@@ -6,7 +6,9 @@
       "Bash(git push:*)",
       "Bash(node scripts/rebrand-automation.js:*)",
       "Bash(git fetch:*)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm install)"
     ]
   }
 }

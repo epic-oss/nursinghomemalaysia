@@ -177,11 +177,7 @@ export default async function ListingDetailPage({ params }: PageProps) {
                   Care Services Offered
                 </h2>
                 {(listing as NursingHome).services && (listing as NursingHome).services!.length > 0 ? (
-                  <ul className="list-inside list-disc space-y-1 text-zinc-600 dark:text-zinc-400">
-                    {(listing as NursingHome).services!.map((service, index) => (
-                      <li key={index}>{service}</li>
-                    ))}
-                  </ul>
+                  <p className="text-zinc-600 dark:text-zinc-400">{(listing as NursingHome).services}</p>
                 ) : (
                   <p className="text-zinc-600 dark:text-zinc-400">Contact for details</p>
                 )}
