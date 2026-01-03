@@ -17,7 +17,7 @@ interface FacilityData {
   id: string
   name: string
   state: string | null
-  activities: string | null
+  services: string | null
   contact_email: string | null
   user_id: string | null
 }
@@ -29,7 +29,7 @@ async function getVendor(facilityId: string): Promise<FacilityData | null> {
 
   const { data, error } = await supabase
     .from('nursing_homes')
-    .select('id, name, state, activities, contact_email, user_id')
+    .select('id, name, state, services, contact_email, user_id')
     .eq('id', facilityId)
     .single()
 
