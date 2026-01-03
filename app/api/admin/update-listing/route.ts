@@ -19,9 +19,8 @@ export async function POST(request: NextRequest) {
       state,
       average_rating,
       review_count,
-      ,
       is_premium,
-      is_featured,
+      is_featured
     } = body
 
     if (!listingId) {

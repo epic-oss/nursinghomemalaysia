@@ -22,8 +22,7 @@ export async function POST(request: NextRequest) {
       contact_phone,
       contact_email,
       website,
-      description,
-      ,
+      description
     } = body
 
     // Validate required fields

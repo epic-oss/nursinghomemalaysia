@@ -23,9 +23,8 @@ export function ListingCard({ listing, type, currentUserId }: ListingCardProps) 
       ? `${listing.description.slice(0, 150)}...`
       : listing.description
   const isCompany = type === 'nursing_home'
-  const company = isCompany ? (listing as Company) : null
+  const company = isCompany ? (listing as NursingHome) : null
   const logoUrl = getHighResLogoUrl(company?.logo_url || null)
-  const hrdfClaimable = !!company?.
   const isUnclaimed = isCompany && !company?.user_id
   const isOwnedByCurrentUser = isCompany && company?.user_id === currentUserId
   let ratingDisplay: string | null = null
@@ -49,10 +48,10 @@ export function ListingCard({ listing, type, currentUserId }: ListingCardProps) 
   // Type-specific details
   let details: string[] = []
   if (type === 'nursing_home') {
-    const company = listing as Company
+    const nursingHome = listing as NursingHome
     details = [
-      company.state,
-      company.price_range || 'Contact for pricing',
+      nursingHome.state,
+      nursingHome.price_range || 'Contact for pricing',
     ]
   } else if (type === 'venue') {
     const venue = listing as Venue
@@ -144,11 +143,6 @@ export function ListingCard({ listing, type, currentUserId }: ListingCardProps) 
                 </div>
               )}
             </div>
-            {hrdfClaimable && (
-              <span className="rounded-full bg-green-600/10 px-3 py-1 text-xs font-semibold text-green-700 dark:bg-green-500/20 dark:text-green-100">
-                HRDF Claimable
-              </span>
-            )}
           </div>
           <p className="mb-3 text-sm text-zinc-600 dark:text-zinc-400">{description}</p>
           <div className="flex flex-wrap gap-2">

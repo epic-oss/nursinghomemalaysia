@@ -12,7 +12,6 @@ async function getHRDFProviders(): Promise<NursingHome[]> {
   const { data } = await supabase
     .from('nursing_homes')
     .select('*')
-    .eq(', true)
     .order('average_rating', { ascending: false, nullsFirst: false })
     .order('review_count', { ascending: false, nullsFirst: false })
     .limit(10)

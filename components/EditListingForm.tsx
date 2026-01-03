@@ -21,8 +21,7 @@ export function EditListingForm({ listing }: EditListingFormProps) {
     contact_email: listing.contact_email || '',
     website: listing.website || '',
     location: listing.location || '',
-    state: listing.state || '',
-    ,
+    state: listing.state || ''
   })
 
   const [errors, setErrors] = useState<Record<string, string>>({})
@@ -307,23 +306,6 @@ export function EditListingForm({ listing }: EditListingFormProps) {
           </div>
         </div>
 
-        {/* HRDF Claimable */}
-        <div>
-          <label className="flex items-center gap-3">
-            <input
-              type="checkbox"
-              checked={formData.
-              onChange={(e) => setFormData({ ...formData, 
-              className="h-5 w-5 rounded border-zinc-300 text-blue-600 focus:ring-blue-500"
-            />
-            <span className="text-sm font-medium text-zinc-900 dark:text-zinc-50">
-              HRDF Claimable Programs
-            </span>
-          </label>
-          <p className="mt-1 ml-8 text-xs text-zinc-500 dark:text-zinc-400">
-            Check this if your company is registered with HRDF and can provide claimable programs
-          </p>
-        </div>
 
         {/* Action Buttons */}
         <div className="flex flex-col gap-4 pt-6">

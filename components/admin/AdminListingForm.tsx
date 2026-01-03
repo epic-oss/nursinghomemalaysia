@@ -27,9 +27,8 @@ export function AdminListingForm({ listing }: AdminListingFormProps) {
     state: listing.state || '',
     average_rating: listing.average_rating ?? '',
     review_count: listing.review_count ?? '',
-    ,
     is_premium: listing.is_premium || false,
-    is_featured: listing.is_featured || false,
+    is_featured: listing.is_featured || false
   })
 
   const malaysianStates = [

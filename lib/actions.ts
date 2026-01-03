@@ -55,9 +55,8 @@ export async function submitVendorApplication(formData: FormData) {
       company_type: formData.get('companyType') as string,
       description: formData.get('description') as string,
       activities_offered: activities,
-      ,
       referral_source: formData.get('referralSource') as string || null,
-      status: 'pending',
+      status: 'pending'
     }
 
     const { error } = await supabase.from('vendor_submissions').insert(submission)

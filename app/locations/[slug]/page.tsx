@@ -255,11 +255,6 @@ export default async function LocationPage({ params }: LocationPageProps) {
 
                       {/* Tags */}
                       <div className="flex flex-wrap gap-2">
-                        {company.
-                          <span className="inline-flex items-center rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-800 dark:bg-green-900 dark:text-green-200">
-                            HRDF Claimable
-                          </span>
-                        )}
                         {company.is_premium && (
                           <span className="inline-flex items-center rounded-full bg-yellow-100 px-3 py-1 text-xs font-medium text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">
                             Premium Provider
