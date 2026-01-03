@@ -4,7 +4,9 @@
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Bash(git push:*)",
-      "Bash(node scripts/rebrand-automation.js:*)"
+      "Bash(node scripts/rebrand-automation.js:*)",
+      "Bash(git fetch:*)",
+      "Bash(cat:*)"
     ]
   }
 }
