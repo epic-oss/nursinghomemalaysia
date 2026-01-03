@@ -240,21 +240,6 @@ export function AddListingModal({ isOpen, onClose }: AddListingModalProps) {
             />
           </div>
 
-          {/* HRDF Claimable */}
-          <div className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              id="
-              name="
-              checked={formData.
-              onChange={handleChange}
-              className="h-4 w-4 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900 dark:border-zinc-700"
-            />
-            <label htmlFor="
-              HRDF Claimable
-            </label>
-          </div>
-
           {/* Actions */}
           <div className="flex gap-3 pt-4">
             <button
