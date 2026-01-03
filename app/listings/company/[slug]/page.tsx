@@ -113,5 +113,5 @@ export default async function NursingHomeDetailPage({ params }: PageProps) {
     notFound()
   }
 
-  return <CompanyDetailContent company={nursing_home} />
+  return <NursingHomeDetailContent company={nursing_home} />
 }
