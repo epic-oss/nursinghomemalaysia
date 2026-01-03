@@ -3,23 +3,45 @@ import { createClient } from '@supabase/supabase-js'
 import Stripe from 'stripe'
 
 // Initialize Stripe with secret key
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2025-11-17.clover',
-})
+const stripe = process.env.STRIPE_SECRET_KEY
+  ? new Stripe(process.env.STRIPE_SECRET_KEY, {
+      apiVersion: '2025-11-17.clover',
+    })
+  : null
 
 // Initialize Supabase with service role key for admin operations
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!,
-  {
-    auth: {
-      autoRefreshToken: false,
-      persistSession: false,
-    },
+const getSupabaseClient = () => {
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    return null
   }
-)
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.SUPABASE_SERVICE_ROLE_KEY,
+    {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false,
+      },
+    }
+  )
+}
 
 export async function POST(request: NextRequest) {
+  if (!stripe) {
+    return NextResponse.json(
+      { error: 'Payment system not configured' },
+      { status: 503 }
+    )
+  }
+
+  const supabase = getSupabaseClient()
+  if (!supabase) {
+    return NextResponse.json(
+      { error: 'Database not configured' },
+      { status: 503 }
+    )
+  }
+
   const body = await request.text()
   const signature = request.headers.get('stripe-signature')
 
