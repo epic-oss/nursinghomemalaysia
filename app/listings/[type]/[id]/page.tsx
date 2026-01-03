@@ -177,7 +177,11 @@ export default async function ListingDetailPage({ params }: PageProps) {
                   Care Services Offered
                 </h2>
                 {(listing as NursingHome).services && (listing as NursingHome).services!.length > 0 ? (
-                  <p className="text-zinc-600 dark:text-zinc-400">{(listing as NursingHome).services}</p>
+                  <p className="text-zinc-600 dark:text-zinc-400">
+                    {Array.isArray((listing as NursingHome).services)
+                      ? ((listing as NursingHome).services as unknown as string[]).join(', ')
+                      : (listing as NursingHome).services}
+                  </p>
                 ) : (
                   <p className="text-zinc-600 dark:text-zinc-400">Contact for details</p>
                 )}

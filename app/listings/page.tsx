@@ -25,11 +25,15 @@ async function ListingsContent({ searchParams }: { searchParams: SearchParams })
   // Fetch all nursing homes to extract unique services
   const { data: allNursingHomes } = await supabase.from('nursing_homes').select('services')
 
-  // Extract unique services from comma-separated strings
+  // Extract unique services from comma-separated strings or arrays
   const uniqueServices = new Set<string>()
   allNursingHomes?.forEach(nursing_home => {
     if (nursing_home.services) {
-      const services = nursing_home.services.split(',').map((s: string) => s.trim())
+      const services = Array.isArray(nursing_home.services)
+        ? nursing_home.services
+        : typeof nursing_home.services === 'string'
+          ? nursing_home.services.split(',').map((s: string) => s.trim())
+          : []
       services.forEach((s: string) => {
         if (s) uniqueServices.add(s)
       })
