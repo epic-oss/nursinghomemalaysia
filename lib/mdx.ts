@@ -40,7 +40,7 @@ export function getBlogPosts(): BlogPost[] {
   const fileNames = fs.readdirSync(postsDirectory)
 
   const posts = fileNames
-    .filter(fileName => fileName.endsWith('.md'))
+    .filter(fileName => fileName.endsWith('.md') && !fileName.toUpperCase().startsWith('README'))
     .map(fileName => {
       const slug = fileName.replace(/\.md$/, '')
       const fullPath = path.join(postsDirectory, fileName)
@@ -98,7 +98,7 @@ export function getLocationPages(): LocationPage[] {
   const fileNames = fs.readdirSync(locationsDirectory)
 
   const locations = fileNames
-    .filter(fileName => fileName.endsWith('.md'))
+    .filter(fileName => fileName.endsWith('.md') && !fileName.toUpperCase().startsWith('README'))
     .map(fileName => {
       const slug = fileName.replace(/\.md$/, '')
       const fullPath = path.join(locationsDirectory, fileName)
