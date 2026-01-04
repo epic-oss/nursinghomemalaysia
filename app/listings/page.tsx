@@ -55,8 +55,9 @@ async function ListingsContent({ searchParams }: { searchParams: SearchParams })
     query = query.ilike('category', `%${category}%`)
   }
   if (service) {
-    // Use JSONB array containment for proper filtering
-    query = query.contains('services', [service])
+    // Match service in JSON array format: ["Service One", "Service Two"]
+    // Using ilike to match the service name with quotes for JSON arrays
+    query = query.or(`services.ilike.%"${service}"%,services.ilike.%${service}%`)
   }
 
   const { data: nursing_homes } = await query
