@@ -70,13 +70,6 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    if (!body.company || body.company.length < 2) {
-      return NextResponse.json(
-        { success: false, error: 'Please enter your company name' },
-        { status: 400 }
-      )
-    }
-
     if (!validateEmail(body.email)) {
       return NextResponse.json(
         { success: false, error: 'Please enter a valid email address' },
@@ -91,17 +84,37 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    if (!body.participants || body.participants < 10 || body.participants > 500) {
+    if (!body.patientAge || body.patientAge < 1 || body.patientAge > 120) {
       return NextResponse.json(
-        { success: false, error: 'Participants must be between 10 and 500' },
+        { success: false, error: 'Please enter a valid patient age' },
         { status: 400 }
       )
     }
 
-    // Date is only required if not flexible
-    if (!body.flexibleDates && !body.date) {
+    if (!body.relationship) {
       return NextResponse.json(
-        { success: false, error: 'Please select a date or check flexible dates' },
+        { success: false, error: 'Please select your relationship to patient' },
+        { status: 400 }
+      )
+    }
+
+    if (!body.careLevel) {
+      return NextResponse.json(
+        { success: false, error: 'Please select care level needed' },
+        { status: 400 }
+      )
+    }
+
+    if (!body.stayType) {
+      return NextResponse.json(
+        { success: false, error: 'Please select type of stay' },
+        { status: 400 }
+      )
+    }
+
+    if (!body.mobilityLevel) {
+      return NextResponse.json(
+        { success: false, error: 'Please select mobility level' },
         { status: 400 }
       )
     }
@@ -113,16 +126,9 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    if (!body.duration) {
+    if (!body.timeline) {
       return NextResponse.json(
-        { success: false, error: 'Please select a duration' },
-        { status: 400 }
-      )
-    }
-
-    if (!body.hrdf) {
-      return NextResponse.json(
-        { success: false, error: 'Please select HRDF option' },
+        { success: false, error: 'Please select a timeline' },
         { status: 400 }
       )
     }
@@ -130,69 +136,47 @@ export async function POST(request: NextRequest) {
     // Sanitize inputs
     const sanitizedData = {
       name: sanitizeInput(body.name),
-      company: sanitizeInput(body.company),
       email: sanitizeInput(body.email),
       phone: sanitizeInput(body.phone),
-      participants: parseInt(body.participants),
-      date: body.date,
-      flexibleDates: !!body.flexibleDates,
+      patientAge: parseInt(body.patientAge),
+      relationship: sanitizeInput(body.relationship),
+      careLevel: sanitizeInput(body.careLevel),
+      stayType: sanitizeInput(body.stayType),
+      mobilityLevel: sanitizeInput(body.mobilityLevel),
+      specialRequirements: Array.isArray(body.specialRequirements)
+        ? body.specialRequirements.map((req: string) => sanitizeInput(req))
+        : [],
       location: sanitizeInput(body.location),
-      duration: sanitizeInput(body.duration),
       budget: body.budget ? sanitizeInput(body.budget) : 'Not specified',
-      hrdf: sanitizeInput(body.hrdf),
+      timeline: sanitizeInput(body.timeline),
       additionalRequirements: body.additionalRequirements ? sanitizeInput(body.additionalRequirements) : 'None',
       source: sanitizeInput(body.source || 'unknown'),
     }
 
     // Generate Lead ID
-    const leadId = `TB${Date.now()}`
+    const leadId = `NH${Date.now()}`
 
-    // Format date for display
-    const formattedDate = sanitizedData.flexibleDates
-      ? 'Flexible'
-      : sanitizedData.date
-      ? new Date(sanitizedData.date).toLocaleDateString('en-MY', {
-          day: 'numeric',
-          month: 'long',
-          year: 'numeric',
-        })
-      : 'Not specified'
-
-    // Format duration for display
-    const durationMap: Record<string, string> = {
-      'half-day': 'Half Day (4-5 hours)',
-      'full-day': 'Full Day (8 hours)',
-      '2d1n': '2D1N (Overnight)',
-      '3d2n': '3D2N (2 nights)',
-      'not-sure': 'Not Sure',
-    }
-
-    const durationLabel = durationMap[sanitizedData.duration] || sanitizedData.duration
-
-    // Format HRDF for display
-    const hrdfMap: Record<string, string> = {
-      yes: 'Yes',
-      no: 'No',
-      'not-sure': 'Not sure / Need advice',
-    }
-
-    const hrdfLabel = hrdfMap[sanitizedData.hrdf] || sanitizedData.hrdf
+    // Format special requirements for display
+    const specialReqsDisplay = sanitizedData.specialRequirements.length > 0
+      ? sanitizedData.specialRequirements.join(', ')
+      : 'None'
 
     // Prepare data for Make.com webhook - standardized field names
     const webhookData = {
       leadId: leadId,
       timestamp: new Date().toISOString(),
       fullName: sanitizedData.name,
-      companyName: sanitizedData.company,
       email: sanitizedData.email,
       phone: sanitizedData.phone,
-      participants: sanitizedData.participants.toString(),
-      preferredDate: formattedDate,
-      flexibleDates: sanitizedData.flexibleDates ? 'Yes' : 'No',
+      patientAge: sanitizedData.patientAge.toString(),
+      relationship: sanitizedData.relationship,
+      careLevel: sanitizedData.careLevel,
+      stayType: sanitizedData.stayType,
+      mobilityLevel: sanitizedData.mobilityLevel,
+      specialRequirements: specialReqsDisplay,
       location: sanitizedData.location,
-      duration: durationLabel,
       budget: sanitizedData.budget,
-      hrdfRequired: hrdfLabel,
+      timeline: sanitizedData.timeline,
       additionalRequirements: sanitizedData.additionalRequirements,
       source: sanitizedData.source,
       status: 'NEW',
@@ -205,26 +189,26 @@ export async function POST(request: NextRequest) {
 
     console.log('📤 Processing lead:', JSON.stringify(webhookData, null, 2))
 
-    // Process lead: save to database and distribute to matching facilities
+    // Process lead: save to database and distribute to matching nursing homes
     const distributionResult = await processAndDistributeLead({
       leadId: leadId,
       name: sanitizedData.name,
-      companyName: sanitizedData.company,
+      companyName: 'N/A', // Not applicable for nursing home leads
       email: sanitizedData.email,
       phone: sanitizedData.phone,
-      participants: sanitizedData.participants,
-      preferredDate: formattedDate,
-      flexibleDates: sanitizedData.flexibleDates,
+      participants: sanitizedData.patientAge, // Reuse participants field for age
+      preferredDate: sanitizedData.timeline,
+      flexibleDates: true, // Not applicable for nursing homes
       location: sanitizedData.location,
-      duration: durationLabel,
+      duration: sanitizedData.stayType,
       budget: sanitizedData.budget,
-      hrdfRequired: hrdfLabel,
-      additionalRequirements: sanitizedData.additionalRequirements,
+      hrdfRequired: 'N/A', // Not applicable for nursing homes
+      additionalRequirements: `Care Level: ${sanitizedData.careLevel}, Mobility: ${sanitizedData.mobilityLevel}, Relationship: ${sanitizedData.relationship}, Special Requirements: ${specialReqsDisplay}, Additional: ${sanitizedData.additionalRequirements}`,
       source: sanitizedData.source,
     })
 
     const totalFacilitiesNotified = distributionResult.claimedFacilitiesNotified + distributionResult.unclaimedFacilitiesNotified
-    console.log(`✅ Lead processed. Facilities notified: ${totalFacilitiesNotified} (${distributionResult.claimedFacilitiesNotified} claimed, ${distributionResult.unclaimedFacilitiesNotified} unclaimed)`)
+    console.log(`✅ Lead processed. Nursing homes notified: ${totalFacilitiesNotified} (${distributionResult.claimedFacilitiesNotified} claimed, ${distributionResult.unclaimedFacilitiesNotified} unclaimed)`)
     if (distributionResult.vendorNames.length > 0) {
       console.log(`   Notified: ${distributionResult.vendorNames.join(', ')}`)
     }
