@@ -14,13 +14,15 @@ interface FormData {
   company: string
   email: string
   phone: string
-  participants: number
-  date: string
-  flexibleDates: boolean
-  location: string
-  duration: string
+  patientAge: number
+  relationship: string
+  careLevel: string
+  stayType: string
+  mobilityLevel: string
+  specialRequirements: string[]
   budget: string
-  hrdf: string
+  timeline: string
+  location: string
   additionalRequirements: string
   agreeToTerms: boolean
   honeypot: string
@@ -32,13 +34,15 @@ export function QuoteForm({ onSuccess, source }: QuoteFormProps) {
     company: '',
     email: '',
     phone: '',
-    participants: 50,
-    date: '',
-    flexibleDates: false,
-    location: '',
-    duration: '',
+    patientAge: 75,
+    relationship: '',
+    careLevel: '',
+    stayType: '',
+    mobilityLevel: '',
+    specialRequirements: [],
     budget: '',
-    hrdf: '',
+    timeline: '',
+    location: '',
     additionalRequirements: '',
     agreeToTerms: false,
     honeypot: '',
@@ -56,10 +60,6 @@ export function QuoteForm({ onSuccess, source }: QuoteFormProps) {
       newErrors.name = 'Please enter your name'
     }
 
-    if (!formData.company || formData.company.length < 2) {
-      newErrors.company = 'Please enter your company name'
-    }
-
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!formData.email || !emailRegex.test(formData.email)) {
       newErrors.email = 'Please enter a valid email address'
@@ -70,32 +70,32 @@ export function QuoteForm({ onSuccess, source }: QuoteFormProps) {
       newErrors.phone = 'Please enter a valid Malaysian phone number'
     }
 
-    if (!formData.participants || formData.participants < 10 || formData.participants > 500) {
-      newErrors.participants = 'Participants must be between 10 and 500'
+    if (!formData.patientAge || formData.patientAge < 1 || formData.patientAge > 120) {
+      newErrors.patientAge = 'Please enter a valid age'
     }
 
-    // Date is only required if not flexible
-    if (!formData.flexibleDates && !formData.date) {
-      newErrors.date = 'Please select a date or check flexible dates'
-    } else if (formData.date && !formData.flexibleDates) {
-      const selectedDate = new Date(formData.date)
-      const today = new Date()
-      today.setHours(0, 0, 0, 0)
-      if (selectedDate < today) {
-        newErrors.date = 'Please select a future date'
-      }
+    if (!formData.relationship) {
+      newErrors.relationship = 'Please select your relationship'
+    }
+
+    if (!formData.careLevel) {
+      newErrors.careLevel = 'Please select care level needed'
+    }
+
+    if (!formData.stayType) {
+      newErrors.stayType = 'Please select type of stay'
+    }
+
+    if (!formData.mobilityLevel) {
+      newErrors.mobilityLevel = 'Please select mobility level'
     }
 
     if (!formData.location) {
       newErrors.location = 'Please select a location'
     }
 
-    if (!formData.duration) {
-      newErrors.duration = 'Please select a duration'
-    }
-
-    if (!formData.hrdf) {
-      newErrors.hrdf = 'Please select an option'
+    if (!formData.timeline) {
+      newErrors.timeline = 'Please select a timeline'
     }
 
     if (!formData.agreeToTerms) {
@@ -149,9 +149,9 @@ export function QuoteForm({ onSuccess, source }: QuoteFormProps) {
       // Track successful submission with GA4
       trackQuoteSubmission({
         source: 'quote_form',
-        participants: formData.participants,
+        participants: formData.patientAge,
         location: formData.location,
-        duration: formData.duration,
+        duration: formData.stayType,
         estimatedBudget: formData.budget,
       })
 
@@ -173,6 +173,15 @@ export function QuoteForm({ onSuccess, source }: QuoteFormProps) {
     }
   }
 
+  const toggleSpecialRequirement = (requirement: string) => {
+    setFormData(prev => ({
+      ...prev,
+      specialRequirements: prev.specialRequirements.includes(requirement)
+        ? prev.specialRequirements.filter(r => r !== requirement)
+        : [...prev.specialRequirements, requirement]
+    }))
+  }
+
   if (showSuccess) {
     return (
       <div className="text-center">
@@ -191,20 +200,22 @@ export function QuoteForm({ onSuccess, source }: QuoteFormProps) {
             What Happens Next:
           </h4>
           <ol className="mb-4 ml-5 list-decimal space-y-2 text-sm text-zinc-700 dark:text-zinc-300">
-            <li>We'll match you with 3-5 suitable facilities (within 24 hours)</li>
+            <li>We'll match you with 3-5 suitable nursing homes (within 24 hours)</li>
             <li>Facilities will contact you directly with customized quotes</li>
-            <li>Compare quotes and choose the best fit for your team</li>
+            <li>Compare quotes and choose the best fit for your loved one</li>
           </ol>
 
           <h4 className="mb-3 font-semibold text-zinc-900 dark:text-zinc-50">
             Your Request Summary:
           </h4>
           <ul className="space-y-1 text-sm text-zinc-700 dark:text-zinc-300">
-            <li>• {formData.participants} participants</li>
-            <li>• {formData.duration} program in {formData.location}</li>
-            <li>• Date: {formData.flexibleDates ? 'Flexible' : new Date(formData.date).toLocaleDateString()}</li>
-            {formData.budget && <li>• Budget: {formData.budget}/person</li>}
-            <li>•: {formData.hrdf === 'yes' ? 'Yes' : formData.hrdf === 'no' ? 'No' : 'Not sure'}</li>
+            <li>• Patient Age: {formData.patientAge} years</li>
+            <li>• Care Level: {formData.careLevel}</li>
+            <li>• Type of Stay: {formData.stayType}</li>
+            <li>• Mobility: {formData.mobilityLevel}</li>
+            <li>• Location: {formData.location}</li>
+            {formData.budget && <li>• Monthly Budget: {formData.budget}</li>}
+            <li>• Timeline: {formData.timeline}</li>
           </ul>
         </div>
 
@@ -243,7 +254,7 @@ export function QuoteForm({ onSuccess, source }: QuoteFormProps) {
           {/* Name */}
           <div>
             <label htmlFor="name" className="mb-1 block text-sm font-medium text-zinc-700 dark:text-zinc-300">
-              Name *
+              Your Name *
             </label>
             <input
               type="text"
@@ -260,26 +271,6 @@ export function QuoteForm({ onSuccess, source }: QuoteFormProps) {
             {errors.name && <p className="mt-1 text-xs text-red-600 dark:text-red-400">{errors.name}</p>}
           </div>
 
-          {/* Company Name */}
-          <div>
-            <label htmlFor="nursing_home" className="mb-1 block text-sm font-medium text-zinc-700 dark:text-zinc-300">
-              Company Name *
-            </label>
-            <input
-              type="text"
-              id="nursing_home"
-              value={formData.company}
-              onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-              placeholder="Your company name"
-              className={`w-full rounded-lg border px-4 py-3 transition-colors ${
-                errors.company
-                  ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
-                  : 'border-zinc-300 focus:border-blue-500 focus:ring-blue-500 dark:border-zinc-700'
-              } bg-white dark:bg-zinc-800 dark:text-zinc-50`}
-            />
-            {errors.company && <p className="mt-1 text-xs text-red-600 dark:text-red-400">{errors.company}</p>}
-          </div>
-
           {/* Email */}
           <div>
             <label htmlFor="email" className="mb-1 block text-sm font-medium text-zinc-700 dark:text-zinc-300">
@@ -290,7 +281,7 @@ export function QuoteForm({ onSuccess, source }: QuoteFormProps) {
               id="email"
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              placeholder="your.email@company.com"
+              placeholder="your.email@example.com"
               className={`w-full rounded-lg border px-4 py-3 transition-colors ${
                 errors.email
                   ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
@@ -334,60 +325,157 @@ export function QuoteForm({ onSuccess, source }: QuoteFormProps) {
         </div>
       </div>
 
-      {/* TEAM BUILDING REQUIREMENTS SECTION */}
+      {/* CARE REQUIREMENTS SECTION */}
       <div>
         <h3 className="mb-4 text-lg font-semibold text-zinc-900 dark:text-zinc-50">
-          Nursing Home Requirements
+          Care Requirements
         </h3>
 
         <div className="space-y-4">
-          {/* Number of Participants */}
+          {/* Patient Age */}
           <div>
-            <label htmlFor="participants" className="mb-1 block text-sm font-medium text-zinc-700 dark:text-zinc-300">
-              Number of Participants * ({formData.participants})
+            <label htmlFor="patientAge" className="mb-1 block text-sm font-medium text-zinc-700 dark:text-zinc-300">
+              Patient's Age * ({formData.patientAge} years)
             </label>
             <input
               type="range"
-              id="participants"
-              min="10"
-              max="500"
-              value={formData.participants}
-              onChange={(e) => setFormData({ ...formData, participants: parseInt(e.target.value) })}
+              id="patientAge"
+              min="1"
+              max="120"
+              value={formData.patientAge}
+              onChange={(e) => setFormData({ ...formData, patientAge: parseInt(e.target.value) })}
               className="w-full"
             />
             <p className="mt-1 text-xs text-zinc-500 dark:text-zinc-400">
-              Most facilities require minimum 20 participants
+              Different facilities specialize in different age groups
             </p>
+            {errors.patientAge && <p className="mt-1 text-xs text-red-600 dark:text-red-400">{errors.patientAge}</p>}
           </div>
 
-          {/* Preferred Date */}
+          {/* Relationship to Patient */}
           <div>
-            <label htmlFor="date" className="mb-1 block text-sm font-medium text-zinc-700 dark:text-zinc-300">
-              Preferred Date *
+            <label htmlFor="relationship" className="mb-1 block text-sm font-medium text-zinc-700 dark:text-zinc-300">
+              Your Relationship to Patient *
             </label>
-            <input
-              type="date"
-              id="date"
-              value={formData.date}
-              onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-              min={new Date().toISOString().split('T')[0]}
+            <select
+              id="relationship"
+              value={formData.relationship}
+              onChange={(e) => setFormData({ ...formData, relationship: e.target.value })}
               className={`w-full rounded-lg border px-4 py-3 transition-colors ${
-                errors.date
+                errors.relationship
                   ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
                   : 'border-zinc-300 focus:border-blue-500 focus:ring-blue-500 dark:border-zinc-700'
               } bg-white dark:bg-zinc-800 dark:text-zinc-50`}
-            />
-            {errors.date && <p className="mt-1 text-xs text-red-600 dark:text-red-400">{errors.date}</p>}
+            >
+              <option value="">Select relationship</option>
+              <option value="Son/Daughter">Son/Daughter</option>
+              <option value="Spouse">Spouse</option>
+              <option value="Sibling">Sibling</option>
+              <option value="Self">Self</option>
+              <option value="Professional Caregiver">Professional Caregiver</option>
+              <option value="Other">Other</option>
+            </select>
+            {errors.relationship && <p className="mt-1 text-xs text-red-600 dark:text-red-400">{errors.relationship}</p>}
+          </div>
 
-            <label className="mt-2 flex items-center text-sm text-zinc-700 dark:text-zinc-300">
-              <input
-                type="checkbox"
-                checked={formData.flexibleDates}
-                onChange={(e) => setFormData({ ...formData, flexibleDates: e.target.checked })}
-                className="mr-2"
-              />
-              Flexible dates
+          {/* Care Level Needed */}
+          <div>
+            <label htmlFor="careLevel" className="mb-1 block text-sm font-medium text-zinc-700 dark:text-zinc-300">
+              Care Level Needed *
             </label>
+            <select
+              id="careLevel"
+              value={formData.careLevel}
+              onChange={(e) => setFormData({ ...formData, careLevel: e.target.value })}
+              className={`w-full rounded-lg border px-4 py-3 transition-colors ${
+                errors.careLevel
+                  ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
+                  : 'border-zinc-300 focus:border-blue-500 focus:ring-blue-500 dark:border-zinc-700'
+              } bg-white dark:bg-zinc-800 dark:text-zinc-50`}
+            >
+              <option value="">Select care level</option>
+              <option value="Basic Assistance">Basic Assistance</option>
+              <option value="Nursing Care">Nursing Care</option>
+              <option value="Memory/Dementia Care">Memory/Dementia Care</option>
+              <option value="Palliative Care">Palliative Care</option>
+              <option value="Not Sure">Not Sure</option>
+            </select>
+            {errors.careLevel && <p className="mt-1 text-xs text-red-600 dark:text-red-400">{errors.careLevel}</p>}
+          </div>
+
+          {/* Type of Stay */}
+          <div>
+            <label htmlFor="stayType" className="mb-1 block text-sm font-medium text-zinc-700 dark:text-zinc-300">
+              Type of Stay *
+            </label>
+            <select
+              id="stayType"
+              value={formData.stayType}
+              onChange={(e) => setFormData({ ...formData, stayType: e.target.value })}
+              className={`w-full rounded-lg border px-4 py-3 transition-colors ${
+                errors.stayType
+                  ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
+                  : 'border-zinc-300 focus:border-blue-500 focus:ring-blue-500 dark:border-zinc-700'
+              } bg-white dark:bg-zinc-800 dark:text-zinc-50`}
+            >
+              <option value="">Select stay type</option>
+              <option value="Permanent Residence">Permanent Residence</option>
+              <option value="Respite/Short-term">Respite/Short-term</option>
+              <option value="Day Care Only">Day Care Only</option>
+            </select>
+            {errors.stayType && <p className="mt-1 text-xs text-red-600 dark:text-red-400">{errors.stayType}</p>}
+          </div>
+
+          {/* Mobility Level */}
+          <div>
+            <label htmlFor="mobilityLevel" className="mb-1 block text-sm font-medium text-zinc-700 dark:text-zinc-300">
+              Mobility Level *
+            </label>
+            <select
+              id="mobilityLevel"
+              value={formData.mobilityLevel}
+              onChange={(e) => setFormData({ ...formData, mobilityLevel: e.target.value })}
+              className={`w-full rounded-lg border px-4 py-3 transition-colors ${
+                errors.mobilityLevel
+                  ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
+                  : 'border-zinc-300 focus:border-blue-500 focus:ring-blue-500 dark:border-zinc-700'
+              } bg-white dark:bg-zinc-800 dark:text-zinc-50`}
+            >
+              <option value="">Select mobility level</option>
+              <option value="Fully Independent">Fully Independent</option>
+              <option value="Needs Some Assistance">Needs Some Assistance</option>
+              <option value="Wheelchair User">Wheelchair User</option>
+              <option value="Bedridden">Bedridden</option>
+            </select>
+            {errors.mobilityLevel && <p className="mt-1 text-xs text-red-600 dark:text-red-400">{errors.mobilityLevel}</p>}
+          </div>
+
+          {/* Special Requirements */}
+          <div>
+            <label className="mb-2 block text-sm font-medium text-zinc-700 dark:text-zinc-300">
+              Special Requirements (Optional)
+            </label>
+            <div className="space-y-2">
+              {[
+                'Dementia Care',
+                'Dialysis Support',
+                'Physiotherapy',
+                'Halal Meals',
+                'Vegetarian Meals',
+                'Chinese-speaking Staff',
+                '24-hour Nursing',
+              ].map((requirement) => (
+                <label key={requirement} className="flex items-center text-sm text-zinc-700 dark:text-zinc-300">
+                  <input
+                    type="checkbox"
+                    checked={formData.specialRequirements.includes(requirement)}
+                    onChange={() => toggleSpecialRequirement(requirement)}
+                    className="mr-2"
+                  />
+                  {requirement}
+                </label>
+              ))}
+            </div>
           </div>
 
           {/* Location Preference */}
@@ -409,14 +497,14 @@ export function QuoteForm({ onSuccess, source }: QuoteFormProps) {
               <option value="Selangor">Selangor</option>
               <option value="Kuala Lumpur">Kuala Lumpur</option>
               <option value="Penang">Penang</option>
-              <option value="Negeri Sembilan">Negeri Sembilan</option>
-              <option value="Pahang">Pahang</option>
-              <option value="Melaka">Melaka</option>
               <option value="Johor">Johor</option>
               <option value="Perak">Perak</option>
+              <option value="Negeri Sembilan">Negeri Sembilan</option>
+              <option value="Melaka">Melaka</option>
+              <option value="Pahang">Pahang</option>
               <option value="Kedah">Kedah</option>
-              <option value="Terengganu">Terengganu</option>
               <option value="Kelantan">Kelantan</option>
+              <option value="Terengganu">Terengganu</option>
               <option value="Sabah">Sabah</option>
               <option value="Sarawak">Sarawak</option>
               <option value="Other">Other</option>
@@ -424,39 +512,10 @@ export function QuoteForm({ onSuccess, source }: QuoteFormProps) {
             {errors.location && <p className="mt-1 text-xs text-red-600 dark:text-red-400">{errors.location}</p>}
           </div>
 
-          {/* Duration */}
-          <div>
-            <label className="mb-2 block text-sm font-medium text-zinc-700 dark:text-zinc-300">
-              Duration *
-            </label>
-            <div className="space-y-2">
-              {[
-                { value: 'half-day', label: 'Half Day (4-5 hours)' },
-                { value: 'full-day', label: 'Full Day (8 hours)' },
-                { value: '2d1n', label: '2D1N (Overnight)' },
-                { value: '3d2n', label: '3D2N (2 nights)' },
-                { value: 'not-sure', label: 'Not Sure' },
-              ].map((option) => (
-                <label key={option.value} className="flex items-center text-sm text-zinc-700 dark:text-zinc-300">
-                  <input
-                    type="radio"
-                    name="duration"
-                    value={option.value}
-                    checked={formData.duration === option.value}
-                    onChange={(e) => setFormData({ ...formData, duration: e.target.value })}
-                    className="mr-2"
-                  />
-                  {option.label}
-                </label>
-              ))}
-            </div>
-            {errors.duration && <p className="mt-1 text-xs text-red-600 dark:text-red-400">{errors.duration}</p>}
-          </div>
-
-          {/* Budget Range */}
+          {/* Monthly Budget */}
           <div>
             <label htmlFor="budget" className="mb-1 block text-sm font-medium text-zinc-700 dark:text-zinc-300">
-              Budget per Person (Optional)
+              Monthly Budget (Optional)
             </label>
             <select
               id="budget"
@@ -465,55 +524,51 @@ export function QuoteForm({ onSuccess, source }: QuoteFormProps) {
               className="w-full rounded-lg border border-zinc-300 bg-white px-4 py-3 transition-colors focus:border-blue-500 focus:ring-blue-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-50"
             >
               <option value="">Select budget range</option>
-              <option value="Below RM100">Below RM100</option>
-              <option value="RM100-200">RM100-200</option>
-              <option value="RM200-300">RM200-300</option>
-              <option value="RM300-500">RM300-500</option>
-              <option value="Above RM500">Above RM500</option>
-              <option value="Not Sure / Need Guidance">Not Sure / Need Guidance</option>
+              <option value="Below RM2,000">Below RM2,000</option>
+              <option value="RM2,000-4,000">RM2,000-4,000</option>
+              <option value="RM4,000-6,000">RM4,000-6,000</option>
+              <option value="RM6,000-10,000">RM6,000-10,000</option>
+              <option value="Above RM10,000">Above RM10,000</option>
             </select>
             <p className="mt-1 text-xs text-zinc-500 dark:text-zinc-400">
               This helps us match you with suitable facilities
             </p>
           </div>
 
-          {/* HRDF Claim Required */}
+          {/* Move-in Timeline */}
           <div>
-            <label className="mb-2 block text-sm font-medium text-zinc-700 dark:text-zinc-300">
-              HRDF Claim Required? *
+            <label htmlFor="timeline" className="mb-1 block text-sm font-medium text-zinc-700 dark:text-zinc-300">
+              Move-in Timeline *
             </label>
-            <div className="space-y-2">
-              {[
-                { value: 'yes', label: 'Yes, need HRDF-claimable program' },
-                { value: 'no', label: 'No HRDF needed' },
-                { value: 'not-sure', label: 'Not sure / Need advice' },
-              ].map((option) => (
-                <label key={option.value} className="flex items-center text-sm text-zinc-700 dark:text-zinc-300">
-                  <input
-                    type="radio"
-                    name="hrdf"
-                    value={option.value}
-                    checked={formData.hrdf === option.value}
-                    onChange={(e) => setFormData({ ...formData, hrdf: e.target.value })}
-                    className="mr-2"
-                  />
-                  {option.label}
-                </label>
-              ))}
-            </div>
-            {errors.hrdf && <p className="mt-1 text-xs text-red-600 dark:text-red-400">{errors.hrdf}</p>}
+            <select
+              id="timeline"
+              value={formData.timeline}
+              onChange={(e) => setFormData({ ...formData, timeline: e.target.value })}
+              className={`w-full rounded-lg border px-4 py-3 transition-colors ${
+                errors.timeline
+                  ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
+                  : 'border-zinc-300 focus:border-blue-500 focus:ring-blue-500 dark:border-zinc-700'
+              } bg-white dark:bg-zinc-800 dark:text-zinc-50`}
+            >
+              <option value="">Select timeline</option>
+              <option value="Immediately">Immediately</option>
+              <option value="Within 1 Month">Within 1 Month</option>
+              <option value="1-3 Months">1-3 Months</option>
+              <option value="Just Researching">Just Researching</option>
+            </select>
+            {errors.timeline && <p className="mt-1 text-xs text-red-600 dark:text-red-400">{errors.timeline}</p>}
           </div>
 
           {/* Additional Requirements */}
           <div>
             <label htmlFor="additionalRequirements" className="mb-1 block text-sm font-medium text-zinc-700 dark:text-zinc-300">
-              Additional Requirements (Optional)
+              Additional Information (Optional)
             </label>
             <textarea
               id="additionalRequirements"
               value={formData.additionalRequirements}
               onChange={(e) => setFormData({ ...formData, additionalRequirements: e.target.value })}
-              placeholder="Tell us more about your nursing home goals, activity preferences, or special requests...&#10;Example: Looking for beach activities, need halal catering, team of 50 sales staff, focus on communication skills, etc."
+              placeholder="Any other information we should know? Medical conditions, dietary restrictions, preferred languages, specific facility preferences, etc."
               rows={4}
               maxLength={500}
               className="w-full rounded-lg border border-zinc-300 bg-white px-4 py-3 transition-colors focus:border-blue-500 focus:ring-blue-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-50"
@@ -535,7 +590,7 @@ export function QuoteForm({ onSuccess, source }: QuoteFormProps) {
             className="mr-2 mt-1"
           />
           <span>
-            I agree to receive quotes from verified facilities and accept the{' '}
+            I agree to receive quotes from verified nursing homes and accept the{' '}
             <a href="/terms" target="_blank" className="text-blue-600 underline hover:text-blue-700">
               Terms of Service
             </a>{' '}
