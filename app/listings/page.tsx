@@ -9,6 +9,7 @@ interface SearchParams {
   search?: string
   state?: string
   category?: string
+  service?: string
   activity?: string
   hrdf?: string
 }
@@ -19,7 +20,7 @@ async function ListingsContent({ searchParams }: { searchParams: SearchParams })
   const search = searchParams.search || ''
   const state = searchParams.state || ''
   const category = searchParams.category || ''
-  const activity = searchParams.activity || ''
+  const service = searchParams.service || searchParams.activity || ''
   const hrdf = searchParams.hrdf || 'all'
 
   // Fetch all nursing homes to extract unique services
@@ -53,8 +54,8 @@ async function ListingsContent({ searchParams }: { searchParams: SearchParams })
   if (category) {
     query = query.ilike('category', `%${category}%`)
   }
-  if (activity) {
-    query = query.ilike('services', `%${activity}%`)
+  if (service) {
+    query = query.ilike('services', `%${service}%`)
   }
 
   const { data: nursing_homes } = await query
@@ -75,7 +76,7 @@ async function ListingsContent({ searchParams }: { searchParams: SearchParams })
           showStateFilter={true}
           showActivityFilter={true}
           showHrdfFilter={false}
-          activities={servicesList}
+          services={servicesList}
         />
       </div>
 

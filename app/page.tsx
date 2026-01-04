@@ -91,7 +91,7 @@ async function HomeContent({ searchParams }: { searchParams: SearchParams }) {
           showStateFilter={true}
           showActivityFilter={true}
           showHrdfFilter={false}
-          activities={servicesList}
+          services={servicesList}
         />
       </section>
 

@@ -10,6 +10,7 @@ interface SearchFilterProps {
   showActivityFilter?: boolean
   showHrdfFilter?: boolean
   activities?: string[]
+  services?: string[]
 }
 
 export function SearchFilter({
@@ -18,6 +19,7 @@ export function SearchFilter({
   showActivityFilter = false,
   showHrdfFilter = true,
   activities = [],
+  services = [],
 }: SearchFilterProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -27,7 +29,7 @@ export function SearchFilter({
   const [search, setSearch] = useState(searchParams.get('search') || '')
   const [state, setState] = useState(searchParams.get('state') || '')
   const [category, setCategory] = useState(searchParams.get('category') || '')
-  const [activity, setActivity] = useState(searchParams.get('activity') || '')
+  const [activity, setActivity] = useState(searchParams.get('service') || searchParams.get('activity') || '')
   const [hrdf, setHrdf] = useState(searchParams.get('hrdf') || 'all')
 
   const handleFilter = () => {
@@ -35,7 +37,7 @@ export function SearchFilter({
     if (search) params.set('search', search)
     if (state) params.set('state', state)
     if (category) params.set('category', category)
-    if (activity) params.set('activity', activity)
+    if (activity) params.set('service', activity)
     if (hrdf && hrdf !== 'all') params.set('hrdf', hrdf)
 
     startTransition(() => {
@@ -98,35 +100,18 @@ export function SearchFilter({
           </div>
         )}
 
-        {showHrdfFilter && (
-          <div>
-            <label className="mb-1 block text-sm font-medium text-zinc-700 dark:text-zinc-300">
-              HRDF Claimable
-            </label>
-            <select
-              value={hrdf}
-              onChange={(e) => setHrdf(e.target.value)}
-              className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-zinc-900 focus:border-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-50"
-            >
-              <option value="all">All</option>
-              <option value="claimable">HRDF Claimable Only</option>
-              <option value="non">Non-HRDF</option>
-            </select>
-          </div>
-        )}
-
         {showActivityFilter && (
           <div>
             <label className="mb-1 block text-sm font-medium text-zinc-700 dark:text-zinc-300">
-              Activities
+              Care Services
             </label>
             <select
               value={activity}
               onChange={(e) => setActivity(e.target.value)}
               className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-zinc-900 focus:border-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-50"
             >
-              <option value="">All Activities</option>
-              {activities.map((a) => (
+              <option value="">All Services</option>
+              {(services.length > 0 ? services : activities).map((a) => (
                 <option key={a} value={a}>
                   {a}
                 </option>
@@ -139,7 +124,7 @@ export function SearchFilter({
       <div className="mt-4">
         <input
           type="text"
-          placeholder="Search by name or description..."
+          placeholder="Search by name or location..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && handleFilter()}
