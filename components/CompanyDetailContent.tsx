@@ -54,8 +54,8 @@ export function NursingHomeDetailContent({ company }: NursingHomeDetailContentPr
             Listings
           </Link>
           <span className="mx-2">/</span>
-          <Link href="/listings?type=company" className="hover:text-zinc-900 dark:hover:text-zinc-50">
-            Companies
+          <Link href="/listings?type=nursing_home" className="hover:text-zinc-900 dark:hover:text-zinc-50">
+            Facilities
           </Link>
           <span className="mx-2">/</span>
           <span className="text-zinc-900 dark:text-zinc-50">{company.name}</span>
@@ -112,20 +112,20 @@ export function NursingHomeDetailContent({ company }: NursingHomeDetailContentPr
               </div>
             )}
 
-            {/* Description */}
+            {/* About This Facility */}
             <div className="mb-6 rounded-lg border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900">
               <h2 className="mb-3 text-xl font-semibold text-zinc-900 dark:text-zinc-50">
-                Description
+                About This Facility
               </h2>
               <p className="whitespace-pre-wrap text-zinc-600 dark:text-zinc-400">
                 {company.description}
               </p>
             </div>
 
-            {/* Services Offered */}
+            {/* Care Services */}
             <div className="mb-6 rounded-lg border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900">
               <h2 className="mb-3 text-xl font-semibold text-zinc-900 dark:text-zinc-50">
-                Services Offered
+                Care Services
               </h2>
               {company.services && company.services.length > 0 ? (
                 <p className="text-zinc-600 dark:text-zinc-400">
@@ -142,10 +142,10 @@ export function NursingHomeDetailContent({ company }: NursingHomeDetailContentPr
           {/* Sidebar */}
           <div className="lg:col-span-1">
             <div className="sticky top-8 space-y-6">
-              {/* Details Card */}
+              {/* Facility Details Card */}
               <div className="rounded-lg border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900">
                 <h2 className="mb-4 text-xl font-semibold text-zinc-900 dark:text-zinc-50">
-                  Details
+                  Facility Details
                 </h2>
                 <dl className="space-y-3 text-sm">
                   <div>

@@ -41,7 +41,7 @@ export function Footer() {
 
         {/* Optional: Additional info */}
         <div className="mt-4 text-center text-xs text-zinc-500 dark:text-zinc-500">
-          <p>Your trusted directory for nursing home companies in Malaysia</p>
+          <p>Your trusted directory for nursing home facilities and elderly care in Malaysia</p>
         </div>
       </div>
     </footer>
