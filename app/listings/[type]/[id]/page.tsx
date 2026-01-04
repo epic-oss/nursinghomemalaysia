@@ -183,11 +183,19 @@ export default async function ListingDetailPage({ params }: PageProps) {
                   Care Services Offered
                 </h2>
                 {(listing as NursingHome).services && (listing as NursingHome).services!.length > 0 ? (
-                  <p className="text-zinc-600 dark:text-zinc-400">
-                    {Array.isArray((listing as NursingHome).services)
-                      ? ((listing as NursingHome).services as unknown as string[]).join(', ')
-                      : (listing as NursingHome).services}
-                  </p>
+                  <ul className="list-disc space-y-1 pl-5 text-zinc-600 dark:text-zinc-400">
+                    {(() => {
+                      const services = (listing as NursingHome).services
+                      const serviceArray = Array.isArray(services)
+                        ? services
+                        : typeof services === 'string'
+                          ? services.split(',').map((s: string) => s.trim())
+                          : []
+                      return serviceArray.map((service: string, index: number) => (
+                        <li key={index}>{service}</li>
+                      ))
+                    })()}
+                  </ul>
                 ) : (
                   <p className="text-zinc-600 dark:text-zinc-400">Contact for details</p>
                 )}

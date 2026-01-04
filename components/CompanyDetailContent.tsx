@@ -128,11 +128,16 @@ export function NursingHomeDetailContent({ company }: NursingHomeDetailContentPr
                 Care Services
               </h2>
               {company.services && company.services.length > 0 ? (
-                <p className="text-zinc-600 dark:text-zinc-400">
-                  {Array.isArray(company.services)
-                    ? (company.services as unknown as string[]).join(', ')
-                    : company.services}
-                </p>
+                <ul className="list-disc space-y-1 pl-5 text-zinc-600 dark:text-zinc-400">
+                  {(Array.isArray(company.services)
+                    ? company.services
+                    : typeof company.services === 'string'
+                      ? company.services.split(',').map((s: string) => s.trim())
+                      : []
+                  ).map((service: string, index: number) => (
+                    <li key={index}>{service}</li>
+                  ))}
+                </ul>
               ) : (
                 <p className="text-zinc-600 dark:text-zinc-400">Contact for details</p>
               )}
