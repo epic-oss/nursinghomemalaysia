@@ -55,7 +55,13 @@ export default async function ListingDetailPage({ params }: PageProps) {
     notFound()
   }
 
-  const images = listing.images || []
+  // Handle images as either string or array
+  const normalizeImages = (imgs: any): string[] => {
+    if (Array.isArray(imgs)) return imgs
+    if (imgs && typeof imgs === 'string' && imgs.length > 0) return [imgs]
+    return []
+  }
+  const images = normalizeImages(listing.images)
   const mainImage = images[0] || '/placeholder.svg'
   const isNursingHome = type === 'nursing_home'
   const nursing_home = isNursingHome ? (listing as NursingHome) : null

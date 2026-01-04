@@ -33,6 +33,14 @@ export function NursingHomeDetailContent({ company }: NursingHomeDetailContentPr
 
   const logoUrl = getHighResLogoUrl(company.logo_url)
 
+  // Handle images as either string or array
+  const normalizeImages = (imgs: any): string[] => {
+    if (Array.isArray(imgs)) return imgs
+    if (imgs && typeof imgs === 'string' && imgs.length > 0) return [imgs]
+    return []
+  }
+  const images = normalizeImages(company.images)
+
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
@@ -91,9 +99,9 @@ export function NursingHomeDetailContent({ company }: NursingHomeDetailContentPr
             </div>
 
             {/* Image Gallery */}
-            {company.images && company.images.length > 0 && (
+            {images.length > 0 && (
               <div className="mb-6 grid grid-cols-4 gap-2">
-                {company.images.slice(0, 4).map((image, index) => (
+                {images.slice(0, 4).map((image, index) => (
                   <div
                     key={index}
                     className="relative h-24 w-full overflow-hidden rounded-lg bg-zinc-100 dark:bg-zinc-800"
