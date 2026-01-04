@@ -24,6 +24,13 @@ export interface NursingHome {
   featured_images: string[] | null
   created_at: string
   updated_at: string
+  // Enriched fields
+  care_levels: string[] | null
+  amenities: string[] | null
+  languages: string[] | null
+  price_min: number | null
+  price_max: number | null
+  room_types: string | null
 }
 
 export interface Facility {

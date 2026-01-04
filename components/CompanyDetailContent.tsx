@@ -142,6 +142,54 @@ export function NursingHomeDetailContent({ company }: NursingHomeDetailContentPr
                 <p className="text-zinc-600 dark:text-zinc-400">Contact for details</p>
               )}
             </div>
+
+            {/* Care Levels */}
+            {company.care_levels && company.care_levels.length > 0 && (
+              <div className="mb-6 rounded-lg border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900">
+                <h2 className="mb-3 text-xl font-semibold text-zinc-900 dark:text-zinc-50">
+                  Care Levels
+                </h2>
+                <div className="flex flex-wrap gap-2">
+                  {company.care_levels.map((level: string, index: number) => (
+                    <span
+                      key={index}
+                      className="rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-800 dark:bg-blue-900/30 dark:text-blue-300"
+                    >
+                      {level}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Amenities */}
+            {company.amenities && company.amenities.length > 0 && (
+              <div className="mb-6 rounded-lg border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900">
+                <h2 className="mb-3 text-xl font-semibold text-zinc-900 dark:text-zinc-50">
+                  Amenities
+                </h2>
+                <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                  {company.amenities.map((amenity: string, index: number) => (
+                    <li key={index} className="flex items-center text-zinc-600 dark:text-zinc-400">
+                      <svg className="mr-2 h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      {amenity}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Room Types */}
+            {company.room_types && (
+              <div className="mb-6 rounded-lg border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900">
+                <h2 className="mb-3 text-xl font-semibold text-zinc-900 dark:text-zinc-50">
+                  Room Types
+                </h2>
+                <p className="text-zinc-600 dark:text-zinc-400">{company.room_types}</p>
+              </div>
+            )}
           </div>
 
           {/* Sidebar */}
@@ -161,12 +209,39 @@ export function NursingHomeDetailContent({ company }: NursingHomeDetailContentPr
                     <dt className="font-medium text-zinc-900 dark:text-zinc-50">State</dt>
                     <dd className="text-zinc-600 dark:text-zinc-400">{company.state}</dd>
                   </div>
-                  <div>
-                    <dt className="font-medium text-zinc-900 dark:text-zinc-50">Price Range</dt>
-                    <dd className="text-zinc-600 dark:text-zinc-400">
-                      {company.price_range || 'Contact for pricing'}
-                    </dd>
-                  </div>
+                  {company.price_min && company.price_max ? (
+                    <div>
+                      <dt className="font-medium text-zinc-900 dark:text-zinc-50">Estimated Monthly Cost</dt>
+                      <dd className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">
+                        RM {company.price_min.toLocaleString()} - RM {company.price_max.toLocaleString()}
+                      </dd>
+                    </div>
+                  ) : company.price_range ? (
+                    <div>
+                      <dt className="font-medium text-zinc-900 dark:text-zinc-50">Price Range</dt>
+                      <dd className="text-zinc-600 dark:text-zinc-400">{company.price_range}</dd>
+                    </div>
+                  ) : (
+                    <div>
+                      <dt className="font-medium text-zinc-900 dark:text-zinc-50">Price Range</dt>
+                      <dd className="text-zinc-600 dark:text-zinc-400">Contact for pricing</dd>
+                    </div>
+                  )}
+                  {company.languages && company.languages.length > 0 && (
+                    <div>
+                      <dt className="font-medium text-zinc-900 dark:text-zinc-50">Languages Spoken</dt>
+                      <dd className="mt-1 flex flex-wrap gap-1">
+                        {company.languages.map((language: string, index: number) => (
+                          <span
+                            key={index}
+                            className="rounded bg-zinc-100 px-2 py-0.5 text-xs font-medium text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300"
+                          >
+                            {language}
+                          </span>
+                        ))}
+                      </dd>
+                    </div>
+                  )}
                   <div>
                     <dt className="font-medium text-zinc-900 dark:text-zinc-50">Email</dt>
                     <dd className="text-zinc-600 dark:text-zinc-400">
