@@ -54,17 +54,28 @@ async function ListingsContent({ searchParams }: { searchParams: SearchParams })
   if (category) {
     query = query.ilike('category', `%${category}%`)
   }
-  if (service) {
-    // For TEXT column storing JSON array format, use ilike with the service name
-    // This matches services like: ["Elderly Care", "Malay-Speaking Staff"]
-    query = query.ilike('services', `%${service}%`)
-  }
-
-  const { data: nursing_homes } = await query
+  const { data: allResults } = await query
     .order('is_premium', { ascending: false })
     .order('is_featured', { ascending: false })
     .order('featured', { ascending: false })
     .order('created_at', { ascending: false })
+
+  // Filter by service client-side since the column type doesn't support direct querying
+  let nursing_homes = allResults
+  if (service && allResults) {
+    nursing_homes = allResults.filter(nh => {
+      if (!nh.services) return false
+      // Handle both array and string formats
+      const serviceList = Array.isArray(nh.services)
+        ? nh.services
+        : typeof nh.services === 'string'
+          ? nh.services.split(',').map((s: string) => s.trim())
+          : []
+      return serviceList.some((s: string) =>
+        s.toLowerCase().includes(service.toLowerCase())
+      )
+    })
+  }
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
