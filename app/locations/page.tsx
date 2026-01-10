@@ -5,8 +5,8 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Nursing Home by Location - All Malaysian States | Nursing Home MY',
-  description: 'Find nursing home companies and activities across all Malaysian states. Browse by location to discover the best providers in your area.',
-  keywords: ['nursing home Malaysia', 'corporate events by location', 'team activities by state'],
+  description: 'Find nursing home facilities across all Malaysian states. Browse by location to discover the best elderly care providers in your area.',
+  keywords: ['nursing home Malaysia', 'elderly care by location', 'nursing facilities by state'],
 }
 
 const MALAYSIAN_STATES = [
@@ -67,7 +67,7 @@ export default function LocationsPage() {
             Nursing Home by Location
           </h1>
           <p className="mt-4 text-lg text-zinc-600 dark:text-zinc-400">
-            Find the best nursing home companies and activities across Malaysia
+            Find the best nursing home facilities across Malaysia
           </p>
         </div>
 
@@ -95,15 +95,15 @@ export default function LocationsPage() {
                 Verified Providers
               </h3>
               <p className="text-sm text-zinc-600 dark:text-zinc-400">
-                All listed companies are verified providers offering professional nursing home activities, from outdoor adventures to creative workshops.
+                All listed facilities are verified providers offering professional elderly care services, from basic assistance to skilled nursing.
               </p>
             </div>
             <div>
               <h3 className="mb-2 font-semibold text-zinc-900 dark:text-zinc-50">
-                HRDF Claimable Options
+                Family Support Services
               </h3>
               <p className="text-sm text-zinc-600 dark:text-zinc-400">
-                Many providers offer HRDF-claimable programs, helping your company invest in team development with training subsidies.
+                Many facilities offer family counseling, regular updates, and flexible visiting hours to keep families connected with their loved ones.
               </p>
             </div>
             <div>
@@ -111,7 +111,7 @@ export default function LocationsPage() {
                 Easy Comparison
               </h3>
               <p className="text-sm text-zinc-600 dark:text-zinc-400">
-                Browse by location to compare providers, read reviews, view packages, and contact companies directly for quotes.
+                Browse by location to compare facilities, read reviews, view services, and contact providers directly for inquiries.
               </p>
             </div>
           </div>

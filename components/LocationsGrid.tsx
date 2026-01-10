@@ -32,11 +32,11 @@ export function LocationsGrid({ states, stateCounts }: LocationsGridProps) {
   const [showAll, setShowAll] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
-  // Separate states with and without companies
-  const statesWithCompanies = states.filter((state) => (stateCounts[state.name] || 0) > 0)
-  const statesWithoutCompanies = states.filter((state) => (stateCounts[state.name] || 0) === 0)
+  // Separate states with and without facilities
+  const statesWithFacilities = states.filter((state) => (stateCounts[state.name] || 0) > 0)
+  const statesWithoutFacilities = states.filter((state) => (stateCounts[state.name] || 0) === 0)
 
-  const displayedStates = showAll ? states : statesWithCompanies
+  const displayedStates = showAll ? states : statesWithFacilities
 
   const handleToggle = () => {
     if (!showAll) {
@@ -75,10 +75,10 @@ export function LocationsGrid({ states, stateCounts }: LocationsGridProps) {
                         <span className="font-semibold text-zinc-900 dark:text-zinc-50">
                           {count}
                         </span>{' '}
-                        {count === 1 ? 'nursing_home' : 'companies'}
+                        {count === 1 ? 'facility' : 'facilities'}
                       </>
                     ) : (
-                      'No companies yet'
+                      'No facilities yet'
                     )}
                   </p>
                 </div>
@@ -107,13 +107,13 @@ export function LocationsGrid({ states, stateCounts }: LocationsGridProps) {
 
         {/* Skeleton loading for newly revealed states */}
         {isLoading &&
-          statesWithoutCompanies.map((state) => (
+          statesWithoutFacilities.map((state) => (
             <LocationCardSkeleton key={`skeleton-${state.slug}`} />
           ))}
       </div>
 
       {/* Show All Toggle Button */}
-      {statesWithoutCompanies.length > 0 && (
+      {statesWithoutFacilities.length > 0 && (
         <div className="mt-8 text-center">
           <button
             onClick={handleToggle}
@@ -151,7 +151,7 @@ export function LocationsGrid({ states, stateCounts }: LocationsGridProps) {
                     d="M19 9l-7 7-7-7"
                   />
                 </svg>
-                Show all {states.length} states ({statesWithoutCompanies.length} without companies)
+                Show all {states.length} states ({statesWithoutFacilities.length} without companies)
               </>
             )}
           </button>
