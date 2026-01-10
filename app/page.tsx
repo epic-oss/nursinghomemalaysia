@@ -58,9 +58,9 @@ async function HomeContent({ searchParams }: { searchParams: SearchParams }) {
     query = query.ilike('category', `%${category}%`)
   }
   if (service) {
-    // Match service in JSON array format - escape special characters
-    // Check if services column contains the service (works for both JSONB arrays and comma-separated strings)
-    query = query.filter('services', 'ilike', `%${service}%`)
+    // For TEXT column storing JSON array format, use ilike with the service name
+    // This matches services like: ["Elderly Care", "Malay-Speaking Staff"]
+    query = query.ilike('services', `%${service}%`)
   }
 
   const { data: nursing_homes } = await query
