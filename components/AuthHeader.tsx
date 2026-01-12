@@ -49,7 +49,7 @@ export function AuthHeader() {
               alt="Nursing Home Malaysia"
               width={300}
               height={65}
-              className="h-[50px] w-auto sm:h-[60px]"
+              className="h-[50px] w-[120px] sm:h-[60px] sm:w-auto"
               priority
             />
           </Link>
