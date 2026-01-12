@@ -32,8 +32,8 @@ export function Header() {
     <header className="sticky top-0 z-50 border-b border-zinc-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:border-zinc-800 dark:bg-zinc-950/95 dark:supports-[backdrop-filter]:bg-zinc-950/60">
       <nav className="mx-auto flex max-w-7xl items-center justify-between p-4 lg:px-8">
         {/* Logo/Brand */}
-        <div className="flex lg:flex-1">
-          <Link href="/" className="-m-1.5 p-1.5">
+        <div className="flex items-center lg:flex-1">
+          <Link href="/" className="flex items-center">
             <Image
               src="/logo-horizontal.png"
               alt="Nursing Home Malaysia"
