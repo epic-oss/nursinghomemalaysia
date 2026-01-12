@@ -217,7 +217,9 @@ export async function POST(request: NextRequest) {
     }
 
     // Also send to Make.com webhook if configured (for backwards compatibility)
-    const webhookUrl = process.env.MAKE_QUOTE_WEBHOOK_URL
+    const webhookUrl = process.env.MAKE_WEBHOOK_URL || process.env.MAKE_QUOTE_WEBHOOK_URL
+
+    console.log('Make.com webhook URL configured:', !!webhookUrl)
 
     if (webhookUrl) {
       try {
