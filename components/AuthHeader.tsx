@@ -40,9 +40,9 @@ export function AuthHeader() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-zinc-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:border-zinc-800 dark:bg-zinc-950/95 dark:supports-[backdrop-filter]:bg-zinc-950/60">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2 lg:px-8">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 lg:px-8">
         {/* Logo/Brand */}
-        <div className="flex shrink-0 items-center">
+        <div className="flex items-center">
           <Link href="/" className="flex items-center">
             <Image
               src="/logo-horizontal.png"
@@ -76,49 +76,49 @@ export function AuthHeader() {
         </div>
 
         {/* Desktop navigation */}
-        <div className="hidden lg:flex lg:items-center lg:gap-x-8">
+        <nav className="hidden lg:flex lg:items-center lg:gap-x-8">
           <Link
             href="/listings"
-            className="text-sm font-semibold leading-6 text-zinc-900 transition-colors hover:text-zinc-600 dark:text-zinc-50 dark:hover:text-zinc-300"
+            className="text-sm font-semibold text-zinc-900 transition-colors hover:text-zinc-600 dark:text-zinc-50 dark:hover:text-zinc-300"
           >
             Browse Facilities
           </Link>
           <Link
             href="/locations"
-            className="text-sm font-semibold leading-6 text-zinc-900 transition-colors hover:text-zinc-600 dark:text-zinc-50 dark:hover:text-zinc-300"
+            className="text-sm font-semibold text-zinc-900 transition-colors hover:text-zinc-600 dark:text-zinc-50 dark:hover:text-zinc-300"
           >
             Locations
           </Link>
           <Link
             href="/calculator"
-            className="text-sm font-semibold leading-6 text-zinc-900 transition-colors hover:text-zinc-600 dark:text-zinc-50 dark:hover:text-zinc-300"
+            className="text-sm font-semibold text-zinc-900 transition-colors hover:text-zinc-600 dark:text-zinc-50 dark:hover:text-zinc-300"
           >
             Calculator
           </Link>
           <Link
             href="/guides"
-            className="text-sm font-semibold leading-6 text-zinc-900 transition-colors hover:text-zinc-600 dark:text-zinc-50 dark:hover:text-zinc-300"
+            className="text-sm font-semibold text-zinc-900 transition-colors hover:text-zinc-600 dark:text-zinc-50 dark:hover:text-zinc-300"
           >
             Guides
           </Link>
           <Link
             href="/about"
-            className="text-sm font-semibold leading-6 text-zinc-900 transition-colors hover:text-zinc-600 dark:text-zinc-50 dark:hover:text-zinc-300"
+            className="text-sm font-semibold text-zinc-900 transition-colors hover:text-zinc-600 dark:text-zinc-50 dark:hover:text-zinc-300"
           >
             About
           </Link>
           {user && (
             <Link
               href="/dashboard"
-              className="text-sm font-semibold leading-6 text-zinc-900 transition-colors hover:text-zinc-600 dark:text-zinc-50 dark:hover:text-zinc-300"
+              className="text-sm font-semibold text-zinc-900 transition-colors hover:text-zinc-600 dark:text-zinc-50 dark:hover:text-zinc-300"
             >
               Dashboard
             </Link>
           )}
-        </div>
+        </nav>
 
         {/* CTA/Auth Buttons */}
-        <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:gap-x-6">
+        <div className="hidden lg:flex lg:items-center lg:gap-x-4">
           {user ? (
             <div className="relative">
               <button
@@ -166,7 +166,7 @@ export function AuthHeader() {
             </>
           )}
         </div>
-      </nav>
+      </div>
 
       {/* Mobile menu */}
       {mobileMenuOpen && (
