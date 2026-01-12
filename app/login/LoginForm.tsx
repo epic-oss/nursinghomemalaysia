@@ -117,7 +117,7 @@ export default function LoginForm() {
           </label>
           <Link
             href="/forgot-password"
-            className="text-sm font-medium text-zinc-900 hover:underline dark:text-zinc-50"
+            className="text-sm font-medium text-teal-600 hover:underline dark:text-teal-400"
           >
             Forgot password?
           </Link>
@@ -126,7 +126,7 @@ export default function LoginForm() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full rounded-md bg-zinc-900 px-4 py-2 font-semibold text-white transition-colors hover:bg-zinc-700 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200"
+          className="w-full rounded-md bg-teal-600 px-4 py-2 font-semibold text-white transition-colors hover:bg-teal-700 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-teal-500 dark:hover:bg-teal-600"
         >
           {loading ? 'Logging in...' : 'Log In'}
         </button>
@@ -134,7 +134,7 @@ export default function LoginForm() {
 
       <p className="mt-4 text-center text-sm text-zinc-600 dark:text-zinc-400">
         Don't have an account?{' '}
-        <Link href="/register" className="font-medium text-zinc-900 hover:underline dark:text-zinc-50">
+        <Link href="/register" className="font-medium text-teal-600 hover:underline dark:text-teal-400">
           Create one
         </Link>
       </p>

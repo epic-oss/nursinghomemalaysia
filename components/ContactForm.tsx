@@ -53,7 +53,7 @@ export function ContactForm({ listingId, listingName, listingType }: ContactForm
     return (
       <button
         onClick={() => setShowForm(true)}
-        className="w-full rounded-lg bg-zinc-900 px-6 py-3 text-base font-medium text-white transition-colors hover:bg-zinc-700 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200"
+        className="w-full rounded-lg bg-teal-600 px-6 py-3 text-base font-medium text-white transition-colors hover:bg-teal-700 dark:bg-teal-500 dark:hover:bg-teal-600"
       >
         Get Free Quote
       </button>
@@ -179,7 +179,7 @@ export function ContactForm({ listingId, listingName, listingType }: ContactForm
           <button
             type="submit"
             disabled={isPending}
-            className="flex-1 rounded-lg bg-zinc-900 px-6 py-3 text-base font-medium text-white transition-colors hover:bg-zinc-700 disabled:opacity-50 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200"
+            className="flex-1 rounded-lg bg-teal-600 px-6 py-3 text-base font-medium text-white transition-colors hover:bg-teal-700 disabled:opacity-50 dark:bg-teal-500 dark:hover:bg-teal-600"
           >
             {isPending ? 'Submitting...' : 'Submit Inquiry'}
           </button>

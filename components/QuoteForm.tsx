@@ -227,7 +227,7 @@ export function QuoteForm({ onSuccess, source }: QuoteFormProps) {
 
         <button
           onClick={onSuccess}
-          className="w-full rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white transition-colors hover:bg-blue-700"
+          className="w-full rounded-lg bg-teal-600 px-6 py-3 font-semibold text-white transition-colors hover:bg-teal-700"
         >
           Close
         </button>
@@ -265,7 +265,7 @@ export function QuoteForm({ onSuccess, source }: QuoteFormProps) {
               className={`w-full rounded-lg border px-4 py-3 transition-colors ${
                 errors.name
                   ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
-                  : 'border-zinc-300 focus:border-blue-500 focus:ring-blue-500 dark:border-zinc-700'
+                  : 'border-zinc-300 focus:border-teal-500 focus:ring-teal-500 dark:border-zinc-700'
               } bg-white dark:bg-zinc-800 dark:text-zinc-50`}
             />
             {errors.name && <p className="mt-1 text-xs text-red-600 dark:text-red-400">{errors.name}</p>}
@@ -285,7 +285,7 @@ export function QuoteForm({ onSuccess, source }: QuoteFormProps) {
               className={`w-full rounded-lg border px-4 py-3 transition-colors ${
                 errors.email
                   ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
-                  : 'border-zinc-300 focus:border-blue-500 focus:ring-blue-500 dark:border-zinc-700'
+                  : 'border-zinc-300 focus:border-teal-500 focus:ring-teal-500 dark:border-zinc-700'
               } bg-white dark:bg-zinc-800 dark:text-zinc-50`}
             />
             {errors.email && <p className="mt-1 text-xs text-red-600 dark:text-red-400">{errors.email}</p>}
@@ -305,7 +305,7 @@ export function QuoteForm({ onSuccess, source }: QuoteFormProps) {
               className={`w-full rounded-lg border px-4 py-3 transition-colors ${
                 errors.phone
                   ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
-                  : 'border-zinc-300 focus:border-blue-500 focus:ring-blue-500 dark:border-zinc-700'
+                  : 'border-zinc-300 focus:border-teal-500 focus:ring-teal-500 dark:border-zinc-700'
               } bg-white dark:bg-zinc-800 dark:text-zinc-50`}
             />
             {errors.phone && <p className="mt-1 text-xs text-red-600 dark:text-red-400">{errors.phone}</p>}
@@ -364,7 +364,7 @@ export function QuoteForm({ onSuccess, source }: QuoteFormProps) {
               className={`w-full rounded-lg border px-4 py-3 transition-colors ${
                 errors.relationship
                   ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
-                  : 'border-zinc-300 focus:border-blue-500 focus:ring-blue-500 dark:border-zinc-700'
+                  : 'border-zinc-300 focus:border-teal-500 focus:ring-teal-500 dark:border-zinc-700'
               } bg-white dark:bg-zinc-800 dark:text-zinc-50`}
             >
               <option value="">Select relationship</option>
@@ -390,7 +390,7 @@ export function QuoteForm({ onSuccess, source }: QuoteFormProps) {
               className={`w-full rounded-lg border px-4 py-3 transition-colors ${
                 errors.careLevel
                   ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
-                  : 'border-zinc-300 focus:border-blue-500 focus:ring-blue-500 dark:border-zinc-700'
+                  : 'border-zinc-300 focus:border-teal-500 focus:ring-teal-500 dark:border-zinc-700'
               } bg-white dark:bg-zinc-800 dark:text-zinc-50`}
             >
               <option value="">Select care level</option>
@@ -415,7 +415,7 @@ export function QuoteForm({ onSuccess, source }: QuoteFormProps) {
               className={`w-full rounded-lg border px-4 py-3 transition-colors ${
                 errors.stayType
                   ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
-                  : 'border-zinc-300 focus:border-blue-500 focus:ring-blue-500 dark:border-zinc-700'
+                  : 'border-zinc-300 focus:border-teal-500 focus:ring-teal-500 dark:border-zinc-700'
               } bg-white dark:bg-zinc-800 dark:text-zinc-50`}
             >
               <option value="">Select stay type</option>
@@ -438,7 +438,7 @@ export function QuoteForm({ onSuccess, source }: QuoteFormProps) {
               className={`w-full rounded-lg border px-4 py-3 transition-colors ${
                 errors.mobilityLevel
                   ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
-                  : 'border-zinc-300 focus:border-blue-500 focus:ring-blue-500 dark:border-zinc-700'
+                  : 'border-zinc-300 focus:border-teal-500 focus:ring-teal-500 dark:border-zinc-700'
               } bg-white dark:bg-zinc-800 dark:text-zinc-50`}
             >
               <option value="">Select mobility level</option>
@@ -490,7 +490,7 @@ export function QuoteForm({ onSuccess, source }: QuoteFormProps) {
               className={`w-full rounded-lg border px-4 py-3 transition-colors ${
                 errors.location
                   ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
-                  : 'border-zinc-300 focus:border-blue-500 focus:ring-blue-500 dark:border-zinc-700'
+                  : 'border-zinc-300 focus:border-teal-500 focus:ring-teal-500 dark:border-zinc-700'
               } bg-white dark:bg-zinc-800 dark:text-zinc-50`}
             >
               <option value="">Select a location</option>
@@ -521,7 +521,7 @@ export function QuoteForm({ onSuccess, source }: QuoteFormProps) {
               id="budget"
               value={formData.budget}
               onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
-              className="w-full rounded-lg border border-zinc-300 bg-white px-4 py-3 transition-colors focus:border-blue-500 focus:ring-blue-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-50"
+              className="w-full rounded-lg border border-zinc-300 bg-white px-4 py-3 transition-colors focus:border-teal-500 focus:ring-teal-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-50"
             >
               <option value="">Select budget range</option>
               <option value="Below RM2,000">Below RM2,000</option>
@@ -547,7 +547,7 @@ export function QuoteForm({ onSuccess, source }: QuoteFormProps) {
               className={`w-full rounded-lg border px-4 py-3 transition-colors ${
                 errors.timeline
                   ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
-                  : 'border-zinc-300 focus:border-blue-500 focus:ring-blue-500 dark:border-zinc-700'
+                  : 'border-zinc-300 focus:border-teal-500 focus:ring-teal-500 dark:border-zinc-700'
               } bg-white dark:bg-zinc-800 dark:text-zinc-50`}
             >
               <option value="">Select timeline</option>
@@ -571,7 +571,7 @@ export function QuoteForm({ onSuccess, source }: QuoteFormProps) {
               placeholder="Any other information we should know? Medical conditions, dietary restrictions, preferred languages, specific facility preferences, etc."
               rows={4}
               maxLength={500}
-              className="w-full rounded-lg border border-zinc-300 bg-white px-4 py-3 transition-colors focus:border-blue-500 focus:ring-blue-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-50"
+              className="w-full rounded-lg border border-zinc-300 bg-white px-4 py-3 transition-colors focus:border-teal-500 focus:ring-teal-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-50"
             />
             <p className="mt-1 text-xs text-zinc-500 dark:text-zinc-400">
               {formData.additionalRequirements.length}/500 characters
@@ -591,11 +591,11 @@ export function QuoteForm({ onSuccess, source }: QuoteFormProps) {
           />
           <span>
             I agree to receive quotes from verified nursing homes and accept the{' '}
-            <a href="/terms" target="_blank" className="text-blue-600 underline hover:text-blue-700">
+            <a href="/terms" target="_blank" className="text-teal-600 underline hover:text-teal-700">
               Terms of Service
             </a>{' '}
             and{' '}
-            <a href="/privacy" target="_blank" className="text-blue-600 underline hover:text-blue-700">
+            <a href="/privacy" target="_blank" className="text-teal-600 underline hover:text-teal-700">
               Privacy Policy
             </a>
           </span>
@@ -607,7 +607,7 @@ export function QuoteForm({ onSuccess, source }: QuoteFormProps) {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="flex h-14 w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 text-base font-bold text-white transition-all hover:from-blue-700 hover:to-blue-800 disabled:cursor-not-allowed disabled:opacity-50"
+        className="flex h-14 w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-teal-600 to-teal-700 text-base font-bold text-white transition-all hover:from-teal-700 hover:to-teal-800 disabled:cursor-not-allowed disabled:opacity-50"
       >
         {isSubmitting ? (
           <>

@@ -30,9 +30,9 @@ export function GetQuoteButton() {
     <>
       <button
         onClick={() => setIsModalOpen(true)}
-        className="fixed bottom-6 right-6 z-50 flex h-12 w-36 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-blue-700 px-4 text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl sm:h-14 sm:w-40 lg:bottom-8 lg:right-8"
+        className="fixed bottom-6 right-6 z-50 flex h-12 w-36 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-teal-600 to-teal-700 px-4 text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl sm:h-14 sm:w-40 lg:bottom-8 lg:right-8"
         style={{
-          boxShadow: '0 4px 12px rgba(37,99,235,0.3)',
+          boxShadow: '0 4px 12px rgba(13,148,136,0.3)',
           animation: 'pulse-subtle 3s ease-in-out infinite',
         }}
         aria-label="Get free quotes"

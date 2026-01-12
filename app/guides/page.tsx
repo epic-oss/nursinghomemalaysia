@@ -33,11 +33,11 @@ export default function GuidesPage() {
         <div className="mb-12">
           <Link
             href="/guides/nursing-home-costs-malaysia"
-            className="group block overflow-hidden rounded-xl border-2 border-blue-200 bg-gradient-to-r from-blue-50 to-indigo-50 transition-all hover:border-blue-400 hover:shadow-xl dark:border-blue-800 dark:from-blue-950 dark:to-indigo-950 dark:hover:border-blue-600"
+            className="group block overflow-hidden rounded-xl border-2 border-teal-200 bg-gradient-to-r from-teal-50 to-cyan-50 transition-all hover:border-teal-400 hover:shadow-xl dark:border-teal-800 dark:from-teal-950 dark:to-cyan-950 dark:hover:border-teal-600"
           >
             <div className="p-8">
               <div className="mb-3 flex items-center gap-3">
-                <span className="inline-flex items-center rounded-full bg-blue-600 px-3 py-1 text-xs font-semibold text-white">
+                <span className="inline-flex items-center rounded-full bg-teal-600 px-3 py-1 text-xs font-semibold text-white">
                   Featured Guide
                 </span>
                 <span className="text-sm text-zinc-600 dark:text-zinc-400">
@@ -45,7 +45,7 @@ export default function GuidesPage() {
                 </span>
               </div>
 
-              <h2 className="mb-3 text-2xl font-bold text-zinc-900 transition-colors group-hover:text-blue-600 dark:text-zinc-50 dark:group-hover:text-blue-400 sm:text-3xl">
+              <h2 className="mb-3 text-2xl font-bold text-zinc-900 transition-colors group-hover:text-teal-600 dark:text-zinc-50 dark:group-hover:text-teal-400 sm:text-3xl">
                 Nursing Home Costs in Malaysia ({currentYear}): Complete Price Guide
               </h2>
 
@@ -68,7 +68,7 @@ export default function GuidesPage() {
                 </span>
               </div>
 
-              <div className="mt-6 inline-flex items-center font-semibold text-blue-600 dark:text-blue-400">
+              <div className="mt-6 inline-flex items-center font-semibold text-teal-600 dark:text-teal-400">
                 Read the complete guide
                 <svg className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -106,7 +106,7 @@ export default function GuidesPage() {
                   <span>{post.readingTime}</span>
                 </div>
 
-                <h2 className="mb-3 text-xl font-bold text-zinc-900 transition-colors group-hover:text-blue-600 dark:text-zinc-50 dark:group-hover:text-blue-400">
+                <h2 className="mb-3 text-xl font-bold text-zinc-900 transition-colors group-hover:text-teal-600 dark:text-zinc-50 dark:group-hover:text-teal-400">
                   {processTemplateVariables(post.title)}
                 </h2>
 
@@ -120,7 +120,7 @@ export default function GuidesPage() {
                   </div>
                 )}
 
-                <div className="mt-4 text-sm font-semibold text-blue-600 dark:text-blue-400">
+                <div className="mt-4 text-sm font-semibold text-teal-600 dark:text-teal-400">
                   Read more →
                 </div>
               </div>

@@ -10,25 +10,25 @@ export function Footer() {
         <div className="flex flex-wrap justify-center gap-6 text-sm">
           <Link
             href="/about"
-            className="text-zinc-600 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50"
+            className="text-zinc-600 transition-colors hover:text-teal-600 dark:text-zinc-400 dark:hover:text-zinc-50"
           >
             About
           </Link>
           <Link
             href="/contact"
-            className="text-zinc-600 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50"
+            className="text-zinc-600 transition-colors hover:text-teal-600 dark:text-zinc-400 dark:hover:text-zinc-50"
           >
             Contact
           </Link>
           <Link
             href="/terms"
-            className="text-zinc-600 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50"
+            className="text-zinc-600 transition-colors hover:text-teal-600 dark:text-zinc-400 dark:hover:text-zinc-50"
           >
             Terms
           </Link>
           <Link
             href="/privacy"
-            className="text-zinc-600 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50"
+            className="text-zinc-600 transition-colors hover:text-teal-600 dark:text-zinc-400 dark:hover:text-zinc-50"
           >
             Privacy
           </Link>

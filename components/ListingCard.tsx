@@ -160,7 +160,7 @@ export function ListingCard({ listing, type, currentUserId }: ListingCardProps) 
           {isUnclaimed && !isOwnedByCurrentUser && (
             <button
               onClick={handleClaimClick}
-              className="mt-3 w-full rounded-md border-2 border-zinc-900 bg-white px-4 py-2 text-sm font-semibold text-zinc-900 transition-colors hover:bg-zinc-900 hover:text-white dark:border-zinc-50 dark:bg-zinc-900 dark:text-zinc-50 dark:hover:bg-zinc-50 dark:hover:text-zinc-900"
+              className="mt-3 w-full rounded-md border-2 border-teal-600 bg-white px-4 py-2 text-sm font-semibold text-teal-600 transition-colors hover:bg-teal-600 hover:text-white dark:border-teal-500 dark:bg-zinc-900 dark:text-teal-500 dark:hover:bg-teal-500 dark:hover:text-white"
             >
               Claim This Listing
             </button>

@@ -181,7 +181,7 @@ export default function RegisterForm() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full rounded-md bg-zinc-900 px-4 py-2 font-semibold text-white transition-colors hover:bg-zinc-700 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200"
+          className="w-full rounded-md bg-teal-600 px-4 py-2 font-semibold text-white transition-colors hover:bg-teal-700 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-teal-500 dark:hover:bg-teal-600"
         >
           {loading ? 'Creating Account...' : 'Create Account'}
         </button>
@@ -189,7 +189,7 @@ export default function RegisterForm() {
 
       <p className="mt-4 text-center text-sm text-zinc-600 dark:text-zinc-400">
         Already have an account?{' '}
-        <Link href="/login" className="font-medium text-zinc-900 hover:underline dark:text-zinc-50">
+        <Link href="/login" className="font-medium text-teal-600 hover:underline dark:text-teal-400">
           Log in
         </Link>
       </p>

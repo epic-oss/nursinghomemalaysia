@@ -21,9 +21,9 @@ export function InArticleCTA({
 
   return (
     <>
-      <div className="my-8 rounded-xl border-2 border-blue-200 bg-gradient-to-r from-blue-50 to-cyan-50 p-8 text-center shadow-sm dark:border-blue-900 dark:from-blue-950 dark:to-cyan-950">
+      <div className="my-8 rounded-xl border-2 border-teal-200 bg-gradient-to-r from-teal-50 to-cyan-50 p-8 text-center shadow-sm dark:border-teal-900 dark:from-teal-950 dark:to-cyan-950">
         <div className="mb-4 flex justify-center">
-          <MessageSquareQuote className="h-12 w-12 text-blue-600 dark:text-blue-400" />
+          <MessageSquareQuote className="h-12 w-12 text-teal-600 dark:text-teal-400" />
         </div>
 
         <h3 className="mb-2 text-2xl font-bold text-zinc-900 dark:text-zinc-50">{displayTitle}</h3>
@@ -31,7 +31,7 @@ export function InArticleCTA({
 
         <button
           onClick={() => setIsModalOpen(true)}
-          className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 px-8 py-4 text-lg font-bold text-white shadow-md transition-all hover:scale-105 hover:shadow-lg"
+          className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-teal-600 to-teal-700 px-8 py-4 text-lg font-bold text-white shadow-md transition-all hover:scale-105 hover:shadow-lg"
         >
           <MessageSquareQuote className="h-5 w-5" />
           Get Free Quotes

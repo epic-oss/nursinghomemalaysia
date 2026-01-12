@@ -161,7 +161,7 @@ export function AuthHeader() {
               </Link>
               <Link
                 href="/submit"
-                className="rounded-md bg-zinc-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-zinc-700 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200"
+                className="rounded-md bg-teal-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-teal-700 dark:bg-teal-500 dark:hover:bg-teal-600"
               >
                 List Your Facility
               </Link>
@@ -237,7 +237,7 @@ export function AuthHeader() {
                 </Link>
                 <Link
                   href="/submit"
-                  className="mt-3 block rounded-md bg-zinc-900 px-4 py-2.5 text-center text-base font-semibold text-white shadow-sm transition-colors hover:bg-zinc-700 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200"
+                  className="mt-3 block rounded-md bg-teal-600 px-4 py-2.5 text-center text-base font-semibold text-white shadow-sm transition-colors hover:bg-teal-700 dark:bg-teal-500 dark:hover:bg-teal-600"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   List Your Facility

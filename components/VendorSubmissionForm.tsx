@@ -370,7 +370,7 @@ export function VendorSubmissionForm() {
         <button
           type="submit"
           disabled={isSubmitting || selectedActivities.length === 0}
-          className="w-full rounded-md bg-zinc-900 px-6 py-3 text-base font-semibold text-white shadow-sm transition-colors hover:bg-zinc-700 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200 sm:w-auto"
+          className="w-full rounded-md bg-teal-600 px-6 py-3 text-base font-semibold text-white shadow-sm transition-colors hover:bg-teal-700 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-teal-500 dark:hover:bg-teal-600 sm:w-auto"
         >
           {isSubmitting ? 'Submitting...' : 'Submit for Review'}
         </button>
