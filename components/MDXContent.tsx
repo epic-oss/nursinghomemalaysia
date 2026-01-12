@@ -134,6 +134,8 @@ const components = {
   GuideCTA,
   QuoteCTA,
   CalculatorCTA,
+  // Alias for MDX files that use QuoteFormCTA
+  QuoteFormCTA: QuoteCTA,
 }
 
 export function MDXContent({ source }: MDXContentProps) {
