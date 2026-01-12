@@ -40,16 +40,16 @@ export function AuthHeader() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-zinc-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:border-zinc-800 dark:bg-zinc-950/95 dark:supports-[backdrop-filter]:bg-zinc-950/60">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between p-4 lg:px-8">
+      <nav className="mx-auto flex max-w-7xl items-center justify-between p-3 lg:px-8">
         {/* Logo/Brand */}
         <div className="flex lg:flex-1">
           <Link href="/" className="-m-1.5 p-1.5">
             <Image
               src="/logo-horizontal.png"
               alt="Nursing Home Malaysia"
-              width={280}
-              height={60}
-              className="h-12 w-auto sm:h-14"
+              width={300}
+              height={65}
+              className="h-[50px] w-auto sm:h-[60px]"
               priority
             />
           </Link>
