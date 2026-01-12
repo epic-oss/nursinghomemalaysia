@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import type { User } from '@supabase/supabase-js'
@@ -33,9 +34,14 @@ export function Header() {
         {/* Logo/Brand */}
         <div className="flex lg:flex-1">
           <Link href="/" className="-m-1.5 p-1.5">
-            <span className="text-xl font-bold text-zinc-900 dark:text-zinc-50">
-              Nursing Home MY
-            </span>
+            <Image
+              src="/logo-horizontal.png"
+              alt="Nursing Home Malaysia"
+              width={400}
+              height={100}
+              className="h-[70px] w-auto sm:h-[100px]"
+              priority
+            />
           </Link>
         </div>
 
