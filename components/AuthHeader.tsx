@@ -48,8 +48,8 @@ export function AuthHeader() {
               src="/logo-horizontal.png"
               alt="Nursing Home Malaysia"
               width={300}
-              height={65}
-              className="h-[50px] w-[120px] sm:h-[60px] sm:w-auto"
+              height={70}
+              className="h-[55px] w-[180px] sm:h-[70px] sm:w-auto"
               priority
             />
           </Link>
