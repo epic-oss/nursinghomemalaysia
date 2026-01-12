@@ -40,26 +40,26 @@ export function AuthHeader() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-zinc-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:border-zinc-800 dark:bg-zinc-950/95 dark:supports-[backdrop-filter]:bg-zinc-950/60">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between p-3 lg:px-8">
+      <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2 lg:px-8">
         {/* Logo/Brand */}
-        <div className="flex items-center lg:flex-1">
+        <div className="flex shrink-0 items-center">
           <Link href="/" className="flex items-center">
             <Image
               src="/logo-horizontal.png"
               alt="Nursing Home Malaysia"
               width={280}
               height={70}
-              className="h-auto w-[280px]"
+              className="h-[50px] w-auto"
               priority
             />
           </Link>
         </div>
 
         {/* Mobile menu button */}
-        <div className="flex lg:hidden">
+        <div className="flex items-center lg:hidden">
           <button
             type="button"
-            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-zinc-700 dark:text-zinc-200"
+            className="inline-flex items-center justify-center rounded-md p-2 text-zinc-700 dark:text-zinc-200"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             <span className="sr-only">Open main menu</span>
@@ -76,7 +76,7 @@ export function AuthHeader() {
         </div>
 
         {/* Desktop navigation */}
-        <div className="hidden lg:flex lg:gap-x-8">
+        <div className="hidden lg:flex lg:items-center lg:gap-x-8">
           <Link
             href="/listings"
             className="text-sm font-semibold leading-6 text-zinc-900 transition-colors hover:text-zinc-600 dark:text-zinc-50 dark:hover:text-zinc-300"
