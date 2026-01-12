@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
@@ -42,7 +43,14 @@ export function AuthHeader() {
       <nav className="mx-auto flex max-w-7xl items-center justify-between p-4 lg:px-8">
         {/* Logo/Brand */}
         <div className="flex lg:flex-1">
-          <Link href="/" className="-m-1.5 p-1.5">
+          <Link href="/" className="-m-1.5 p-1.5 flex items-center gap-2">
+            <Image
+              src="/logo.png"
+              alt="Nursing Home Malaysia"
+              width={40}
+              height={40}
+              className="h-10 w-auto"
+            />
             <span className="text-xl font-bold text-zinc-900 dark:text-zinc-50">
               Nursing Home MY
             </span>
