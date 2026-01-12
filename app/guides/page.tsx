@@ -86,6 +86,7 @@ export default function GuidesPage() {
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {posts
             .filter(post => post.slug !== 'nursing-home-costs-malaysia') // Exclude featured
+            .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()) // Sort by date, newest first
             .map((post) => (
             <Link
               key={post.slug}
