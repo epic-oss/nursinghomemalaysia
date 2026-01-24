@@ -3,11 +3,26 @@
 import { createClient } from '@/lib/supabase/server'
 import { Inquiry } from '@/lib/types'
 
+const MAKE_WEBHOOK_URL = 'https://hook.us2.make.com/3wypv1bft6s6b67yeoeno98328a7e1m5'
+
+async function sendWebhook(payload: Record<string, unknown>) {
+  try {
+    await fetch(MAKE_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    })
+  } catch (error) {
+    // Log but don't fail the main operation if webhook fails
+    console.error('Webhook error:', error)
+  }
+}
+
 export async function submitInquiry(inquiry: Inquiry) {
   try {
     const supabase = await createClient()
 
-    const { error } = await supabase.from('inquiries').insert({
+    const { data, error } = await supabase.from('inquiries').insert({
       listing_type: inquiry.listing_type,
       listing_id: inquiry.listing_id,
       listing_name: inquiry.listing_name,
@@ -18,12 +33,24 @@ export async function submitInquiry(inquiry: Inquiry) {
       message: inquiry.message,
       preferred_date: inquiry.preferred_date || null,
       group_size: inquiry.group_size || null,
-    })
+      status: 'new',
+    }).select().single()
 
     if (error) {
       console.error('Supabase error:', error)
       return { success: false, error: 'Failed to submit inquiry' }
     }
+
+    // Send webhook to Make.com
+    await sendWebhook({
+      source: 'NursingHomeMY_lead',
+      timestamp: data?.created_at || new Date().toISOString(),
+      facility_name: inquiry.listing_name,
+      contact_name: inquiry.name,
+      email: inquiry.email,
+      phone: inquiry.phone || '',
+      message: inquiry.message,
+    })
 
     return { success: true }
   } catch (error) {
@@ -59,12 +86,23 @@ export async function submitVendorApplication(formData: FormData) {
       status: 'pending'
     }
 
-    const { error } = await supabase.from('vendor_submissions').insert(submission)
+    const { data, error } = await supabase.from('vendor_submissions').insert(submission).select().single()
 
     if (error) {
       console.error('Supabase error:', error)
       return { success: false, error: 'Failed to submit application. Please try again.' }
     }
+
+    // Send webhook to Make.com
+    await sendWebhook({
+      source: 'NursingHomeMY_submission',
+      timestamp: data?.created_at || new Date().toISOString(),
+      company_name: submission.company_name,
+      email: submission.email,
+      phone: submission.phone,
+      state: submission.state,
+      referral_source: submission.referral_source || '',
+    })
 
     return { success: true }
   } catch (error) {

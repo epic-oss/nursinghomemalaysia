@@ -2,7 +2,8 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { createClient } from '@/lib/supabase/client'
 
 interface AdminSidebarProps {
   userEmail: string
@@ -11,11 +12,37 @@ interface AdminSidebarProps {
 export function AdminSidebar({ userEmail }: AdminSidebarProps) {
   const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(true)
+  const [pendingApplications, setPendingApplications] = useState<number | null>(null)
+  const [newLeads, setNewLeads] = useState<number | null>(null)
+
+  useEffect(() => {
+    async function fetchCounts() {
+      const supabase = createClient()
+
+      // Get pending applications count
+      const { count: appCount } = await supabase
+        .from('vendor_submissions')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'pending')
+
+      // Get new leads count
+      const { count: leadCount } = await supabase
+        .from('inquiries')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'new')
+
+      setPendingApplications(appCount || 0)
+      setNewLeads(leadCount || 0)
+    }
+
+    fetchCounts()
+  }, [pathname]) // Refetch when navigating
 
   const navItems = [
     { href: '/admin', label: 'Dashboard', icon: '📊', badge: null },
-    { href: '/admin/listings', label: 'All Listings', icon: '📝', badge: null },
-    { href: '/admin/facilities', label: 'Facilities', icon: '👥', badge: null },
+    { href: '/admin/applications', label: 'Applications', icon: '📋', badge: pendingApplications },
+    { href: '/admin/leads', label: 'Leads', icon: '📧', badge: newLeads },
+    { href: '/admin/listings', label: 'Listings', icon: '📝', badge: null },
     { href: '/admin/premium', label: 'Premium', icon: '💰', badge: null },
   ]
 
@@ -62,8 +89,8 @@ export function AdminSidebar({ userEmail }: AdminSidebarProps) {
                     <span className="text-lg">{item.icon}</span>
                     <span>{item.label}</span>
                   </div>
-                  {item.badge && (
-                    <span className="rounded-full bg-blue-600 px-2 py-0.5 text-xs text-white">
+                  {item.badge !== null && item.badge > 0 && (
+                    <span className="rounded-full bg-red-500 px-2 py-0.5 text-xs text-white">
                       {item.badge}
                     </span>
                   )}
