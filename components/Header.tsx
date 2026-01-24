@@ -37,9 +37,9 @@ export function Header() {
             <Image
               src="/logo-horizontal.png"
               alt="Nursing Home Malaysia"
-              width={280}
-              height={70}
-              className="h-[50px] w-auto"
+              width={160}
+              height={40}
+              className="h-10 w-auto"
               priority
             />
           </Link>
